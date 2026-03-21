@@ -2,7 +2,10 @@ import type { TSESTree } from "@typescript-eslint/utils";
 
 /** Convert a static string-ish AST node into its runtime string value. */
 export const getStaticStringValue = (
-    node: null | TSESTree.Expression | TSESTree.PrivateIdentifier
+    node:
+        | null
+        | Readonly<TSESTree.Expression>
+        | Readonly<TSESTree.PrivateIdentifier>
 ): string | undefined => {
     if (node === null) {
         return undefined;
@@ -21,7 +24,7 @@ export const getStaticStringValue = (
 
 /** Resolve the static key name for a property or member expression. */
 export const getStaticPropertyName = (
-    node: TSESTree.MemberExpression | TSESTree.Property
+    node: Readonly<TSESTree.MemberExpression> | Readonly<TSESTree.Property>
 ): string | undefined => {
     if (node.type === "Property") {
         if (!node.computed && node.key.type === "Identifier") {
@@ -40,19 +43,28 @@ export const getStaticPropertyName = (
 
 /** Find a non-spread property by name inside an object expression. */
 export const findPropertyByName = (
-    objectExpression: TSESTree.ObjectExpression,
+    objectExpression: Readonly<TSESTree.ObjectExpression>,
     propertyName: string
-): TSESTree.Property | undefined =>
-    objectExpression.properties.find(
-        (property): property is TSESTree.Property =>
-            property.type === "Property" &&
-            getStaticPropertyName(property) === propertyName
-    );
+): TSESTree.Property | undefined => {
+    for (const property of objectExpression.properties) {
+        if (property.type !== "Property") {
+            continue;
+        }
+
+        if (getStaticPropertyName(property) === propertyName) {
+            return property;
+        }
+    }
+
+    return undefined;
+};
 
 /** Resolve the static nested property path for an object property. */
-export const getPropertyPath = (node: TSESTree.Property): readonly string[] => {
+export const getPropertyPath = (
+    node: Readonly<TSESTree.Property>
+): readonly string[] => {
     const propertyPath: string[] = [];
-    let currentNode: TSESTree.Node = node;
+    let currentNode: Readonly<TSESTree.Node> = node;
 
     while (currentNode.type === "Property") {
         const propertyName = getStaticPropertyName(currentNode);
@@ -83,7 +95,7 @@ export const getPropertyPath = (node: TSESTree.Property): readonly string[] => {
 
 /** Check whether a property resolves to the provided nested path. */
 export const matchesPropertyPath = (
-    node: TSESTree.Property,
+    node: Readonly<TSESTree.Property>,
     expectedPath: readonly string[]
 ): boolean => {
     const propertyPath = getPropertyPath(node);
@@ -96,7 +108,7 @@ export const matchesPropertyPath = (
 
 /** Check whether an AST node is the `import.meta` meta property. */
 export const isImportMeta = (
-    node: TSESTree.Node
+    node: Readonly<TSESTree.Node>
 ): node is TSESTree.MetaProperty =>
     node.type === "MetaProperty" &&
     node.meta.name === "import" &&
@@ -104,7 +116,7 @@ export const isImportMeta = (
 
 /** Check whether a member expression is `import.meta.env`. */
 export const isImportMetaEnvMemberExpression = (
-    node: TSESTree.Node
+    node: Readonly<TSESTree.Node>
 ): node is TSESTree.MemberExpression =>
     node.type === "MemberExpression" &&
     isImportMeta(node.object) &&
@@ -112,7 +124,7 @@ export const isImportMetaEnvMemberExpression = (
 
 /** Check whether a member expression is `import.meta.glob`. */
 export const isImportMetaGlobMemberExpression = (
-    node: TSESTree.Node
+    node: Readonly<TSESTree.Node>
 ): node is TSESTree.MemberExpression =>
     node.type === "MemberExpression" &&
     isImportMeta(node.object) &&
@@ -120,6 +132,6 @@ export const isImportMetaGlobMemberExpression = (
 
 /** Extract an object expression from a direct expression when possible. */
 export const asObjectExpression = (
-    node: null | TSESTree.Expression
+    node: null | Readonly<TSESTree.Expression>
 ): TSESTree.ObjectExpression | undefined =>
     node?.type === "ObjectExpression" ? node : undefined;

@@ -1,11 +1,16 @@
 {
-    "background_color": "#2E2A33",
+    "background_color": "#101010",
     "description": "eslint-plugin-vite documentation and rule references.",
     "display": "standalone",
     "icons": [
         {
             "sizes": "192x192",
             "src": "img/logo_192x192.png",
+            "type": "image/png"
+        },
+        {
+            "sizes": "180x180",
+            "src": "img/apple-touch-icon.png",
             "type": "image/png"
         },
         {
@@ -18,5 +23,5 @@
     "scope": ".",
     "short_name": "Vite Docs",
     "start_url": ".",
-    "theme_color": "#2E2A33"
+    "theme_color": "#101010"
 }

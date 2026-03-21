@@ -12,6 +12,8 @@ const isBooleanLiteral = (value: unknown, expected: boolean): boolean =>
     "value" in value &&
     value.value === expected;
 
+/** Disallow unsafe Vite server and preview settings that weaken default
+protections. */
 const noUnsafeServerOptionsRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], MessageId>({
         create(context) {

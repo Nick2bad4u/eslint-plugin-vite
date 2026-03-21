@@ -48,20 +48,21 @@ const expressionNodeTypes = new Set<TSESTree.Expression["type"]>([
 ] as const);
 
 const getExportedExpression = (
-    declaration: TSESTree.ExportDefaultDeclaration["declaration"]
+    declaration: Readonly<TSESTree.ExportDefaultDeclaration["declaration"]>
 ): null | TSESTree.Expression =>
     expressionNodeTypes.has(declaration.type as TSESTree.Expression["type"])
         ? (declaration as TSESTree.Expression)
         : null;
 
 const isAcceptedExportExpression = (
-    expression: TSESTree.Expression,
+    expression: Readonly<TSESTree.Expression>,
     fileKind: keyof typeof acceptedCallNamesByKind
 ): boolean =>
     expression.type === "CallExpression" &&
     expression.callee.type === "Identifier" &&
     acceptedCallNamesByKind[fileKind].has(expression.callee.name);
 
+/** Require Vite and Vitest config files to export the canonical helper wrappers. */
 const configRequireDefineConfigRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], MessageId>({
         create(context) {

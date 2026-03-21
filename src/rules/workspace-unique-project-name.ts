@@ -4,7 +4,7 @@ import { findPropertyByName, getStaticStringValue } from "../_internal/ast.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const getWorkspaceProjectObject = (
-    element: TSESTree.ArrayExpression["elements"][number]
+    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
 ): TSESTree.ObjectExpression | undefined => {
     if (element === null) {
         return undefined;
@@ -24,6 +24,7 @@ const getWorkspaceProjectObject = (
     return undefined;
 };
 
+/** Require each literal Vitest workspace project name to be unique. */
 const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "duplicateProjectName">({
         create(context) {

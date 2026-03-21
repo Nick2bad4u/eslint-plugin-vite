@@ -12,21 +12,22 @@
     padding: 4.45rem 0 3.65rem;
     background:
         radial-gradient(
-            circle at 86% 12%,
-            rgb(244 114 182 / 28%),
-            transparent 40%
+            circle at 88% 14%,
+            rgb(255 206 84 / 24%),
+            transparent 32%
         ),
         radial-gradient(
-            circle at 16% 90%,
-            rgb(34 211 238 / 30%),
-            transparent 45%
+            circle at 14% 92%,
+            rgb(65 209 255 / 28%),
+            transparent 40%
         ),
         linear-gradient(
             134deg,
-            #312e81 0%,
-            #4338ca 38%,
-            #3b82f6 72%,
-            #22d3ee 100%
+            #101010 0%,
+            #1c1033 26%,
+            #4d1d91 55%,
+            #234f92 78%,
+            #153d54 100%
         );
     border-block-end: 1px solid rgb(255 255 255 / 18%);
     color: #ffffff;
@@ -267,7 +268,7 @@
 .heroActionPrimary {
     border-color: rgb(224 231 255 / 36%);
     background:
-        linear-gradient(145deg, rgb(129 140 248 / 90%), rgb(99 102 241 / 90%)),
+        linear-gradient(145deg, rgb(189 52 254 / 92%), rgb(65 209 255 / 92%)),
         linear-gradient(180deg, rgb(255 255 255 / 12%), rgb(255 255 255 / 0%));
     color: rgb(232 239 255);
 
@@ -279,15 +280,15 @@
 }
 
 .heroActionSecondary {
-    border-color: rgb(191 219 254 / 34%);
+    border-color: rgb(65 209 255 / 34%);
     background:
-        linear-gradient(145deg, rgb(186 230 253 / 20%), rgb(147 197 253 / 11%)),
+        linear-gradient(145deg, rgb(189 52 254 / 16%), rgb(65 209 255 / 12%)),
         rgb(15 23 42 / 28%);
     color: rgb(222 235 255);
 
     &:hover,
     &:focus {
-        border-color: rgb(191 219 254 / 50%);
+        border-color: rgb(65 209 255 / 50%);
         color: rgb(238 246 255);
     }
 }

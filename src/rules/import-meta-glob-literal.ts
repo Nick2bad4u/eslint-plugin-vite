@@ -7,7 +7,7 @@ import {
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const isStaticPatternNode = (
-    node: TSESTree.CallExpression["arguments"][number]
+    node: Readonly<TSESTree.CallExpression["arguments"][number]>
 ): boolean => {
     if (node.type === "Literal" || node.type === "TemplateLiteral") {
         return getStaticStringValue(node) !== undefined;
@@ -17,7 +17,7 @@ const isStaticPatternNode = (
 };
 
 const isStaticGlobPatternArgument = (
-    node: TSESTree.CallExpression["arguments"][number] | undefined
+    node: Readonly<TSESTree.CallExpression["arguments"][number]> | undefined
 ): boolean => {
     if (node === undefined) {
         return false;
@@ -32,6 +32,7 @@ const isStaticGlobPatternArgument = (
     return isStaticPatternNode(node);
 };
 
+/** Require `import.meta.glob()` patterns to stay statically analyzable. */
 const importMetaGlobLiteralRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "literalPattern">({
         create(context) {

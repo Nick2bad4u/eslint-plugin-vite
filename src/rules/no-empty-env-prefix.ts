@@ -5,6 +5,7 @@ import {
 import { isConfigFile } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
+/** Disallow empty `envPrefix` values that expose every environment variable. */
 const noEmptyEnvPrefixRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "emptyEnvPrefix">({
         create(context) {

@@ -8,6 +8,7 @@ const vitestWorkspaceFilePattern =
 const testDirectoryPattern = /(?:^|[/\\])(?:test|tests)(?:[/\\]|$)/u;
 const testFilenamePattern = /\.(?:bench|spec|test)\.[cm]?[jt]sx?$/u;
 
+/** Normalize a filename to forward-slash separators for cross-platform matching. */
 export const normalizeFilename = (filename: string): string =>
     filename.replaceAll("\\", "/");
 

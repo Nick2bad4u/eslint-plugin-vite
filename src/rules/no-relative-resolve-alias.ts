@@ -8,7 +8,7 @@ import { isConfigFile } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const isRelativeReplacementString = (
-    node: TSESTree.Property["value"]
+    node: Readonly<TSESTree.Property["value"]>
 ): boolean => {
     if (node.type !== "Literal" && node.type !== "TemplateLiteral") {
         return false;
@@ -21,7 +21,7 @@ const isRelativeReplacementString = (
 
 const reportIfRelativeReplacement = (
     context: Readonly<TSESLint.RuleContext<"relativeAliasReplacement", []>>,
-    valueNode: TSESTree.Property["value"]
+    valueNode: Readonly<TSESTree.Property["value"]>
 ): void => {
     if (!isRelativeReplacementString(valueNode)) {
         return;
@@ -33,6 +33,7 @@ const reportIfRelativeReplacement = (
     });
 };
 
+/** Disallow relative filesystem replacements inside `resolve.alias`. */
 const noRelativeResolveAliasRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "relativeAliasReplacement">({
         create(context) {

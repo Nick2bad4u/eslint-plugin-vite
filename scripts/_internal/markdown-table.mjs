@@ -82,26 +82,24 @@ export const renderMarkdownTable = (rows, alignments) => {
     );
 
     /**
+     * @param {string} cell
+     * @param {number} columnIndex
+     *
+     * @returns {string}
+     */
+    const renderCell = (cell, columnIndex) =>
+        padCell(
+            cell,
+            columnWidths[columnIndex] ?? cell.length,
+            alignments[columnIndex] ?? "left"
+        );
+
+    /**
      * @param {readonly string[]} row
      *
      * @returns {string}
      */
-    const renderRow = (row) =>
-        `| ${row
-            /**
-             * @param {string} cell
-             * @param {number} columnIndex
-             *
-             * @returns {string}
-             */
-            .map((cell, columnIndex) =>
-                padCell(
-                    cell,
-                    columnWidths[columnIndex] ?? cell.length,
-                    alignments[columnIndex] ?? "left"
-                )
-            )
-            .join(" | ")} |`;
+    const renderRow = (row) => `| ${row.map(renderCell).join(" | ")} |`;
 
     const header = renderRow(firstRow);
     const separator = `| ${columnWidths

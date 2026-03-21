@@ -8,7 +8,7 @@ const testApiNames = new Set(["it", "test"]);
 const benchApiNames = new Set(["bench"]);
 
 const getImportedNamesBySource = (
-    node: TSESTree.ImportDeclaration
+    node: Readonly<TSESTree.ImportDeclaration>
 ): ReadonlyMap<string, string> => {
     const names = new Map<string, string>();
 
@@ -28,6 +28,7 @@ const getImportedNamesBySource = (
     return names;
 };
 
+/** Disallow mixing Vitest correctness tests and benchmark APIs within one file. */
 const noMixedTestAndBenchApisRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], MessageId>({
         create(context) {

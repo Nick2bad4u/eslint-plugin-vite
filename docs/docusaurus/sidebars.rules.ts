@@ -2,9 +2,18 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 const sidebars: SidebarsConfig = {
     rules: [
-        "overview",
-        "getting-started",
         {
+            className: "sb-doc-overview",
+            id: "overview",
+            type: "doc",
+        },
+        {
+            className: "sb-doc-getting-started",
+            id: "getting-started",
+            type: "doc",
+        },
+        {
+            className: "sb-cat-guides",
             type: "category",
             label: "Guides",
             items: [
@@ -15,6 +24,7 @@ const sidebars: SidebarsConfig = {
             ],
         },
         {
+            className: "sb-cat-presets",
             type: "category",
             label: "Presets",
             link: {
@@ -22,16 +32,45 @@ const sidebars: SidebarsConfig = {
                 id: "presets/index",
             },
             items: [
-                "presets/recommended",
-                "presets/strict",
-                "presets/all",
-                "presets/configs",
-                "presets/client",
-                "presets/vitest",
-                "presets/vitest-bench",
+                {
+                    className: "sb-preset-recommended",
+                    id: "presets/recommended",
+                    type: "doc",
+                },
+                {
+                    className: "sb-preset-strict",
+                    id: "presets/strict",
+                    type: "doc",
+                },
+                {
+                    className: "sb-preset-all",
+                    id: "presets/all",
+                    type: "doc",
+                },
+                {
+                    className: "sb-preset-configs",
+                    id: "presets/configs",
+                    type: "doc",
+                },
+                {
+                    className: "sb-preset-client",
+                    id: "presets/client",
+                    type: "doc",
+                },
+                {
+                    className: "sb-preset-vitest",
+                    id: "presets/vitest",
+                    type: "doc",
+                },
+                {
+                    className: "sb-preset-vitest-bench",
+                    id: "presets/vitest-bench",
+                    type: "doc",
+                },
             ],
         },
         {
+            className: "sb-cat-rules",
             type: "category",
             label: "Rules",
             items: [

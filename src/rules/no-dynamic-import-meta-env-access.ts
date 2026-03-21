@@ -1,6 +1,7 @@
 import { isImportMetaEnvMemberExpression } from "../_internal/ast.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
+/** Disallow dynamic `import.meta.env[key]` access in client-side code. */
 const noDynamicImportMetaEnvAccessRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "dynamicAccess">({
         create(context) {

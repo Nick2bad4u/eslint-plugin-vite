@@ -25,11 +25,12 @@ declare const styles: {
     readonly "sb-inline-rule-number": string;
     readonly "sb-inline-runtime-kind": string;
     readonly "sb-preset-all": string;
-    readonly "sb-preset-minimal": string;
+    readonly "sb-preset-client": string;
+    readonly "sb-preset-configs": string;
     readonly "sb-preset-recommended": string;
-    readonly "sb-preset-recommended-type-checked": string;
     readonly "sb-preset-strict": string;
-    readonly "sb-preset-type-guards": string;
+    readonly "sb-preset-vitest": string;
+    readonly "sb-preset-vitest-bench": string;
     readonly "theme-doc-markdown": string;
     readonly "theme-doc-sidebar-item-category-level-2": string;
     readonly "theme-doc-sidebar-item-category-level-3": string;

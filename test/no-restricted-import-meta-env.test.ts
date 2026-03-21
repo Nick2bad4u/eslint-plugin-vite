@@ -1,33 +1,39 @@
-import { expect, test } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import rule from "../src/rules/no-restricted-import-meta-env.js";
+import noRestrictedImportMetaEnvRule from "../src/rules/no-restricted-import-meta-env.js";
 import { createRuleTester } from "./_internal/ruleTester.js";
 
-createRuleTester().run("no-restricted-import-meta-env", rule, {
-    invalid: [
+describe("no-restricted-import-meta-env", () => {
+    createRuleTester().run(
+        "no-restricted-import-meta-env",
+        noRestrictedImportMetaEnvRule,
         {
-            code: "const token = import.meta.env.SECRET_TOKEN;",
-            errors: [{ messageId: "restrictedEnvKey" }],
-            filename: "src/app.ts",
-        },
-    ],
-    valid: [
-        {
-            code: "const mode = import.meta.env.MODE; const url = import.meta.env.VITE_API_URL;",
-            filename: "src/app.ts",
-        },
-        {
-            code: "const token = import.meta.env.PUBLIC_TOKEN;",
-            filename: "src/app.ts",
-            options: [{ allowPrefixes: ["VITE_", "PUBLIC_"] }],
-        },
-        {
-            code: "const secret = import.meta.env.SECRET_TOKEN;",
-            filename: "vite.config.ts",
-        },
-    ],
-});
+            invalid: [
+                {
+                    code: "const token = import.meta.env.SECRET_TOKEN;",
+                    errors: [{ messageId: "restrictedEnvKey" }],
+                    filename: "src/app.ts",
+                },
+            ],
+            valid: [
+                {
+                    code: "const mode = import.meta.env.MODE; const url = import.meta.env.VITE_API_URL;",
+                    filename: "src/app.ts",
+                },
+                {
+                    code: "const token = import.meta.env.PUBLIC_TOKEN;",
+                    filename: "src/app.ts",
+                    options: [{ allowPrefixes: ["VITE_", "PUBLIC_"] }],
+                },
+                {
+                    code: "const secret = import.meta.env.SECRET_TOKEN;",
+                    filename: "vite.config.ts",
+                },
+            ],
+        }
+    );
 
-test("exposes rule metadata", () => {
-    expect(rule.meta.messages).toBeDefined();
+    it("exposes rule metadata", () => {
+        expect(noRestrictedImportMetaEnvRule.meta.messages).toBeDefined();
+    });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable canonical/no-re-export -- The plugin rule registry intentionally exposes imported rule modules as runtime plugin metadata. */
 import type { TSESLint } from "@typescript-eslint/utils";
 
 import configRequireDefineConfigRule from "../rules/config-require-define-config.js";
@@ -49,3 +50,5 @@ export const viteRules: ViteRuleModules = {
 export type ViteRuleName = keyof typeof viteRules;
 
 export default viteRules;
+
+/* eslint-enable canonical/no-re-export -- Re-enable after the intentional rule-registry object literal. */

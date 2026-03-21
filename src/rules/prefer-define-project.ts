@@ -1,5 +1,6 @@
 import { createTypedRule } from "../_internal/typed-rule.js";
 
+/** Require inline Vitest workspace projects to use `defineProject(...)`. */
 const preferDefineProjectRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "preferDefineProject">({
         create(context) {
@@ -33,7 +34,7 @@ const preferDefineProjectRule: ReturnType<typeof createTypedRule> =
             deprecated: false,
             docs: {
                 description:
-                    "prefer `defineProject(...)` over `defineConfig(...)` for inline Vitest workspace projects.",
+                    "require inline Vitest workspace projects to use `defineProject(...)` instead of `defineConfig(...)`.",
                 frozen: false,
                 recommended: false,
                 requiresTypeChecking: false,

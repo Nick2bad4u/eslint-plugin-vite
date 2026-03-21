@@ -30,7 +30,7 @@ const defaultOptions = [
 ] as const satisfies RuleOptions;
 
 const getStaticEnvKey = (
-    node: TSESTree.MemberExpression
+    node: Readonly<TSESTree.MemberExpression>
 ): string | undefined => {
     if (!node.computed && node.property.type === "Identifier") {
         return node.property.name;
@@ -39,6 +39,8 @@ const getStaticEnvKey = (
     return getStaticStringValue(node.property);
 };
 
+/** Restrict client-visible `import.meta.env` access to built-ins and approved
+prefixes. */
 const noRestrictedImportMetaEnvRule: ReturnType<typeof createTypedRule> =
     createTypedRule<RuleOptions, MessageId>({
         create(context, [options]) {
