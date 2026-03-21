@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible bug in eslint-plugin-typefest
+about: Report a reproducible bug in eslint-plugin-vite
 title: "Bug: "
 labels:
     - bug
@@ -10,11 +10,9 @@ assignees: []
 
 ## Summary
 
-<!-- Briefly describe the bug and impact. -->
-
 ## Rule / Area
 
-<!-- Example: prefer-ts-extras-array-find, docs/docusaurus, presets, runtime API docs -->
+<!-- Example: vite/no-empty-env-prefix, docs site, presets, sync scripts -->
 
 ## Reproduction
 
@@ -33,7 +31,7 @@ assignees: []
 ### Command and output
 
 ```bash
-# Example: npm run test -- test/prefer-ts-extras-array-find.test.ts
+# Example: npm test
 ```
 
 ## Steps to reproduce
@@ -52,10 +50,11 @@ assignees: []
 - npm version:
 - ESLint version:
 - TypeScript version:
-- `@typescript-eslint/*` version:
-- `eslint-plugin-typefest` version/commit:
+- Vite version:
+- Vitest version:
+- `eslint-plugin-vite` version/commit:
 - OS:
 
 ## Additional context
 
-<!-- Add logs, screenshots, benchmark numbers, or related issues/PRs if helpful. -->
+<!-- Add logs, screenshots, or related issues if helpful. -->

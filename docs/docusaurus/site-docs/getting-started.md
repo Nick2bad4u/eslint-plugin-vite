@@ -2,37 +2,32 @@
 sidebar_position: 2
 ---
 
-# Getting Started
+# Getting started
 
 Install the plugin:
 
 ```bash
-npm install --save-dev eslint-plugin-typefest
+npm install --save-dev eslint-plugin-vite eslint
 ```
 
-Then enable it in your Flat Config:
+Then enable a preset in your flat config:
 
 ```ts
-import typefest from "eslint-plugin-typefest";
+import vite from "eslint-plugin-vite";
 
-export default [
-    {
-        plugins: {
-            typefest,
-        },
-        rules: {
-            "typefest/prefer-ts-extras-is-defined": "error",
-        },
-    },
-];
+export default [vite.configs.recommended];
 ```
 
-## Recommended approach
+## Recommended rollout
 
-- Start with one ruleset (`typefest.configs.recommended` or `typefest.configs.strict`).
-- Fix violations in small batches.
-- Promote warnings to errors after stabilization.
+- Start with `vite.configs.recommended`.
+- Add `vite.configs.client` for browser-heavy `import.meta.*` usage.
+- Add `vite.configs.vitest` for Vitest config and workspace checks.
+- Add `vite.configs["vitest-bench"]` for benchmark-file hygiene.
+- Move to `vite.configs.strict` when the baseline is stable.
 
-## Rule navigation
+## More docs
 
-Use the sidebar **Rules** section for the full list of rule docs synced from the repository.
+- `Rule overview`
+- `Preset reference`
+- `Adoption checklist`

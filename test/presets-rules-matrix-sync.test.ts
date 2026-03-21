@@ -1,106 +1,78 @@
-/**
- * @packageDocumentation
- * Contract test that keeps presets matrix synchronized with plugin metadata.
- */
-import * as fs from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import * as path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { generatePresetsRulesMatrixSectionFromRules } from "../scripts/sync-presets-rules-matrix.mjs";
-import typefestPlugin from "../src/plugin";
+import {
+    PRESET_MATRIX_END,
+    PRESET_MATRIX_START,
+    PRESET_RULES_END,
+    PRESET_RULES_START,
+    renderPresetMatrix,
+    renderPresetRulesTable,
+} from "../scripts/sync-presets-rules-matrix.mjs";
 
-const MATRIX_SECTION_HEADING = "## Rule matrix";
+const normalizeLineEndings = (contents: string): string =>
+    contents.replaceAll("\r\n", "\n");
 
-/**
- * Normalize markdown table row spacing so formatter-aligned columns compare
- * equivalently to compact generated table rows.
- *
- * @param markdown - Markdown content that may include table rows.
- *
- * @returns Normalized markdown preserving table semantics.
- */
-const normalizeMarkdownTableSpacing = (markdown: string): string =>
-    markdown
-        .replaceAll("\r\n", "\n")
-        .split("\n")
-        .map((line) => {
-            const trimmedLine = line.trimEnd();
+const readSection = (
+    contents: string,
+    startMarker: string,
+    endMarker: string
+) => {
+    const startIndex = contents.indexOf(startMarker);
+    const endIndex = contents.indexOf(endMarker);
 
-            const cells = trimmedLine
-                .split("|")
-                .slice(1, -1)
-                .map((cell) => {
-                    const trimmedCell = cell.trim();
-                    const isSeparatorCell = /^:?-+:?$/v.test(trimmedCell);
-                    const hasStartColon = trimmedCell.startsWith(":");
-                    const hasEndColon = trimmedCell.endsWith(":");
-                    const separatorKey =
-                        `${Number(hasStartColon)}${Number(hasEndColon)}` as
-                            | "00"
-                            | "01"
-                            | "10"
-                            | "11";
-                    const normalizedSeparator = (
-                        {
-                            "00": "---",
-                            "01": "--:",
-                            "10": ":--",
-                            "11": ":-:",
-                        } as const
-                    )[separatorKey];
-
-                    return isSeparatorCell ? normalizedSeparator : trimmedCell;
-                });
-
-            return /^\|.*\|$/v.test(trimmedLine)
-                ? `| ${cells.join(" | ")} |`
-                : trimmedLine;
-        })
-        .join("\n");
-
-/**
- * Extract the presets `## Rule matrix` section.
- *
- * @param markdown - Full presets markdown source.
- *
- * @returns Matrix section markdown including heading.
- */
-const extractMatrixSection = (markdown: string): string => {
-    const headingOffset = markdown.indexOf(MATRIX_SECTION_HEADING);
-
-    if (headingOffset === -1) {
-        throw new Error(
-            "docs/rules/presets/index.md is missing the `## Rule matrix` section heading."
-        );
-    }
-
-    const nextHeadingOffset = markdown.indexOf(
-        "\n## ",
-        headingOffset + MATRIX_SECTION_HEADING.length
+    return normalizeLineEndings(
+        contents.slice(startIndex, endIndex + endMarker.length)
     );
-    const sectionEndOffset =
-        nextHeadingOffset === -1 ? markdown.length : nextHeadingOffset + 1;
-
-    return markdown.slice(headingOffset, sectionEndOffset);
 };
 
-describe("presets rules matrix synchronization", () => {
-    it("matches the canonical matrix generated from plugin metadata", async () => {
-        const presetsIndexPath = path.join(
-            process.cwd(),
-            "docs",
-            "rules",
-            "presets",
-            "index.md"
-        );
-        const presetsMarkdown = await fs.readFile(presetsIndexPath, "utf8");
+const presetNames = [
+    "all",
+    "client",
+    "configs",
+    "recommended",
+    "strict",
+    "vitest",
+    "vitest-bench",
+] as const;
 
-        const presetsMatrixSection = extractMatrixSection(presetsMarkdown);
-        const expectedMatrixSection =
-            generatePresetsRulesMatrixSectionFromRules(typefestPlugin.rules);
-
-        expect(normalizeMarkdownTableSpacing(presetsMatrixSection)).toBe(
-            normalizeMarkdownTableSpacing(expectedMatrixSection)
+describe("preset docs sync", () => {
+    it("matches the generated preset matrix", () => {
+        const contents = readFileSync(
+            path.join(process.cwd(), "docs", "rules", "presets", "index.md"),
+            "utf8"
         );
+
+        expect(
+            readSection(contents, PRESET_MATRIX_START, PRESET_MATRIX_END)
+        ).toBe(
+            normalizeLineEndings(
+                `${PRESET_MATRIX_START}\n${renderPresetMatrix()}\n${PRESET_MATRIX_END}`
+            )
+        );
+    });
+
+    it("matches the generated per-preset rule tables", () => {
+        for (const presetName of presetNames) {
+            const contents = readFileSync(
+                path.join(
+                    process.cwd(),
+                    "docs",
+                    "rules",
+                    "presets",
+                    `${presetName}.md`
+                ),
+                "utf8"
+            );
+
+            expect(
+                readSection(contents, PRESET_RULES_START, PRESET_RULES_END)
+            ).toBe(
+                normalizeLineEndings(
+                    `${PRESET_RULES_START}\n${renderPresetRulesTable(presetName)}\n${PRESET_RULES_END}`
+                )
+            );
+        }
     });
 });

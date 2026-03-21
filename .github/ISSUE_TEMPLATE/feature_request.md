@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a new rule or improvement for eslint-plugin-typefest
+about: Suggest a new rule or improvement for eslint-plugin-vite
 title: "Feature: "
 labels:
     - enhancement
@@ -10,11 +10,7 @@ assignees: []
 
 ## Problem statement
 
-<!-- What developer pain does this solve? -->
-
 ## Proposed solution
-
-<!-- Describe expected behavior, messages, and fixer/suggestion expectations. -->
 
 ## Scope
 
@@ -29,18 +25,18 @@ assignees: []
 ### Before
 
 ```ts
-// Code that should be reported (if applicable)
+// Code or config that should be reported
 ```
 
 ### After
 
 ```ts
-// Desired code after fix/suggestion
+// Desired code or configuration shape
 ```
 
 ## Acceptance criteria
 
-- [ ] Clear, actionable diagnostic message(s)
-- [ ] Safe autofix or suggestion behavior defined
-- [ ] Test coverage plan (valid/invalid/edge/fixer)
-- [ ] Documentation impact identified (`docs/rules/<rule-id>.md` if rule-related)
+- [ ] Clear diagnostic message(s)
+- [ ] Test coverage plan identified
+- [ ] Documentation impact identified
+- [ ] Vite or Vitest source documentation identified

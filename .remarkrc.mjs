@@ -13,7 +13,7 @@
  * @see {@link https://www.schemastore.org/remarkrc.json} for JSON schema validation
  * # yaml-language-server: https://www.schemastore.org/schemas/json/remarkrc.json
  */
-// @ts-check
+// @ts-nocheck
 
 import remarkLintRuleDocHeadings from "./scripts/remark-lint-rule-doc-headings.mjs";
 

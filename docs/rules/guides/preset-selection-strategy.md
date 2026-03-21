@@ -1,87 +1,46 @@
----
-title: Preset selection strategy
-description: Choose the right eslint-plugin-typefest preset and roll it out with minimal migration risk.
----
-
 # Preset selection strategy
 
-This guide helps teams pick a preset based on migration tolerance, type-checking maturity, and rollout velocity.
+Choose presets by **where the risk lives** in your repository.
 
-## Decision checkpoints
+## Start here
 
-Use these checkpoints before choosing a preset:
+If you are unsure, start with:
 
-1. **Type information availability**: Do you run ESLint with project-aware type services in CI/local workflows?
-2. **Migration bandwidth**: Can the team handle broad replacement churn this quarter?
-3. **Runtime sensitivity**: Do you need to review behavior-sensitive changes manually before broad adoption?
-4. **Convergence target**: Do you intend to land on `strict`/`all`, or stay at a stable baseline?
+```ts
+import vite from "eslint-plugin-vite";
 
-## Recommended starting points
+export default [vite.configs.recommended];
+```
 
-### `minimal`
+## Add focused presets by repository shape
 
-Choose this when:
+### App code uses `import.meta.env` or `import.meta.glob`
 
-- You need the lowest-friction baseline.
-- You want immediate value with minimal code churn.
+Add `vite.configs.client`.
 
-### `recommended`
+### Vitest configs or workspaces are central to the repo
 
-Choose this when:
+Add `vite.configs.vitest`.
 
-- You want broader coverage but still pragmatic defaults.
-- You can absorb moderate migration effort.
+### Benchmarks live alongside tests
 
-### `recommended-type-checked`
+Add `vite.configs.vitest-bench`.
 
-Choose this when:
+### You want the broadest safety net
 
-- Type services are already stable in your lint pipeline.
-- You want stronger guidance on typed guard/helper patterns.
+Move to `vite.configs.strict` or `vite.configs.all`.
 
-### `strict`
+## Preset intent
 
-Choose this when:
+- `recommended`: common pitfalls with low false-positive risk
+- `strict`: stricter client-env and workspace guidance
+- `all`: every rule
+- `configs`: only config-file safety rules
+- `client`: only runtime/client rules
+- `vitest`: only Vitest-focused rules
+- `vitest-bench`: only benchmark-focused rules
 
-- Your codebase already enforces high lint/type discipline.
-- You prefer stronger consistency constraints over minimal churn.
+## Further reading
 
-### `all`
-
-Choose this when:
-
-- You want full plugin coverage and can manage incremental cleanup.
-- You actively maintain migration and suppression hygiene.
-
-### Domain overlays
-
-Layer these when they match your codebase goals:
-
-- `type-fest/types`
-- `ts-extras/type-guards`
-
-## Rollout playbook
-
-1. Start with `warn` for one target folder/package.
-2. Record baseline violations and identify high-churn rule families.
-3. Run autofix in scoped batches, then run full tests/typecheck.
-4. Promote to `error` after each batch reaches zero violations.
-5. Repeat until all target folders are converged.
-
-## Validation gates
-
-- `npm run lint`
-- `npm run typecheck`
-- `npm run test`
-
-For monorepos, run package-level gates first, then full-repo gates.
-
-## Escalation policy
-
-If a rule creates migration risk or noisy output:
-
-1. Keep the preset enabled.
-2. Temporarily lower that single rule to `warn` or `off` with a tracking note.
-3. Re-enable after targeted remediation.
-
-This preserves preset consistency while avoiding long-lived blind spots.
+- [Presets index](../presets/index.md)
+- [Adoption checklist](./adoption-checklist.md)

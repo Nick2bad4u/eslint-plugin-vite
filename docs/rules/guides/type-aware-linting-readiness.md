@@ -1,105 +1,28 @@
----
-title: Type-aware linting readiness
-description: Checklist and rollout playbook for enabling type-aware eslint-plugin-typefest rules safely.
----
-
 # Type-aware linting readiness
 
-Use this guide before enabling type-aware presets or rules in a large codebase.
+The current `eslint-plugin-vite` rule set does **not** require TypeScript type information.
 
-## When this guide applies
+That means:
 
-Use this checklist when adopting:
+- no preset currently needs `parserOptions.projectService: true`
+- the plugin can lint JavaScript and TypeScript config files without a typed Program
+- you can adopt the rules early without changing your TypeScript project graph
 
-- `recommended-type-checked`
-- `strict` or `all` in projects with type-aware rules
-- `ts-extras/type-guards`
+## Why keep this guide?
 
-## Readiness checklist
+The template behind this repository supports type-aware rules, and future Vite ecosystem rules may eventually need type services for higher-confidence checks.
 
-### 1) Parser-service availability
+For now, this guide answers one question:
 
-Confirm the lint runtime can provide full type services:
+> Do I need type-aware ESLint setup to use eslint-plugin-vite today?
 
-- ESLint uses `@typescript-eslint/parser`
-- your lint config resolves the intended `tsconfig`(s)
-- the targeted files are included in those `tsconfig`(s)
+No.
 
-### 2) Project graph stability
+## What to watch for later
 
-Before enabling strict typed checks:
+If future versions add type-aware rules, the rule pages and preset pages will document that requirement.
 
-- `npm run typecheck` is green
-- baseline linting is green (or has a controlled known backlog)
-- generated types/artifacts are not stale
+## Further reading
 
-### 3) Performance baseline
-
-Capture a baseline to detect regressions:
-
-```bash
-npx eslint "src/**/*.{ts,tsx}" --stats
-```
-
-Track:
-
-- total runtime
-- expensive files
-- hot rules that call type-checker operations frequently
-
-### 4) CI gate ordering
-
-Prefer this order:
-
-1. typecheck
-2. lint (typed rules enabled)
-3. tests
-
-This keeps typed-service failures easy to classify.
-
-## Recommended rollout sequence
-
-1. Start with one package/folder.
-2. Enable type-aware rules as `warn` first.
-3. Fix baseline findings in small batches.
-4. Promote to `error` once the scope stays green.
-5. Expand scope incrementally.
-
-## Fast validation commands
-
-```bash
-npm run typecheck
-npm run lint
-npm run test
-```
-
-For focused typed checks during migration:
-
-```bash
-npx eslint "src/**/*.{ts,tsx}" --stats
-```
-
-## Common failure modes
-
-### "Typed rule requires type information"
-
-Likely causes:
-
-- file not included in the active `tsconfig`
-- parser-service wiring mismatch for the current workspace
-- incorrect project root assumptions in local/CI lint execution
-
-### Large runtime regressions
-
-Likely causes:
-
-- expensive semantic checks on broad selectors
-- repeated checker calls without syntax prefilters
-- too-large rollout scope for first pass
-
-## Related docs
-
-- [Rollout and fix safety](./rollout-and-fix-safety.md)
-- [Rule adoption checklist](./adoption-checklist.md)
-- [Preset selection strategy](./preset-selection-strategy.md)
-- [Typed service path inventory](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/developer/typed-paths)
+- [Getting started](../getting-started.md)
+- [Vitest config reference](https://vitest.dev/config/)

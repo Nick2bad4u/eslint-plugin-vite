@@ -1,49 +1,71 @@
 ---
-title: Overview
-description: README-style overview for eslint-plugin-typefest.
+title: Rule overview
+description: Overview of the eslint-plugin-vite rule catalog and the kinds of Vite and Vitest problems it targets.
 ---
 
-# eslint-plugin-typefest
+# Overview
 
-ESLint plugin for teams that want consistent TypeScript-first conventions based on:
+`eslint-plugin-vite` focuses on configuration and runtime patterns that are specific to Vite, Vitest, and Vitest bench.
 
-- [`type-fest`](https://github.com/sindresorhus/type-fest)
-- [`ts-extras`](https://github.com/sindresorhus/ts-extras)
+The current rule set is intentionally biased toward:
 
-The plugin ships focused rule sets for modern Flat Config usage, with parser setup included in each preset.
+- **static build correctness**
+- **config-file safety**
+- **client-side `import.meta.*` behavior**
+- **Vitest workspace and benchmark hygiene**
 
-## Installation
+## What this plugin covers
 
-```bash
-npm install --save-dev eslint-plugin-typefest typescript
-```
+The plugin currently ships rules in four practical buckets:
 
-> `@typescript-eslint/parser` is loaded automatically by plugin presets.
+1. **Config rules**
+   - exporting config files with the right helper APIs
+   - migrating away from deprecated Vite config keys and values
+   - avoiding unsafe `envPrefix` values
+   - keeping dev-server host, CORS, and filesystem settings explicit
+   - keeping `resolve.alias` replacements Vite-compatible
+2. **Client runtime rules**
+   - catching invalid `import.meta.glob()` arguments
+   - catching dynamic `import.meta.env[...]` access
+   - preventing accidental reads from non-public env keys in browser code
+3. **Vitest rules**
+   - enforcing unique workspace project names
+   - nudging inline workspace projects toward `defineProject(...)`
+4. **Vitest bench rules**
+   - preventing mixed correctness tests and benchmark code in the same file
 
-## Quick start (Flat Config)
+## What this plugin does **not** try to do
 
-```ts
-import typefest from "eslint-plugin-typefest";
+This plugin does not try to replace:
 
-export default [typefest.configs.recommended];
-```
+- ESLint core best-practice rules
+- general TypeScript correctness rules
+- testing-style rules that are not specific to Vitest or Vite
+- framework-specific rules for React, Vue, Svelte, or Solid
 
-That is enough for TypeScript files (`**/*.{ts,tsx,mts,cts}`).
+Instead, it focuses on things that are easy to get wrong specifically because of how Vite and Vitest work.
 
-## Presets
+## Recommended adoption path
 
-| Preset                                            | Preset page                                                         |
-| ------------------------------------------------- | ------------------------------------------------------------------- |
-| 🟢 `typefest.configs.minimal`                     | [Minimal](./presets/minimal.md)                                     |
-| 🟡 `typefest.configs.recommended`                 | [Recommended](./presets/recommended.md)                             |
-| 🟠 `typefest.configs["recommended-type-checked"]` | [Recommended (type-checked)](./presets/recommended-type-checked.md) |
-| 🔴 `typefest.configs.strict`                      | [Strict](./presets/strict.md)                                       |
-| 🟣 `typefest.configs.all`                         | [All](./presets/all.md)                                             |
-| 💠 `typefest.configs["type-fest/types"]`          | [type-fest/types](./presets/type-fest-types.md)                     |
-| ✴️ `typefest.configs["ts-extras/type-guards"]`    | [ts-extras/type-guards](./presets/ts-extras-type-guards.md)         |
+- Start with `vite.configs.recommended`.
+- Add `vite.configs.client` if your app uses `import.meta.env` or `import.meta.glob` heavily.
+- Add `vite.configs.vitest` if you use Vitest workspaces or multi-project setups.
+- Add `vite.configs["vitest-bench"]` if you keep benchmark files in the same repository.
+- Move up to `vite.configs.strict` once the recommended baseline is stable.
 
-## Next steps
+## Rule docs
 
-- Open **Getting Started** in this sidebar.
-- Browse [**Presets**](./presets/index.md) for preset-by-preset guidance.
-- Use **Rules** to review every rule with examples.
+Each rule page includes:
+
+- the exact pattern it targets
+- why the pattern is risky in Vite or Vitest
+- incorrect and correct examples
+- a flat-config snippet
+- links back to the relevant Vite or Vitest documentation
+
+## Further reading
+
+- [Vite guide](https://vite.dev/guide/)
+- [Vite config reference](https://vite.dev/config/)
+- [Vitest guide](https://vitest.dev/guide/)
+- [Vitest projects guide](https://vitest.dev/guide/projects)

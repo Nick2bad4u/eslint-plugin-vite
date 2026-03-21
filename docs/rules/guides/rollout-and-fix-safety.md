@@ -1,42 +1,37 @@
----
-title: Rollout and fix safety
-description: Guidance for phased rollout, fix safety, and manual verification.
----
-
 # Rollout and fix safety
 
-This page centralizes rollout guidance used across rule migrations.
+`eslint-plugin-vite` currently focuses on report-only rules.
 
-## Phased rollout model
+That is intentional.
 
-1. Start with `warn` severity to measure blast radius.
-2. Run `--fix` only on a scoped folder first.
-3. Review runtime-sensitive call sites manually.
-4. Promote to `error` after baseline cleanup.
+Most Vite and Vitest mistakes involve configuration intent, not just syntax. A blanket autofix can easily replace one broken setup with a different broken setup.
 
-## Fix safety expectations
+## Safe rollout order
 
-- **Autofix-safe patterns:** simple API shape substitutions where runtime behavior is equivalent.
-- **Suggestion-only patterns:** potentially behavior-sensitive changes requiring explicit reviewer choice.
-- **Manual migrations:** replacements that depend on local typing, nullability, or control flow assumptions.
+1. Fix config exports.
+2. Fix `envPrefix` and `resolve.alias` issues.
+3. Fix `import.meta.glob()` calls.
+4. Fix `import.meta.env` access patterns.
+5. Split mixed test and benchmark files only after the rest of the suite is stable.
 
-## Manual verification checklist
+## Why these rules are mostly report-only
 
-1. Verify import changes are deduplicated and stable.
-2. Confirm narrowed types still match downstream usage.
-3. Validate guard/predicate behavior with tests.
-4. Confirm no accidental semantic changes in edge cases.
+- `defineConfig(...)` fixes often require import changes.
+- env-prefix fixes depend on your deployment and secret-management model.
+- alias fixes depend on ESM path helpers, `path.resolve`, or `fileURLToPath(new URL(...))`.
+- Vitest workspace fixes require naming decisions that only the maintainer can make.
 
-## FAQ
+## Review guidance
 
-### Why not migrate everything in one pass?
+When a rule fires, prefer fixing the underlying setup pattern instead of only silencing the lint warning.
 
-Large one-shot migrations make regressions harder to detect and review. Smaller batches isolate risk.
+Examples:
 
-### Should we always use `--fix` in CI?
+- If `resolve.alias` uses `"./src"`, switch to an absolute replacement and keep the pattern consistent across the repo.
+- If `import.meta.env.SECRET_TOKEN` appears in client code, move that read to server-only code or expose a deliberate public value.
+- If a file mixes `bench()` and `test()`, split correctness assertions and benchmarks into separate files.
 
-No. Prefer running `--fix` locally and committing explicit changes. CI should validate, not rewrite, code.
+## Further reading
 
-### How do we handle wrapper utilities?
-
-Either align wrappers to canonical helpers/types used by this plugin or deprecate wrappers that duplicate behavior.
+- [Vite guide](https://vite.dev/guide/)
+- [Vitest benchmarking guide](https://vitest.dev/guide/features#benchmarking)

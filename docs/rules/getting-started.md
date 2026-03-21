@@ -1,74 +1,81 @@
 ---
-title: Getting Started
-description: Enable eslint-plugin-typefest quickly in Flat Config.
+title: Getting started
+description: Install and configure eslint-plugin-vite with modern flat config.
 ---
 
-# Getting Started
+# Getting started
 
-Install the plugin:
+`eslint-plugin-vite` is a flat-config-first ESLint plugin for catching Vite and Vitest configuration mistakes before they become runtime or build failures.
 
-```bash
-npm install --save-dev eslint-plugin-typefest typescript
+## Installation
+
+```sh
+npm install --save-dev eslint-plugin-vite eslint
 ```
 
-Enable one preset in your Flat Config:
+If your repository already uses Vite or Vitest, you do not need to change how those tools run just to adopt this plugin.
+
+## Quick start
 
 ```ts
-import typefest from "eslint-plugin-typefest";
+import vite from "eslint-plugin-vite";
 
-export default [
-    typefest.configs.recommended,
-];
+export default [vite.configs.recommended];
 ```
 
-`recommended` does not require type information.
+That preset already configures `@typescript-eslint/parser` for the files it targets.
 
-If you want the same baseline plus type-aware helper rules, use
-`typefest.configs["recommended-type-checked"]`.
+## Common compositions
 
-## Alternative: manual scoped setup
-
-If you prefer to apply plugin rules inside your own file-scoped config object, spread the preset rules manually.
+### Vite app with client-side env and glob usage
 
 ```ts
-import tsParser from "@typescript-eslint/parser";
-import typefest from "eslint-plugin-typefest";
+import vite from "eslint-plugin-vite";
 
-export default [
-    {
-        files: ["**/*.{ts,tsx,mts,cts}"],
-        languageOptions: {
-            parser: tsParser,
-            parserOptions: {
-                ecmaVersion: "latest",
-                // Enable only when using a type-aware preset.
-                // projectService: true,
-                sourceType: "module",
-            },
-        },
-        plugins: {
-            typefest,
-        },
-        rules: {
-            ...typefest.configs.recommended.rules,
-        },
-    },
-];
+export default [vite.configs.recommended, vite.configs.client];
 ```
 
-Use this pattern when you only extend rules and want full control over parser setup per scope.
+### Vitest monorepo with workspaces
 
-## Recommended rollout
+```ts
+import vite from "eslint-plugin-vite";
 
-1. Start with `recommended` (or `minimal` if you want low initial noise).
-2. Fix violations in small batches.
-3. Move to `recommended-type-checked` when you are ready for typed rules.
-4. Move to `strict` once your baseline is stable.
-5. Use `all` only when you explicitly want every rule, including experimental rules.
+export default [vite.configs.recommended, vite.configs.vitest];
+```
 
-## Need a subset instead of a full preset?
+### Repository with dedicated benchmark files
 
-- 💠 `typefest.configs["type-fest/types"]`
-- ✴️ `typefest.configs["ts-extras/type-guards"]`
+```ts
+import vite from "eslint-plugin-vite";
 
-See the **Presets** section in this sidebar for details and examples.
+export default [vite.configs.recommended, vite.configs.vitest-bench];
+```
+
+### Stricter rollout after the baseline is clean
+
+```ts
+import vite from "eslint-plugin-vite";
+
+export default [vite.configs.strict];
+```
+
+## Choosing a preset
+
+- [`recommended`](./presets/recommended.md): best default starting point
+- [`strict`](./presets/strict.md): adds stricter env and workspace guidance
+- [`configs`](./presets/configs.md): focused only on config files
+- [`client`](./presets/client.md): focused on `import.meta.env` and `import.meta.glob`
+- [`vitest`](./presets/vitest.md): focused on Vitest config and workspaces
+- [`vitest-bench`](./presets/vitest-bench.md): focused on benchmark file hygiene
+
+## Next steps
+
+- Read the [overview](./overview.md).
+- Review the [preset selection strategy](./guides/preset-selection-strategy.md).
+- Open the individual rule docs for the parts of Vite or Vitest your repository uses most.
+
+## Further reading
+
+- [Vite config reference](https://vite.dev/config/)
+- [Vite shared options](https://vite.dev/config/shared-options)
+- [Vitest config reference](https://vitest.dev/config/)

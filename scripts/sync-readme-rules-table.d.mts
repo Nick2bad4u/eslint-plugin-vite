@@ -1,29 +1,22 @@
 export interface ReadmeRuleModule {
-    readonly meta?:
-        | {
-              readonly docs?:
-                  | {
-                        readonly typefestConfigs?:
-                            | readonly string[]
-                            | string
-                            | undefined;
-                        readonly url?: string | undefined;
-                    }
-                  | undefined;
-              readonly fixable?: string | undefined;
-              readonly hasSuggestions?: boolean | undefined;
-          }
-        | undefined;
+    readonly meta: {
+        readonly docs: {
+            readonly description?: string | undefined;
+            readonly ruleNumber?: number | undefined;
+            readonly viteConfigs?: readonly string[] | string | undefined;
+        };
+        readonly fixable?: "code" | undefined;
+        readonly hasSuggestions?: boolean | undefined;
+    };
 }
 
-export function extractReadmeRulesSection(markdown: string): string;
+export const README_RULES_START: "<!-- begin generated rules table -->";
+export const README_RULES_END: "<!-- end generated rules table -->";
 
-export function normalizeRulesSectionMarkdown(markdown: string): string;
+export function renderPresetLegend(): string;
 
-export function generateReadmeRulesSectionFromRules(
-    rules: Readonly<Record<string, ReadmeRuleModule>>
-): string;
+export function renderReadmeRulesTable(plugin?: {
+    readonly rules: Readonly<Record<string, ReadmeRuleModule>>;
+}): string;
 
-export function syncReadmeRulesTable(input: {
-    readonly writeChanges: boolean;
-}): Promise<Readonly<{ changed: boolean }>>;
+export function replaceReadmeRulesTable(markdown: string): string;

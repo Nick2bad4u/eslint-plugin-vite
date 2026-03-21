@@ -1,37 +1,36 @@
----
-title: Rule adoption checklist
-description: Practical checklist for adopting eslint-plugin-typefest rules with low risk.
----
+# Adoption checklist
 
-# Rule adoption checklist
+Use this checklist when introducing `eslint-plugin-vite` to an existing codebase.
 
-Use this checklist when rolling out one or more rules across an existing codebase.
+## Baseline rollout
 
-## Before enabling rules
+1. Start with `vite.configs.recommended`.
+2. Fix any config-file errors first.
+3. Add `vite.configs.client` only after client bundles are already using `import.meta.env` and `import.meta.glob` consistently.
+4. Add `vite.configs.vitest` only if your repository actually uses Vitest configs or workspaces.
+5. Add `vite.configs.vitest-bench` only if benchmark files live next to test files and contributors could accidentally mix them.
 
-1. Identify the target package/folder scope.
-2. Run ESLint in report-only mode to estimate violation count.
-3. Confirm your CI, tests, and typecheck are green before refactoring.
-4. Decide whether this rollout is autofix-first or manual-first.
+## Config-file review
 
-## During migration
+- Check `vite.config.*` exports.
+- Check `vitest.config.*` exports.
+- Check `vitest.workspace.*` project names.
+- Check `resolve.alias` values for relative replacement strings.
+- Check `envPrefix` for accidental empty strings.
 
-1. Apply changes in small batches (per folder/package).
-2. Keep each PR focused on one rule family when possible.
-3. Re-run tests and typecheck after each batch.
-4. Flag behavior-sensitive replacements for reviewer attention.
+## Client code review
 
-## After migration
+- Search for `import.meta.env[...]`.
+- Search for `import.meta.glob(` with variables or interpolated template strings.
+- Review any env keys that do not use your public prefix.
 
-1. Switch rule severity from `warn` to `error`.
-2. Remove local disables added during migration.
-3. Add one representative example to internal team docs.
-4. Track regressions by keeping the rule enabled in CI.
+## Team process review
 
-## Suggested PR checklist
+- Decide whether benchmark files should be linted with `vite.configs.vitest-bench`.
+- Decide whether `vite.configs.strict` should be opt-in or the default.
+- Document any custom public env prefixes so the env rule can be configured explicitly.
 
-- [ ] Only target files for this migration are changed.
-- [ ] Tests pass after each replacement batch.
-- [ ] Typecheck passes after each replacement batch.
-- [ ] Reviewer notes include runtime-sensitive replacements.
-- [ ] Final lint run has no new violations for the migrated rule(s).
+## Further reading
+
+- [Preset selection strategy](./preset-selection-strategy.md)
+- [Rollout and fix safety](./rollout-and-fix-safety.md)
