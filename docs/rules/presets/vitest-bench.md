@@ -21,9 +21,7 @@ export default [vite.configs.vitest-bench];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-
 | Rule                                                                      | Fix |
-| ------------------------------------------------------------------------- | :-: |
+| :------------------------------------------------------------------------ | :-: |
 | [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md) |  —  |
-
 <!-- end generated preset rules -->

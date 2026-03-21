@@ -6,6 +6,10 @@ import { fileURLToPath } from "node:url";
 
 import vitePlugin from "../dist/plugin.js";
 import {
+    detectLineEnding,
+    renderMarkdownTable,
+} from "./_internal/markdown-table.mjs";
+import {
     viteConfigNames,
     viteConfigNamesByReadmeOrder,
     viteConfigReferenceToName,
@@ -133,8 +137,6 @@ const getOrderedRules = (plugin = vitePlugin) =>
  * @param {VitePlugin} [plugin]
  */
 export const renderPresetMatrix = (plugin = vitePlugin) => {
-    const header = ["| Rule | Fix | Preset key |", "| --- | :-: | :-- |"];
-
     const rows = getOrderedRules(plugin).map((rule) => {
         const presetIcons = rule.configNames
             .sort(
@@ -154,10 +156,28 @@ export const renderPresetMatrix = (plugin = vitePlugin) => {
             })
             .join(" ");
 
-        return `| [\`vite/${rule.ruleName}\`](../${rule.ruleName}.md) | ${rule.fixLabel} | ${presetIcons} |`;
+        return [
+            `[\`vite/${rule.ruleName}\`](../${rule.ruleName}.md)`,
+            rule.fixLabel,
+            presetIcons,
+        ];
     });
 
-    return [...header, ...rows].join("\n");
+    return renderMarkdownTable(
+        [
+            [
+                "Rule",
+                "Fix",
+                "Preset key",
+            ],
+            ...rows,
+        ],
+        [
+            "left",
+            "center",
+            "left",
+        ]
+    );
 };
 
 /**
@@ -167,23 +187,20 @@ export const renderPresetMatrix = (plugin = vitePlugin) => {
 export const renderPresetRulesTable = (configName, plugin = vitePlugin) => {
     const rows = getOrderedRules(plugin)
         .filter((rule) => rule.configNames.includes(configName))
-        .map(
-            (rule) =>
-                `| [\`vite/${rule.ruleName}\`](../${rule.ruleName}.md) | ${rule.fixLabel} |`
-        );
+        .map((rule) => [
+            `[\`vite/${rule.ruleName}\`](../${rule.ruleName}.md)`,
+            rule.fixLabel,
+        ]);
 
-    return [
-        "| Rule | Fix |",
-        "| --- | :-: |",
-        ...rows,
-    ].join("\n");
+    return renderMarkdownTable([["Rule", "Fix"], ...rows], ["left", "center"]);
 };
 
 /**
  * @param {string} markdown
  */
 export const replacePresetMatrix = (markdown) => {
-    const matrix = renderPresetMatrix();
+    const lineEnding = detectLineEnding(markdown);
+    const matrix = renderPresetMatrix().replaceAll("\n", lineEnding);
     const pattern = new RegExp(
         `${PRESET_MATRIX_START}[\\s\\S]*?${PRESET_MATRIX_END}`,
         "u"
@@ -191,7 +208,7 @@ export const replacePresetMatrix = (markdown) => {
 
     return markdown.replace(
         pattern,
-        `${PRESET_MATRIX_START}\n${matrix}\n${PRESET_MATRIX_END}`
+        `${PRESET_MATRIX_START}${lineEnding}${matrix}${lineEnding}${PRESET_MATRIX_END}`
     );
 };
 
@@ -200,7 +217,11 @@ export const replacePresetMatrix = (markdown) => {
  * @param {ViteConfigName} configName
  */
 export const replacePresetRulesTable = (markdown, configName) => {
-    const table = renderPresetRulesTable(configName);
+    const lineEnding = detectLineEnding(markdown);
+    const table = renderPresetRulesTable(configName).replaceAll(
+        "\n",
+        lineEnding
+    );
     const pattern = new RegExp(
         `${PRESET_RULES_START}[\\s\\S]*?${PRESET_RULES_END}`,
         "u"
@@ -208,7 +229,7 @@ export const replacePresetRulesTable = (markdown, configName) => {
 
     return markdown.replace(
         pattern,
-        `${PRESET_RULES_START}\n${table}\n${PRESET_RULES_END}`
+        `${PRESET_RULES_START}${lineEnding}${table}${lineEnding}${PRESET_RULES_END}`
     );
 };
 

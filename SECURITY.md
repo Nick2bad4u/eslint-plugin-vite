@@ -15,8 +15,8 @@ Only the latest published release is actively supported for security fixes.
 
 | Version | Supported |
 | ------- | --------- |
-| Latest  | ✅ |
-| Older   | ❌ |
+| Latest  | ✅         |
+| Older   | ❌         |
 
 ## User guidance
 

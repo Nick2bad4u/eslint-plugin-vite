@@ -17,11 +17,13 @@ describe("plugin entry", () => {
         ).toEqual([
             "config-require-define-config",
             "import-meta-glob-literal",
+            "no-deprecated-config-options",
             "no-dynamic-import-meta-env-access",
             "no-empty-env-prefix",
             "no-mixed-test-and-bench-apis",
             "no-relative-resolve-alias",
             "no-restricted-import-meta-env",
+            "no-unsafe-server-options",
             "prefer-define-project",
             "workspace-unique-project-name",
         ]);

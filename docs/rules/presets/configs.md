@@ -25,13 +25,11 @@ export default [vite.configs.configs];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-
 | Rule                                                                      | Fix |
-| ------------------------------------------------------------------------- | :-: |
+| :------------------------------------------------------------------------ | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md) |  —  |
 | [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md)                   |  —  |
 | [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md)       |  —  |
 | [`vite/no-deprecated-config-options`](../no-deprecated-config-options.md) |  —  |
 | [`vite/no-unsafe-server-options`](../no-unsafe-server-options.md)         |  —  |
-
 <!-- end generated preset rules -->

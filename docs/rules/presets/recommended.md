@@ -21,13 +21,13 @@ export default [vite.configs.recommended];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-| Rule | Fix |
-| --- | :-: |
-| [`vite/config-require-define-config`](../config-require-define-config.md) | — |
-| [`vite/import-meta-glob-literal`](../import-meta-glob-literal.md) | — |
-| [`vite/no-dynamic-import-meta-env-access`](../no-dynamic-import-meta-env-access.md) | — |
-| [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md) | — |
-| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md) | — |
-| [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md) | — |
-| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md) | — |
+| Rule                                                                                | Fix |
+| :---------------------------------------------------------------------------------- | :-: |
+| [`vite/config-require-define-config`](../config-require-define-config.md)           |  —  |
+| [`vite/import-meta-glob-literal`](../import-meta-glob-literal.md)                   |  —  |
+| [`vite/no-dynamic-import-meta-env-access`](../no-dynamic-import-meta-env-access.md) |  —  |
+| [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md)                             |  —  |
+| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)           |  —  |
+| [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md)                 |  —  |
+| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)         |  —  |
 <!-- end generated preset rules -->

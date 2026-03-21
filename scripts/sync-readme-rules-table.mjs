@@ -6,6 +6,10 @@ import { fileURLToPath } from "node:url";
 
 import vitePlugin from "../dist/plugin.js";
 import {
+    detectLineEnding,
+    renderMarkdownTable,
+} from "./_internal/markdown-table.mjs";
+import {
     viteConfigMetadataByName,
     viteConfigNamesByReadmeOrder,
     viteConfigReferenceToName,
@@ -154,7 +158,11 @@ export const renderReadmeRulesTable = (plugin = vitePlugin) => {
                 })
                 .join(" ");
 
-            return `| [\`${docs.ruleId}\`](./docs/rules/${docs.ruleId.slice("vite/".length)}.md) | ${docs.fixLabel} | ${presetIcons} |`;
+            return [
+                ` [\`${docs.ruleId}\`](./docs/rules/${docs.ruleId.slice("vite/".length)}.md)`,
+                docs.fixLabel,
+                presetIcons,
+            ];
         });
 
     return [
@@ -164,9 +172,21 @@ export const renderReadmeRulesTable = (plugin = vitePlugin) => {
         "  - `—` = report only",
         renderPresetLegend(),
         "",
-        "| Rule | Fix | Preset key |",
-        "| --- | :-: | :-- |",
-        ...rows,
+        renderMarkdownTable(
+            [
+                [
+                    "Rule",
+                    "Fix",
+                    "Preset key",
+                ],
+                ...rows,
+            ],
+            [
+                "left",
+                "center",
+                "left",
+            ]
+        ),
     ].join("\n");
 };
 
@@ -174,7 +194,11 @@ export const renderReadmeRulesTable = (plugin = vitePlugin) => {
  * @param {string} markdown
  */
 export const replaceReadmeRulesTable = (markdown) => {
-    const generatedTable = renderReadmeRulesTable();
+    const lineEnding = detectLineEnding(markdown);
+    const generatedTable = renderReadmeRulesTable().replaceAll(
+        "\n",
+        lineEnding
+    );
     const pattern = new RegExp(
         `${README_RULES_START}[\\s\\S]*?${README_RULES_END}`,
         "u"
@@ -182,7 +206,7 @@ export const replaceReadmeRulesTable = (markdown) => {
 
     return markdown.replace(
         pattern,
-        `${README_RULES_START}\n${generatedTable}\n${README_RULES_END}`
+        `${README_RULES_START}${lineEnding}${generatedTable}${lineEnding}${README_RULES_END}`
     );
 };
 

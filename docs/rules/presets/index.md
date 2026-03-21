@@ -32,17 +32,17 @@ Related guides:
 ## Rule matrix
 
 <!-- begin generated preset matrix -->
-| Rule | Fix | Preset key |
-| --- | :-: | :-- |
-| [`vite/config-require-define-config`](../config-require-define-config.md) | — | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md) |
-| [`vite/import-meta-glob-literal`](../import-meta-glob-literal.md) | — | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md) |
-| [`vite/no-dynamic-import-meta-env-access`](../no-dynamic-import-meta-env-access.md) | — | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md) |
-| [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md) | — | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) |
-| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md) | — | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md) |
-| [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md) | — | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) |
-| [`vite/no-restricted-import-meta-env`](../no-restricted-import-meta-env.md) | — | [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md) |
-| [`vite/prefer-define-project`](../prefer-define-project.md) | — | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) |
-| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md) | — | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) |
-| [`vite/no-deprecated-config-options`](../no-deprecated-config-options.md) | — | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) |
-| [`vite/no-unsafe-server-options`](../no-unsafe-server-options.md) | — | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) |
+| Rule                                                                                | Fix | Preset key                                                                                         |
+| :---------------------------------------------------------------------------------- | :-: | :------------------------------------------------------------------------------------------------- |
+| [`vite/config-require-define-config`](../config-require-define-config.md)           |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)       |
+| [`vite/import-meta-glob-literal`](../import-meta-glob-literal.md)                   |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md)                          |
+| [`vite/no-dynamic-import-meta-env-access`](../no-dynamic-import-meta-env-access.md) |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md)                          |
+| [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md)                             |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                         |
+| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)           |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md) |
+| [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md)                 |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                         |
+| [`vite/no-restricted-import-meta-env`](../no-restricted-import-meta-env.md)         |  —  | [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md)                                                 |
+| [`vite/prefer-define-project`](../prefer-define-project.md)                         |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md)                                                 |
+| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)         |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md)                          |
+| [`vite/no-deprecated-config-options`](../no-deprecated-config-options.md)           |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                                                |
+| [`vite/no-unsafe-server-options`](../no-unsafe-server-options.md)                   |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                                                |
 <!-- end generated preset matrix -->
