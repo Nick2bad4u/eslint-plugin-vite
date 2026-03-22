@@ -26,6 +26,18 @@ const orderedRuleNames = [
     "no-empty-vitest-projects",
     "no-empty-vitest-include",
     "no-empty-vitest-project-name",
+    "no-empty-vitest-exclude",
+    "no-empty-vitest-bench-include",
+    "no-empty-vitest-bench-exclude",
+    "no-empty-vitest-coverage-include",
+    "no-empty-vitest-coverage-reporter",
+    "no-empty-vitest-coverage-reports-directory",
+    "no-empty-vitest-project-exclude",
+    "no-mixed-defineworkspace-and-test-projects",
+    "require-vitest-sequence-seed-when-shuffle",
+    "no-vitest-watch-in-config",
+    "no-vitest-ui-in-config",
+    "no-vitest-file-parallelism-disabled",
 ] as const;
 
 /** Canonical rule catalog entry shape. */
