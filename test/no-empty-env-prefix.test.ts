@@ -16,6 +16,11 @@ describe("no-empty-env-prefix", () => {
                 errors: [{ messageId: "emptyEnvPrefix" }],
                 filename: "vite.config.ts",
             },
+            {
+                code: "import { defineConfig } from 'vitepress'; export default defineConfig({ vite: { envPrefix: '' } });",
+                errors: [{ messageId: "emptyEnvPrefix" }],
+                filename: ".vitepress/config.ts",
+            },
         ],
         valid: [
             {

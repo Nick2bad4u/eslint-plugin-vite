@@ -25,6 +25,7 @@ export function renderPresetRulesTable(
         | "all"
         | "configs"
         | "client"
+        | "vitepress"
         | "vitest"
         | "vitest-bench",
     plugin?: {
@@ -42,6 +43,7 @@ export function replacePresetRulesTable(
         | "all"
         | "configs"
         | "client"
+        | "vitepress"
         | "vitest"
         | "vitest-bench"
 ): string;

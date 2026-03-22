@@ -106,6 +106,22 @@ export const matchesPropertyPath = (
     );
 };
 
+/** Check whether a property path ends with the provided nested suffix. */
+export const propertyPathEndsWith = (
+    propertyPath: readonly string[],
+    suffixPath: readonly string[]
+): boolean => {
+    if (suffixPath.length > propertyPath.length) {
+        return false;
+    }
+
+    const offset = propertyPath.length - suffixPath.length;
+
+    return suffixPath.every(
+        (segment, index) => propertyPath[offset + index] === segment
+    );
+};
+
 /** Check whether an AST node is the `import.meta` meta property. */
 export const isImportMeta = (
     node: Readonly<TSESTree.Node>

@@ -15,15 +15,16 @@ const presetsDirectoryPath = path.join(
     "presets"
 );
 
-const presetNames = [
+const presetNames: readonly Parameters<typeof replacePresetRulesTable>[1][] = [
     "all",
     "client",
     "configs",
     "recommended",
     "strict",
+    "vitepress",
     "vitest",
     "vitest-bench",
-] as const;
+];
 
 describe("preset docs sync", () => {
     it("matches the generated preset matrix", () => {

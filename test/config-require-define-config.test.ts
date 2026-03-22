@@ -19,6 +19,11 @@ describe("config-require-define-config", () => {
                     errors: [{ messageId: "requireDefineWorkspace" }],
                     filename: "vitest.workspace.ts",
                 },
+                {
+                    code: "export default { title: 'Docs' };",
+                    errors: [{ messageId: "requireDefineConfig" }],
+                    filename: ".vitepress/config.ts",
+                },
             ],
             valid: [
                 {
@@ -32,6 +37,10 @@ describe("config-require-define-config", () => {
                 {
                     code: "import { defineWorkspace } from 'vitest/config'; export default defineWorkspace([]);",
                     filename: "vitest.workspace.ts",
+                },
+                {
+                    code: "import { defineConfig } from 'vitepress'; export default defineConfig({ title: 'Docs' });",
+                    filename: ".vitepress/config.ts",
                 },
             ],
         }

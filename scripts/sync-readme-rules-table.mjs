@@ -15,7 +15,7 @@ import {
     viteConfigReferenceToName,
 } from "../dist/_internal/vite-config-references.js";
 
-/** @typedef {import("../src/plugin.js").ViteConfigName} ViteConfigName */
+/** @typedef {import("../src/_internal/vite-config-references.js").ViteConfigName} ViteConfigName */
 /** @typedef {import("../src/plugin.js").VitePlugin} VitePlugin */
 
 const README_PATH = new URL("../README.md", import.meta.url);
@@ -23,12 +23,14 @@ const README_PATH = new URL("../README.md", import.meta.url);
 export const README_RULES_START = "<!-- begin generated rules table -->";
 export const README_RULES_END = "<!-- end generated rules table -->";
 
+/** @type {Readonly<Record<ViteConfigName, string>>} */
 const presetDocsPathByName = {
     all: "./docs/rules/presets/all.md",
     client: "./docs/rules/presets/client.md",
     configs: "./docs/rules/presets/configs.md",
     recommended: "./docs/rules/presets/recommended.md",
     strict: "./docs/rules/presets/strict.md",
+    vitepress: "./docs/rules/presets/vitepress.md",
     vitest: "./docs/rules/presets/vitest.md",
     "vitest-bench": "./docs/rules/presets/vitest-bench.md",
 };

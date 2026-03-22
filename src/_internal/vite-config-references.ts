@@ -5,6 +5,7 @@ export const viteConfigNames = [
     "all",
     "configs",
     "client",
+    "vitepress",
     "vitest",
     "vitest-bench",
 ] as const;
@@ -64,12 +65,20 @@ export const viteConfigMetadataByName: Readonly<
         readmeOrder: 2,
         requiresTypeChecking: false,
     },
+    vitepress: {
+        description:
+            "Rules focused on VitePress sites that rely on Vite client APIs and public env handling.",
+        icon: "📚",
+        presetName: "vite:vitepress",
+        readmeOrder: 6,
+        requiresTypeChecking: false,
+    },
     vitest: {
         description:
             "Rules focused on Vitest config files, workspaces, and project organization.",
         icon: "🧪",
         presetName: "vite:vitest",
-        readmeOrder: 6,
+        readmeOrder: 7,
         requiresTypeChecking: false,
     },
     "vitest-bench": {
@@ -77,7 +86,7 @@ export const viteConfigMetadataByName: Readonly<
             "Rules focused on Vitest bench files and keeping benchmark suites separate from test suites.",
         icon: "🏎️",
         presetName: "vite:vitest-bench",
-        readmeOrder: 7,
+        readmeOrder: 8,
         requiresTypeChecking: false,
     },
 };
@@ -89,6 +98,7 @@ export const viteConfigNamesByReadmeOrder: readonly ViteConfigName[] = [
     "all",
     "configs",
     "client",
+    "vitepress",
     "vitest",
     "vitest-bench",
 ];
@@ -100,6 +110,7 @@ export const viteConfigReferenceToName: Readonly<{
     "vite.configs.configs": "configs";
     "vite.configs.recommended": "recommended";
     "vite.configs.strict": "strict";
+    "vite.configs.vitepress": "vitepress";
     "vite.configs.vitest": "vitest";
     "vite.configs.vitest-bench": "vitest-bench";
     'vite.configs["vitest-bench"]': "vitest-bench";
@@ -109,6 +120,7 @@ export const viteConfigReferenceToName: Readonly<{
     "vite.configs.configs": "configs",
     "vite.configs.recommended": "recommended",
     "vite.configs.strict": "strict",
+    "vite.configs.vitepress": "vitepress",
     "vite.configs.vitest": "vitest",
     "vite.configs.vitest-bench": "vitest-bench",
     'vite.configs["vitest-bench"]': "vitest-bench",

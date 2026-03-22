@@ -68,6 +68,7 @@ const importMetaGlobLiteralRule: ReturnType<typeof createTypedRule> =
                     "vite.configs.strict",
                     "vite.configs.all",
                     "vite.configs.client",
+                    "vite.configs.vitepress",
                 ],
             },
             messages: {

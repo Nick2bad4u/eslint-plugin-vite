@@ -113,6 +113,7 @@ const configRequireDefineConfigRule: ReturnType<typeof createTypedRule> =
                     "vite.configs.strict",
                     "vite.configs.all",
                     "vite.configs.configs",
+                    "vite.configs.vitepress",
                     "vite.configs.vitest",
                 ],
             },

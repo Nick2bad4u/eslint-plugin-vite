@@ -16,13 +16,14 @@ import {
     viteConfigMetadataByName,
 } from "../dist/_internal/vite-config-references.js";
 
-/** @typedef {import("../src/plugin.js").ViteConfigName} ViteConfigName */
+/** @typedef {import("../src/_internal/vite-config-references.js").ViteConfigName} ViteConfigName */
 /** @typedef {import("../src/plugin.js").VitePlugin} VitePlugin */
 
 const PRESETS_INDEX_PATH = new URL(
     "../docs/rules/presets/index.md",
     import.meta.url
 );
+/** @type {Readonly<Record<ViteConfigName, URL>>} */
 const PRESET_PAGE_PATHS = {
     all: new URL("../docs/rules/presets/all.md", import.meta.url),
     client: new URL("../docs/rules/presets/client.md", import.meta.url),
@@ -32,6 +33,7 @@ const PRESET_PAGE_PATHS = {
         import.meta.url
     ),
     strict: new URL("../docs/rules/presets/strict.md", import.meta.url),
+    vitepress: new URL("../docs/rules/presets/vitepress.md", import.meta.url),
     vitest: new URL("../docs/rules/presets/vitest.md", import.meta.url),
     "vitest-bench": new URL(
         "../docs/rules/presets/vitest-bench.md",
@@ -181,7 +183,7 @@ export const renderPresetMatrix = (plugin = vitePlugin) => {
 };
 
 /**
- * @param {ViteConfigName} configName
+ * @param {keyof typeof PRESET_PAGE_PATHS} configName
  * @param {VitePlugin} [plugin]
  */
 export const renderPresetRulesTable = (configName, plugin = vitePlugin) => {
@@ -214,7 +216,7 @@ export const replacePresetMatrix = (markdown) => {
 
 /**
  * @param {string} markdown
- * @param {ViteConfigName} configName
+ * @param {keyof typeof PRESET_PAGE_PATHS} configName
  */
 export const replacePresetRulesTable = (markdown, configName) => {
     const lineEnding = detectLineEnding(markdown);

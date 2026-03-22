@@ -11,6 +11,7 @@ export type ViteConfigName =
     | "configs"
     | "recommended"
     | "strict"
+    | "vitepress"
     | "vitest"
     | "vitest-bench";
 
@@ -36,12 +37,26 @@ export type ViteRuleId = `vite/${ViteRuleName}`;
 export type ViteRuleName =
     | "config-require-define-config"
     | "import-meta-glob-literal"
+    | "no-deprecated-config-options"
+    | "no-disabled-vitest-isolation"
+    | "no-disabled-vitest-typecheck"
     | "no-dynamic-import-meta-env-access"
     | "no-empty-env-prefix"
+    | "no-implicit-config-flags"
+    | "no-import-meta-env-in-config"
     | "no-mixed-test-and-bench-apis"
+    | "no-pass-with-no-tests"
     | "no-relative-resolve-alias"
     | "no-restricted-import-meta-env"
+    | "no-unsafe-server-options"
+    | "no-unsafe-vitest-flags"
+    | "no-unsupported-project-options"
+    | "no-vitest-globals"
+    | "no-zero-vitest-slow-test-threshold"
+    | "no-zero-vitest-timeout"
     | "prefer-define-project"
+    | "require-inline-project-name"
+    | "require-vitest-typecheck-tsconfig"
     | "workspace-unique-project-name";
 
 declare const vitePlugin: VitePlugin;

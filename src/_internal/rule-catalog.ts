@@ -15,6 +15,14 @@ const orderedRuleNames = [
     "no-implicit-config-flags",
     "require-inline-project-name",
     "no-unsupported-project-options",
+    "no-disabled-vitest-typecheck",
+    "no-zero-vitest-timeout",
+    "no-unsafe-vitest-flags",
+    "require-vitest-typecheck-tsconfig",
+    "no-disabled-vitest-isolation",
+    "no-zero-vitest-slow-test-threshold",
+    "no-pass-with-no-tests",
+    "no-vitest-globals",
 ] as const;
 
 /** Canonical rule catalog entry shape. */

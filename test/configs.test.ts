@@ -21,6 +21,7 @@ describe("plugin configs", () => {
             "configs",
             "recommended",
             "strict",
+            "vitepress",
             "vitest",
             "vitest-bench",
         ]);

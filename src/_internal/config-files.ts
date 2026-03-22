@@ -2,6 +2,8 @@
 export type ConfigFileKind = "vite" | "vitest" | "workspace";
 
 const viteConfigFilePattern = /(?:^|[/\\])vite\.config\.[cm]?[jt]sx?$/u;
+const vitePressConfigFilePattern =
+    /(?:^|[/\\])\.vitepress[/\\]config\.[cm]?[jt]sx?$/u;
 const vitestConfigFilePattern = /(?:^|[/\\])vitest\.config\.[cm]?[jt]sx?$/u;
 const vitestWorkspaceFilePattern =
     /(?:^|[/\\])vitest\.workspace\.[cm]?[jt]sx?$/u;
@@ -24,7 +26,10 @@ export const getConfigFileKind = (filename: string): ConfigFileKind | null => {
         return "vitest";
     }
 
-    if (viteConfigFilePattern.test(normalizedFilename)) {
+    if (
+        viteConfigFilePattern.test(normalizedFilename) ||
+        vitePressConfigFilePattern.test(normalizedFilename)
+    ) {
         return "vite";
     }
 

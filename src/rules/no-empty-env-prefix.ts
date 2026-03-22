@@ -66,6 +66,7 @@ const noEmptyEnvPrefixRule: ReturnType<typeof createTypedRule> =
                     "vite.configs.strict",
                     "vite.configs.all",
                     "vite.configs.configs",
+                    "vite.configs.vitepress",
                 ],
             },
             messages: {
