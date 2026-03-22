@@ -8,6 +8,9 @@ import noDisabledVitestIsolationRule from "../rules/no-disabled-vitest-isolation
 import noDisabledVitestTypecheckRule from "../rules/no-disabled-vitest-typecheck.js";
 import noDynamicImportMetaEnvAccessRule from "../rules/no-dynamic-import-meta-env-access.js";
 import noEmptyEnvPrefixRule from "../rules/no-empty-env-prefix.js";
+import noEmptyVitestIncludeRule from "../rules/no-empty-vitest-include.js";
+import noEmptyVitestProjectNameRule from "../rules/no-empty-vitest-project-name.js";
+import noEmptyVitestProjectsRule from "../rules/no-empty-vitest-projects.js";
 import noImplicitConfigFlagsRule from "../rules/no-implicit-config-flags.js";
 import noImportMetaEnvInConfigRule from "../rules/no-import-meta-env-in-config.js";
 import noMixedTestAndBenchApisRule from "../rules/no-mixed-test-and-bench-apis.js";
@@ -37,6 +40,9 @@ export type ViteRuleModules = Readonly<{
     "no-disabled-vitest-typecheck": RuleWithDocs;
     "no-dynamic-import-meta-env-access": RuleWithDocs;
     "no-empty-env-prefix": RuleWithDocs;
+    "no-empty-vitest-include": RuleWithDocs;
+    "no-empty-vitest-project-name": RuleWithDocs;
+    "no-empty-vitest-projects": RuleWithDocs;
     "no-implicit-config-flags": RuleWithDocs;
     "no-import-meta-env-in-config": RuleWithDocs;
     "no-mixed-test-and-bench-apis": RuleWithDocs;
@@ -64,6 +70,9 @@ export const viteRules: ViteRuleModules = {
     "no-disabled-vitest-typecheck": noDisabledVitestTypecheckRule,
     "no-dynamic-import-meta-env-access": noDynamicImportMetaEnvAccessRule,
     "no-empty-env-prefix": noEmptyEnvPrefixRule,
+    "no-empty-vitest-include": noEmptyVitestIncludeRule,
+    "no-empty-vitest-project-name": noEmptyVitestProjectNameRule,
+    "no-empty-vitest-projects": noEmptyVitestProjectsRule,
     "no-implicit-config-flags": noImplicitConfigFlagsRule,
     "no-import-meta-env-in-config": noImportMetaEnvInConfigRule,
     "no-mixed-test-and-bench-apis": noMixedTestAndBenchApisRule,

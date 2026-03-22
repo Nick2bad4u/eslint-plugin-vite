@@ -21,7 +21,6 @@ export default [vite.configs.recommended, vite.configs.vitepress];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-
 | Rule                                                                                | Fix |
 | :---------------------------------------------------------------------------------- | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)           |  —  |
@@ -30,5 +29,4 @@ export default [vite.configs.recommended, vite.configs.vitepress];
 | [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md)                             |  —  |
 | [`vite/no-restricted-import-meta-env`](../no-restricted-import-meta-env.md)         |  —  |
 | [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  |
-
 <!-- end generated preset rules -->

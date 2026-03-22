@@ -46,4 +46,7 @@ export default [vite.configs.all];
 | [`vite/no-zero-vitest-slow-test-threshold`](../no-zero-vitest-slow-test-threshold.md) |  —  |
 | [`vite/no-pass-with-no-tests`](../no-pass-with-no-tests.md)                           |  —  |
 | [`vite/no-vitest-globals`](../no-vitest-globals.md)                                   |  —  |
+| [`vite/no-empty-vitest-projects`](../no-empty-vitest-projects.md)                     |  —  |
+| [`vite/no-empty-vitest-include`](../no-empty-vitest-include.md)                       |  —  |
+| [`vite/no-empty-vitest-project-name`](../no-empty-vitest-project-name.md)             |  —  |
 <!-- end generated preset rules -->

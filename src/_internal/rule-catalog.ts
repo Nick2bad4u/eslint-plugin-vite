@@ -23,6 +23,9 @@ const orderedRuleNames = [
     "no-zero-vitest-slow-test-threshold",
     "no-pass-with-no-tests",
     "no-vitest-globals",
+    "no-empty-vitest-projects",
+    "no-empty-vitest-include",
+    "no-empty-vitest-project-name",
 ] as const;
 
 /** Canonical rule catalog entry shape. */

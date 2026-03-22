@@ -57,4 +57,7 @@ Related guides:
 | [`vite/no-zero-vitest-slow-test-threshold`](../no-zero-vitest-slow-test-threshold.md) |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 | [`vite/no-pass-with-no-tests`](../no-pass-with-no-tests.md)                           |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 | [`vite/no-vitest-globals`](../no-vitest-globals.md)                                   |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
+| [`vite/no-empty-vitest-projects`](../no-empty-vitest-projects.md)                     |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
+| [`vite/no-empty-vitest-include`](../no-empty-vitest-include.md)                       |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
+| [`vite/no-empty-vitest-project-name`](../no-empty-vitest-project-name.md)             |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 <!-- end generated preset matrix -->
