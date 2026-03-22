@@ -1,57 +1,34 @@
-import type { TSESTree } from "@typescript-eslint/utils";
-
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 import {
     getInlineVitestProjectEntries,
-    getStaticVitestProjectName,
-    getVitestProjectNameProperty,
+    hasVitestProjectName,
     isVitestProjectsProperty,
 } from "../_internal/vitest-projects.js";
 
-/** Require each literal Vitest workspace project name to be unique. */
-const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
-    createTypedRule<[], "duplicateProjectName">({
+type MessageId = "requireInlineProjectName";
+
+/** Require inline Vitest workspace and project entries to declare a project
+name. */
+const requireInlineProjectNameRule: ReturnType<typeof createTypedRule> =
+    createTypedRule<[], MessageId>({
         create(context) {
             if (getConfigFileKind(context.filename) === null) {
                 return {};
             }
 
-            const reportDuplicateNames = (
+            const reportUnnamedProjects = (
                 projectEntries: ReturnType<typeof getInlineVitestProjectEntries>
             ): void => {
-                const seenProjectNames = new Map<string, TSESTree.Node>();
-
                 for (const projectEntry of projectEntries) {
-                    const name = getStaticVitestProjectName(
-                        projectEntry.projectObject
-                    );
-
-                    if (name === undefined) {
+                    if (hasVitestProjectName(projectEntry.projectObject)) {
                         continue;
                     }
 
-                    const existingNode = seenProjectNames.get(name);
-                    const nameProperty = getVitestProjectNameProperty(
-                        projectEntry.projectObject
-                    );
-
-                    if (nameProperty === undefined) {
-                        continue;
-                    }
-
-                    if (existingNode !== undefined) {
-                        context.report({
-                            data: {
-                                name,
-                            },
-                            messageId: "duplicateProjectName",
-                            node: nameProperty.value,
-                        });
-                        continue;
-                    }
-
-                    seenProjectNames.set(name, nameProperty.value);
+                    context.report({
+                        messageId: "requireInlineProjectName",
+                        node: projectEntry.projectObject,
+                    });
                 }
             };
 
@@ -65,7 +42,7 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                         return;
                     }
 
-                    reportDuplicateNames(
+                    reportUnnamedProjects(
                         getInlineVitestProjectEntries(
                             node.arguments[0],
                             "workspace"
@@ -80,7 +57,7 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                         return;
                     }
 
-                    reportDuplicateNames(
+                    reportUnnamedProjects(
                         getInlineVitestProjectEntries(node.value, "projects")
                     );
                 },
@@ -91,11 +68,11 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
             deprecated: false,
             docs: {
                 description:
-                    "require every statically readable inline Vitest project name to be unique.",
+                    "require inline Vitest project definitions to declare a project name so project labels and `--project` targeting stay stable.",
                 frozen: false,
                 recommended: true,
                 requiresTypeChecking: false,
-                url: "https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/workspace-unique-project-name",
+                url: "https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/require-inline-project-name",
                 viteConfigs: [
                     "vite.configs.recommended",
                     "vite.configs.strict",
@@ -104,13 +81,13 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                 ],
             },
             messages: {
-                duplicateProjectName:
-                    "Vitest workspace project name '{{ name }}' is duplicated; workspace project names must be unique.",
+                requireInlineProjectName:
+                    "Inline Vitest project definitions should declare a project name, usually under `test.name`, so project output and `--project` filtering stay stable.",
             },
             schema: [],
-            type: "problem",
+            type: "suggestion",
         },
-        name: "workspace-unique-project-name",
+        name: "require-inline-project-name",
     });
 
-export default workspaceUniqueProjectNameRule;
+export default requireInlineProjectNameRule;

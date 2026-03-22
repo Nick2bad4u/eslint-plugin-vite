@@ -21,10 +21,13 @@ export default [vite.configs.recommended, vite.configs.vitest];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-| Rule                                                                        | Fix |
-| :-------------------------------------------------------------------------- | :-: |
-| [`vite/config-require-define-config`](../config-require-define-config.md)   |  —  |
-| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)   |  —  |
-| [`vite/prefer-define-project`](../prefer-define-project.md)                 |  —  |
-| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md) |  —  |
+| Rule                                                                          | Fix |
+| :---------------------------------------------------------------------------- | :-: |
+| [`vite/config-require-define-config`](../config-require-define-config.md)     |  —  |
+| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)     |  —  |
+| [`vite/prefer-define-project`](../prefer-define-project.md)                   |  —  |
+| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)   |  —  |
+| [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)     |  —  |
+| [`vite/require-inline-project-name`](../require-inline-project-name.md)       |  —  |
+| [`vite/no-unsupported-project-options`](../no-unsupported-project-options.md) |  —  |
 <!-- end generated preset rules -->

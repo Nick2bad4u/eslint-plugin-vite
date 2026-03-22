@@ -34,4 +34,8 @@ export default [vite.configs.all];
 | [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)         |  —  |
 | [`vite/no-deprecated-config-options`](../no-deprecated-config-options.md)           |  —  |
 | [`vite/no-unsafe-server-options`](../no-unsafe-server-options.md)                   |  —  |
+| [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  |
+| [`vite/no-implicit-config-flags`](../no-implicit-config-flags.md)                   |  —  |
+| [`vite/require-inline-project-name`](../require-inline-project-name.md)             |  —  |
+| [`vite/no-unsupported-project-options`](../no-unsupported-project-options.md)       |  —  |
 <!-- end generated preset rules -->

@@ -1,8 +1,12 @@
 ---
 slug: config-safety-and-workspaces
 title: Why eslint-plugin-vite centers config safety and Vitest workspaces
-authors: [nick]
-tags: [architecture, vite, vitest]
+authors:
+  - nick
+tags:
+  - architecture
+  - vite
+  - vitest
 ---
 
 # Why eslint-plugin-vite centers config safety and Vitest workspaces

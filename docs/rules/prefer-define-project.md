@@ -1,21 +1,24 @@
 # prefer-define-project
 
-Prefer `defineProject(...)` over `defineConfig(...)` for inline Vitest workspace project entries.
+Prefer `defineProject(...)` over `defineConfig(...)` for inline Vitest project entries.
 
 > **Rule catalog ID:** R008
 
 ## Targeted pattern scope
 
 - `vitest.workspace.*`
-- inline workspace project arrays
+- `vitest.config.*`
+- `vite.config.*` when Vitest uses `test.projects`
+- inline `defineWorkspace([...])` project arrays
+- inline `test.projects: [...]` arrays
 
 ## What this rule reports
 
-This rule reports `defineConfig(...)` calls used directly inside `defineWorkspace([...])` arrays.
+This rule reports `defineConfig(...)` calls used directly inside inline Vitest project arrays.
 
 ## Why this rule exists
 
-`defineProject(...)` communicates that the object is a workspace project entry, not a top-level Vitest config export.
+`defineProject(...)` communicates that the object is a project entry, not a top-level Vitest config export.
 
 That makes workspace intent easier to read in reviews and keeps the project API explicit.
 
@@ -49,7 +52,7 @@ export default defineWorkspace([
 
 ## Behavior and migration notes
 
-- this rule only targets inline workspace entries
+- this rule only targets inline project entries
 - top-level `vitest.config.*` files can still use `defineConfig(...)`
 
 ## ESLint flat config example

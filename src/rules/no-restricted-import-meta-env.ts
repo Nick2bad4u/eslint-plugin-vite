@@ -39,8 +39,10 @@ const getStaticEnvKey = (
     return getStaticStringValue(node.property);
 };
 
-/** Restrict client-visible `import.meta.env` access to built-ins and approved
-prefixes. */
+/**
+ * Restrict client-visible `import.meta.env` access to built-ins and approved
+ * prefixes.
+ */
 const noRestrictedImportMetaEnvRule: ReturnType<typeof createTypedRule> =
     createTypedRule<RuleOptions, MessageId>({
         create(context, [options]) {

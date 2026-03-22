@@ -1,17 +1,19 @@
 # workspace-unique-project-name
 
-Require literal Vitest workspace project names to be unique.
+Require statically readable inline Vitest project names to be unique.
 
 > **Rule catalog ID:** R009
 
 ## Targeted pattern scope
 
 - `vitest.workspace.*`
-- inline workspace project definitions
+- `vitest.config.*`
+- `vite.config.*` when Vitest uses `test.projects`
+- inline workspace and project definitions
 
 ## What this rule reports
 
-This rule reports duplicate literal `name` values inside `defineWorkspace([...])` project entries.
+This rule reports duplicate statically readable project names inside inline `defineWorkspace([...])` and `test.projects: [...]` entries.
 
 ## Why this rule exists
 
@@ -57,7 +59,7 @@ export default defineWorkspace([
 
 ## Behavior and migration notes
 
-- this rule only checks literal names it can read statically
+- this rule only checks names it can read statically, including `test.name: "unit"` and `test.name: { label: "unit", color: "green" }`
 - dynamic names are ignored because they are harder to validate safely in linting
 
 ## ESLint flat config example

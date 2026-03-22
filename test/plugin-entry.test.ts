@@ -20,11 +20,15 @@ describe("plugin entry", () => {
             "no-deprecated-config-options",
             "no-dynamic-import-meta-env-access",
             "no-empty-env-prefix",
+            "no-implicit-config-flags",
+            "no-import-meta-env-in-config",
             "no-mixed-test-and-bench-apis",
             "no-relative-resolve-alias",
             "no-restricted-import-meta-env",
             "no-unsafe-server-options",
+            "no-unsupported-project-options",
             "prefer-define-project",
+            "require-inline-project-name",
             "workspace-unique-project-name",
         ]);
     });

@@ -34,8 +34,8 @@ const noMixedTestAndBenchApisRule: ReturnType<typeof createTypedRule> =
         create(context) {
             let hasVitestImport = false;
             const importedNames = new Map<string, string>();
-            let firstBenchCall: TSESTree.CallExpression | undefined;
-            let firstTestCall: TSESTree.CallExpression | undefined;
+            let firstBenchCall: null | TSESTree.CallExpression = null;
+            let firstTestCall: null | TSESTree.CallExpression = null;
 
             return {
                 CallExpression(node) {
@@ -56,11 +56,11 @@ const noMixedTestAndBenchApisRule: ReturnType<typeof createTypedRule> =
                               benchApiNames.has(node.callee.name)
                             : benchApiNames.has(importedName);
 
-                    if (isTestApi && firstTestCall === undefined) {
+                    if (isTestApi && firstTestCall === null) {
                         firstTestCall = node;
                     }
 
-                    if (isBenchApi && firstBenchCall === undefined) {
+                    if (isBenchApi && firstBenchCall === null) {
                         firstBenchCall = node;
                     }
                 },
@@ -79,10 +79,7 @@ const noMixedTestAndBenchApisRule: ReturnType<typeof createTypedRule> =
                     }
                 },
                 "Program:exit"() {
-                    if (
-                        firstBenchCall === undefined ||
-                        firstTestCall === undefined
-                    ) {
+                    if (firstBenchCall === null || firstTestCall === null) {
                         return;
                     }
 

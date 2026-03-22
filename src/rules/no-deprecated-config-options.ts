@@ -44,8 +44,10 @@ const deprecatedConfigPaths: readonly DeprecatedConfigPath[] = [
     },
 ] as const;
 
-/** Disallow deprecated Vite config options and values that now have safer
-replacements. */
+/**
+ * Disallow deprecated Vite config options and values that now have safer
+ * replacements.
+ */
 const noDeprecatedConfigOptionsRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], MessageId>({
         create(context) {

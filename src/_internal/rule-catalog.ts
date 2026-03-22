@@ -11,6 +11,10 @@ const orderedRuleNames = [
     "workspace-unique-project-name",
     "no-deprecated-config-options",
     "no-unsafe-server-options",
+    "no-import-meta-env-in-config",
+    "no-implicit-config-flags",
+    "require-inline-project-name",
+    "no-unsupported-project-options",
 ] as const;
 
 /** Canonical rule catalog entry shape. */

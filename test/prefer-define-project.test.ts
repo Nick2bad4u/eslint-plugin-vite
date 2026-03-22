@@ -11,11 +11,20 @@ describe("prefer-define-project", () => {
                 errors: [{ messageId: "preferDefineProject" }],
                 filename: "vitest.workspace.ts",
             },
+            {
+                code: "import { defineConfig } from 'vitest/config'; export default defineConfig({ test: { projects: [defineConfig({ test: { name: 'browser' } })] } });",
+                errors: [{ messageId: "preferDefineProject" }],
+                filename: "vitest.config.ts",
+            },
         ],
         valid: [
             {
                 code: "import { defineProject, defineWorkspace } from 'vitest/config'; export default defineWorkspace([defineProject({ test: { name: 'browser' } })]);",
                 filename: "vitest.workspace.ts",
+            },
+            {
+                code: "import { defineConfig, defineProject } from 'vitest/config'; export default defineConfig({ test: { projects: [defineProject({ test: { name: 'browser' } })] } });",
+                filename: "vitest.config.ts",
             },
         ],
     });

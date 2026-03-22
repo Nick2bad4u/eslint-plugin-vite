@@ -30,4 +30,7 @@ export default [vite.configs.recommended];
 | [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)           |  —  |
 | [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md)                 |  —  |
 | [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)         |  —  |
+| [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  |
+| [`vite/require-inline-project-name`](../require-inline-project-name.md)             |  —  |
+| [`vite/no-unsupported-project-options`](../no-unsupported-project-options.md)       |  —  |
 <!-- end generated preset rules -->

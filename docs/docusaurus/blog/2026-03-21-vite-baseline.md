@@ -1,8 +1,12 @@
 ---
 slug: vite-baseline
 title: Establishing the eslint-plugin-vite baseline
-authors: [nick]
-tags: [announcement, docs, branding]
+authors:
+  - nick
+tags:
+  - announcement
+  - docs
+  - branding
 ---
 
 # Establishing the eslint-plugin-vite baseline

@@ -32,4 +32,6 @@ export default [vite.configs.configs];
 | [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md)       |  —  |
 | [`vite/no-deprecated-config-options`](../no-deprecated-config-options.md) |  —  |
 | [`vite/no-unsafe-server-options`](../no-unsafe-server-options.md)         |  —  |
+| [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md) |  —  |
+| [`vite/no-implicit-config-flags`](../no-implicit-config-flags.md)         |  —  |
 <!-- end generated preset rules -->

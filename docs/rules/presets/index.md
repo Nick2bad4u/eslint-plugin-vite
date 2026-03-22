@@ -45,4 +45,8 @@ Related guides:
 | [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)         |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md)                          |
 | [`vite/no-deprecated-config-options`](../no-deprecated-config-options.md)           |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                                                |
 | [`vite/no-unsafe-server-options`](../no-unsafe-server-options.md)                   |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                                                |
+| [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)       |
+| [`vite/no-implicit-config-flags`](../no-implicit-config-flags.md)                   |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                                                |
+| [`vite/require-inline-project-name`](../require-inline-project-name.md)             |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md)                          |
+| [`vite/no-unsupported-project-options`](../no-unsupported-project-options.md)       |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md)                          |
 <!-- end generated preset matrix -->
