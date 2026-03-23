@@ -101,4 +101,9 @@ Related guides:
 | [`vite/no-vitepress-empty-head`](../no-vitepress-empty-head.md)                                                   |  —  | [🔴](./strict.md) [🟣](./all.md) [📚](./vitepress.md)                                                             |
 | [`vite/require-vitepress-title-or-titletemplate`](../require-vitepress-title-or-titletemplate.md)                 |  —  | [🔴](./strict.md) [🟣](./all.md) [📚](./vitepress.md)                                                             |
 | [`vite/require-vitepress-clean-urls-explicit`](../require-vitepress-clean-urls-explicit.md)                       |  —  | [🔴](./strict.md) [🟣](./all.md) [📚](./vitepress.md)                                                             |
+| [`vite/no-vitest-default-cache-dir-in-monorepo`](../no-vitest-default-cache-dir-in-monorepo.md)                   |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
+| [`vite/no-vitest-timeout-triplet-mismatch`](../no-vitest-timeout-triplet-mismatch.md)                             |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
+| [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)                           |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
+| [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)                             |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
+| [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
 <!-- end generated preset matrix -->

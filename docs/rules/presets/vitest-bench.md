@@ -21,9 +21,14 @@ export default [vite.configs.vitest-bench];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-| Rule                                                                        | Fix |
-| :-------------------------------------------------------------------------- | :-: |
-| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)   |  —  |
-| [`vite/no-empty-vitest-bench-include`](../no-empty-vitest-bench-include.md) |  —  |
-| [`vite/no-empty-vitest-bench-exclude`](../no-empty-vitest-bench-exclude.md) |  —  |
+| Rule                                                                                            | Fix |
+| :---------------------------------------------------------------------------------------------- | :-: |
+| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)                       |  —  |
+| [`vite/no-empty-vitest-bench-include`](../no-empty-vitest-bench-include.md)                     |  —  |
+| [`vite/no-empty-vitest-bench-exclude`](../no-empty-vitest-bench-exclude.md)                     |  —  |
+| [`vite/no-vitest-default-cache-dir-in-monorepo`](../no-vitest-default-cache-dir-in-monorepo.md) |  —  |
+| [`vite/no-vitest-timeout-triplet-mismatch`](../no-vitest-timeout-triplet-mismatch.md)           |  —  |
+| [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)         |  —  |
+| [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)           |  —  |
+| [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                   |  —  |
 <!-- end generated preset rules -->

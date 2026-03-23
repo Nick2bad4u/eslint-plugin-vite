@@ -90,4 +90,9 @@ export default [vite.configs.all];
 | [`vite/no-vitepress-empty-head`](../no-vitepress-empty-head.md)                                                   |  —  |
 | [`vite/require-vitepress-title-or-titletemplate`](../require-vitepress-title-or-titletemplate.md)                 |  —  |
 | [`vite/require-vitepress-clean-urls-explicit`](../require-vitepress-clean-urls-explicit.md)                       |  —  |
+| [`vite/no-vitest-default-cache-dir-in-monorepo`](../no-vitest-default-cache-dir-in-monorepo.md)                   |  —  |
+| [`vite/no-vitest-timeout-triplet-mismatch`](../no-vitest-timeout-triplet-mismatch.md)                             |  —  |
+| [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)                           |  —  |
+| [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)                             |  —  |
+| [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  |
 <!-- end generated preset rules -->

@@ -42,12 +42,14 @@ import noVitestCoverageEnabledFalseWithThresholdsRule from "../rules/no-vitest-c
 import noVitestCoverageReporterTextOnlyRule from "../rules/no-vitest-coverage-reporter-text-only.js";
 import noVitestCoverageSkipFullFalseInStrictRule from "../rules/no-vitest-coverage-skip-full-false-in-strict.js";
 import noVitestCoverageTempDirInRepoRootRule from "../rules/no-vitest-coverage-temp-dir-in-repo-root.js";
+import noVitestDefaultCacheDirInMonorepoRule from "../rules/no-vitest-default-cache-dir-in-monorepo.js";
 import noVitestEnvLeakageComboRule from "../rules/no-vitest-env-leakage-combo.js";
 import noVitestFileParallelismDisabledRule from "../rules/no-vitest-file-parallelism-disabled.js";
 import noVitestGlobalsRule from "../rules/no-vitest-globals.js";
 import noVitestMaxWorkersZeroRule from "../rules/no-vitest-max-workers-zero.js";
 import noVitestMinWorkersGreaterThanMaxWorkersRule from "../rules/no-vitest-min-workers-greater-than-max-workers.js";
 import noVitestSingleThreadPoolByDefaultRule from "../rules/no-vitest-single-thread-pool-by-default.js";
+import noVitestTimeoutTripletMismatchRule from "../rules/no-vitest-timeout-triplet-mismatch.js";
 import noVitestUiInConfigRule from "../rules/no-vitest-ui-in-config.js";
 import noVitestUnstubEnvsFalseRule from "../rules/no-vitest-unstub-envs-false.js";
 import noVitestUnstubGlobalsFalseRule from "../rules/no-vitest-unstub-globals-false.js";
@@ -64,8 +66,11 @@ import requireVitestCoverageReporterWhenEnabledRule from "../rules/require-vites
 import requireVitestCoverageReportsDirectoryRule from "../rules/require-vitest-coverage-reports-directory.js";
 import requireVitestCoverageThresholdsWhenEnabledRule from "../rules/require-vitest-coverage-thresholds-when-enabled.js";
 import requireVitestEnvironmentMatchGlobsRule from "../rules/require-vitest-environment-match-globs.js";
+import requireVitestExplicitEnvironmentRule from "../rules/require-vitest-explicit-environment.js";
 import requireVitestMockResetPolicyRule from "../rules/require-vitest-mock-reset-policy.js";
 import requireVitestSequenceSeedWhenShuffleRule from "../rules/require-vitest-sequence-seed-when-shuffle.js";
+import requireVitestSlowTestThresholdRule from "../rules/require-vitest-slow-test-threshold.js";
+import requireVitestTimeoutTripletRule from "../rules/require-vitest-timeout-triplet.js";
 import requireVitestTypecheckTsconfigRule from "../rules/require-vitest-typecheck-tsconfig.js";
 import workspaceUniqueProjectNameRule from "../rules/workspace-unique-project-name.js";
 
@@ -115,12 +120,14 @@ export type ViteRuleModules = Readonly<{
     "no-vitest-coverage-reporter-text-only": RuleWithDocs;
     "no-vitest-coverage-skip-full-false-in-strict": RuleWithDocs;
     "no-vitest-coverage-temp-dir-in-repo-root": RuleWithDocs;
+    "no-vitest-default-cache-dir-in-monorepo": RuleWithDocs;
     "no-vitest-env-leakage-combo": RuleWithDocs;
     "no-vitest-file-parallelism-disabled": RuleWithDocs;
     "no-vitest-globals": RuleWithDocs;
     "no-vitest-max-workers-zero": RuleWithDocs;
     "no-vitest-min-workers-greater-than-max-workers": RuleWithDocs;
     "no-vitest-single-thread-pool-by-default": RuleWithDocs;
+    "no-vitest-timeout-triplet-mismatch": RuleWithDocs;
     "no-vitest-ui-in-config": RuleWithDocs;
     "no-vitest-unstub-envs-false": RuleWithDocs;
     "no-vitest-unstub-globals-false": RuleWithDocs;
@@ -137,8 +144,11 @@ export type ViteRuleModules = Readonly<{
     "require-vitest-coverage-reports-directory": RuleWithDocs;
     "require-vitest-coverage-thresholds-when-enabled": RuleWithDocs;
     "require-vitest-environment-match-globs": RuleWithDocs;
+    "require-vitest-explicit-environment": RuleWithDocs;
     "require-vitest-mock-reset-policy": RuleWithDocs;
     "require-vitest-sequence-seed-when-shuffle": RuleWithDocs;
+    "require-vitest-slow-test-threshold": RuleWithDocs;
+    "require-vitest-timeout-triplet": RuleWithDocs;
     "require-vitest-typecheck-tsconfig": RuleWithDocs;
     "workspace-unique-project-name": RuleWithDocs;
 }>;
@@ -192,6 +202,8 @@ export const viteRules: ViteRuleModules = {
         noVitestCoverageSkipFullFalseInStrictRule,
     "no-vitest-coverage-temp-dir-in-repo-root":
         noVitestCoverageTempDirInRepoRootRule,
+    "no-vitest-default-cache-dir-in-monorepo":
+        noVitestDefaultCacheDirInMonorepoRule,
     "no-vitest-env-leakage-combo": noVitestEnvLeakageComboRule,
     "no-vitest-file-parallelism-disabled": noVitestFileParallelismDisabledRule,
     "no-vitest-globals": noVitestGlobalsRule,
@@ -200,6 +212,7 @@ export const viteRules: ViteRuleModules = {
         noVitestMinWorkersGreaterThanMaxWorkersRule,
     "no-vitest-single-thread-pool-by-default":
         noVitestSingleThreadPoolByDefaultRule,
+    "no-vitest-timeout-triplet-mismatch": noVitestTimeoutTripletMismatchRule,
     "no-vitest-ui-in-config": noVitestUiInConfigRule,
     "no-vitest-unstub-envs-false": noVitestUnstubEnvsFalseRule,
     "no-vitest-unstub-globals-false": noVitestUnstubGlobalsFalseRule,
@@ -223,9 +236,12 @@ export const viteRules: ViteRuleModules = {
         requireVitestCoverageThresholdsWhenEnabledRule,
     "require-vitest-environment-match-globs":
         requireVitestEnvironmentMatchGlobsRule,
+    "require-vitest-explicit-environment": requireVitestExplicitEnvironmentRule,
     "require-vitest-mock-reset-policy": requireVitestMockResetPolicyRule,
     "require-vitest-sequence-seed-when-shuffle":
         requireVitestSequenceSeedWhenShuffleRule,
+    "require-vitest-slow-test-threshold": requireVitestSlowTestThresholdRule,
+    "require-vitest-timeout-triplet": requireVitestTimeoutTripletRule,
     "require-vitest-typecheck-tsconfig": requireVitestTypecheckTsconfigRule,
     "workspace-unique-project-name": workspaceUniqueProjectNameRule,
 };

@@ -71,4 +71,9 @@ export default [vite.configs.recommended, vite.configs.vitest];
 | [`vite/no-vitest-unstub-envs-false`](../no-vitest-unstub-envs-false.md)                                           |  —  |
 | [`vite/no-vitest-env-leakage-combo`](../no-vitest-env-leakage-combo.md)                                           |  —  |
 | [`vite/require-vitest-environment-match-globs`](../require-vitest-environment-match-globs.md)                     |  —  |
+| [`vite/no-vitest-default-cache-dir-in-monorepo`](../no-vitest-default-cache-dir-in-monorepo.md)                   |  —  |
+| [`vite/no-vitest-timeout-triplet-mismatch`](../no-vitest-timeout-triplet-mismatch.md)                             |  —  |
+| [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)                           |  —  |
+| [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)                             |  —  |
+| [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  |
 <!-- end generated preset rules -->

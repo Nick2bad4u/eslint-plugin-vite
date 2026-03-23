@@ -67,6 +67,11 @@ const orderedRuleNames = [
     "no-vitepress-empty-head",
     "require-vitepress-title-or-titletemplate",
     "require-vitepress-clean-urls-explicit",
+    "no-vitest-default-cache-dir-in-monorepo",
+    "no-vitest-timeout-triplet-mismatch",
+    "require-vitest-explicit-environment",
+    "require-vitest-slow-test-threshold",
+    "require-vitest-timeout-triplet",
 ] as const;
 
 /** Canonical rule catalog entry shape. */
