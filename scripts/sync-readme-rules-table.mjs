@@ -81,6 +81,36 @@ const toViteConfigName = (value) => {
 };
 
 /**
+ * @param {RuleModule} ruleModule
+ *
+ * @returns {RuleDocs["fixLabel"]}
+ */
+const getFixLabel = (ruleModule) => {
+    if (ruleModule.meta.fixable === "code") {
+        return "🔧";
+    }
+
+    if (ruleModule.meta.hasSuggestions === true) {
+        return "💡";
+    }
+
+    return "—";
+};
+
+/**
+ * @param {ViteConfigName} configName
+ *
+ * @returns {string}
+ */
+const getConfigAccessor = (configName) => {
+    if (configName === "vitest-bench") {
+        return 'vite.configs["vitest-bench"]';
+    }
+
+    return `vite.configs.${configName}`;
+};
+
+/**
  * @param {string} ruleName
  * @param {RuleModule} ruleModule
  *
@@ -106,12 +136,7 @@ const getRuleDocs = (ruleName, ruleModule) => {
     return {
         configNames,
         description: docs.description ?? "",
-        fixLabel:
-            ruleModule.meta.fixable === "code"
-                ? "🔧"
-                : ruleModule.meta.hasSuggestions === true
-                  ? "💡"
-                  : "—",
+        fixLabel: getFixLabel(ruleModule),
         ruleId: `vite/${ruleName}`,
         ruleNumber: docs.ruleNumber ?? Number.POSITIVE_INFINITY,
     };
@@ -123,10 +148,7 @@ export const renderPresetLegend = () =>
         ...viteConfigNamesByReadmeOrder.map((configName) => {
             const metadata = viteConfigMetadataByName[configName];
             const docsPath = presetDocsPathByName[configName];
-            const configAccessor =
-                configName === "vitest-bench"
-                    ? 'vite.configs["vitest-bench"]'
-                    : `vite.configs.${configName}`;
+            const configAccessor = getConfigAccessor(configName);
 
             return `  - [${metadata.icon}](${docsPath}) — [\`${configAccessor}\`](${docsPath})`;
         }),
@@ -202,7 +224,7 @@ export const replaceReadmeRulesTable = (markdown) => {
         lineEnding
     );
     const pattern = new RegExp(
-        `${README_RULES_START}[\\s\\S]*?${README_RULES_END}`,
+        String.raw`${README_RULES_START}[\s\S]*?${README_RULES_END}`,
         "u"
     );
 

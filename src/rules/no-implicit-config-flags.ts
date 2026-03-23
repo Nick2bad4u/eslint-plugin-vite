@@ -198,10 +198,89 @@ const isExplicitBooleanComparison = (
     );
 };
 
-const findImplicitFlagUsage = (
+function findImplicitFlagUsageInBinaryExpression(
+    expression: Readonly<TSESTree.BinaryExpression>,
+    bindings: ReadonlyMap<string, ConfigFlagName>,
+    recurse: (
+        expression: Readonly<TSESTree.Expression>,
+        bindings: ReadonlyMap<string, ConfigFlagName>
+    ) => ImplicitFlagUsage | null
+): ImplicitFlagUsage | null {
+    if (isExplicitBooleanComparison(expression, bindings)) {
+        return null;
+    }
+
+    const left = toExpressionOrNull(expression.left);
+    const right = toExpressionOrNull(expression.right);
+
+    if (left === null || right === null) {
+        return null;
+    }
+
+    return recurse(left, bindings) ?? recurse(right, bindings);
+}
+
+function findImplicitFlagUsageInCallExpression(
+    expression: Readonly<TSESTree.CallExpression>,
+    bindings: ReadonlyMap<string, ConfigFlagName>,
+    recurse: (
+        expression: Readonly<TSESTree.Expression>,
+        bindings: ReadonlyMap<string, ConfigFlagName>
+    ) => ImplicitFlagUsage | null
+): ImplicitFlagUsage | null {
+    if (
+        expression.callee.type !== "Identifier" ||
+        expression.callee.name !== "Boolean"
+    ) {
+        return null;
+    }
+
+    const [argument] = expression.arguments;
+
+    if (argument === undefined || argument.type === "SpreadElement") {
+        return null;
+    }
+
+    return recurse(argument, bindings);
+}
+
+function findImplicitFlagUsageInSequenceExpression(
+    expression: Readonly<TSESTree.SequenceExpression>,
+    bindings: ReadonlyMap<string, ConfigFlagName>,
+    recurse: (
+        expression: Readonly<TSESTree.Expression>,
+        bindings: ReadonlyMap<string, ConfigFlagName>
+    ) => ImplicitFlagUsage | null
+): ImplicitFlagUsage | null {
+    for (const nestedExpression of expression.expressions) {
+        const usage = recurse(nestedExpression, bindings);
+
+        if (usage !== null) {
+            return usage;
+        }
+    }
+
+    return null;
+}
+
+function findImplicitFlagUsageInUnaryExpression(
+    expression: Readonly<TSESTree.UnaryExpression>,
+    bindings: ReadonlyMap<string, ConfigFlagName>,
+    recurse: (
+        expression: Readonly<TSESTree.Expression>,
+        bindings: ReadonlyMap<string, ConfigFlagName>
+    ) => ImplicitFlagUsage | null
+): ImplicitFlagUsage | null {
+    return expression.operator === "!"
+        ? recurse(expression.argument, bindings)
+        : null;
+}
+
+// eslint-disable-next-line perfectionist/sort-modules -- The dispatcher stays after the helper declarations so the file avoids no-use-before-define warnings for the recursive helpers.
+function findImplicitFlagUsage(
     expression: Readonly<TSESTree.Expression>,
     bindings: ReadonlyMap<string, ConfigFlagName>
-): ImplicitFlagUsage | null => {
+): ImplicitFlagUsage | null {
     const unwrappedExpression = unwrapExpression(expression);
     const identifierUsage = getFlagUsageForIdentifier(
         unwrappedExpression,
@@ -213,38 +292,19 @@ const findImplicitFlagUsage = (
     }
 
     if (unwrappedExpression.type === "BinaryExpression") {
-        if (isExplicitBooleanComparison(unwrappedExpression, bindings)) {
-            return null;
-        }
-
-        const left = toExpressionOrNull(unwrappedExpression.left);
-        const right = toExpressionOrNull(unwrappedExpression.right);
-
-        if (left === null || right === null) {
-            return null;
-        }
-
-        return (
-            findImplicitFlagUsage(left, bindings) ??
-            findImplicitFlagUsage(right, bindings)
+        return findImplicitFlagUsageInBinaryExpression(
+            unwrappedExpression,
+            bindings,
+            findImplicitFlagUsage
         );
     }
 
     if (unwrappedExpression.type === "CallExpression") {
-        if (
-            unwrappedExpression.callee.type !== "Identifier" ||
-            unwrappedExpression.callee.name !== "Boolean"
-        ) {
-            return null;
-        }
-
-        const [argument] = unwrappedExpression.arguments;
-
-        if (argument === undefined || argument.type === "SpreadElement") {
-            return null;
-        }
-
-        return findImplicitFlagUsage(argument, bindings);
+        return findImplicitFlagUsageInCallExpression(
+            unwrappedExpression,
+            bindings,
+            findImplicitFlagUsage
+        );
     }
 
     if (unwrappedExpression.type === "ConditionalExpression") {
@@ -259,27 +319,23 @@ const findImplicitFlagUsage = (
     }
 
     if (unwrappedExpression.type === "SequenceExpression") {
-        for (const nestedExpression of unwrappedExpression.expressions) {
-            const usage = findImplicitFlagUsage(nestedExpression, bindings);
-
-            if (usage !== null) {
-                return usage;
-            }
-        }
-
-        return null;
+        return findImplicitFlagUsageInSequenceExpression(
+            unwrappedExpression,
+            bindings,
+            findImplicitFlagUsage
+        );
     }
 
     if (unwrappedExpression.type === "UnaryExpression") {
-        if (unwrappedExpression.operator !== "!") {
-            return null;
-        }
-
-        return findImplicitFlagUsage(unwrappedExpression.argument, bindings);
+        return findImplicitFlagUsageInUnaryExpression(
+            unwrappedExpression,
+            bindings,
+            findImplicitFlagUsage
+        );
     }
 
     return null;
-};
+}
 
 /**
  * Disallow implicit truthy and falsy checks for Vite config callback flags.

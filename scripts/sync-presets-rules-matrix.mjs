@@ -90,6 +90,23 @@ const toViteConfigName = (value) => {
 };
 
 /**
+ * @param {RuleModule} ruleModule
+ *
+ * @returns {RuleDocs["fixLabel"]}
+ */
+const getFixLabel = (ruleModule) => {
+    if (ruleModule.meta.fixable === "code") {
+        return "🔧";
+    }
+
+    if (ruleModule.meta.hasSuggestions === true) {
+        return "💡";
+    }
+
+    return "—";
+};
+
+/**
  * @param {string} ruleName
  * @param {RuleModule} ruleModule
  *
@@ -114,12 +131,7 @@ const normalizeRuleDocs = (ruleName, ruleModule) => {
 
     return {
         configNames,
-        fixLabel:
-            ruleModule.meta.fixable === "code"
-                ? "🔧"
-                : ruleModule.meta.hasSuggestions === true
-                  ? "💡"
-                  : "—",
+        fixLabel: getFixLabel(ruleModule),
         ruleName,
         ruleNumber: docs.ruleNumber ?? Number.POSITIVE_INFINITY,
     };
@@ -133,7 +145,7 @@ const getOrderedRules = (plugin = vitePlugin) =>
         .map(([ruleName, ruleModule]) =>
             normalizeRuleDocs(ruleName, /** @type {RuleModule} */ (ruleModule))
         )
-        .sort((left, right) => left.ruleNumber - right.ruleNumber);
+        .toSorted((left, right) => left.ruleNumber - right.ruleNumber);
 
 /**
  * @param {VitePlugin} [plugin]
@@ -141,7 +153,7 @@ const getOrderedRules = (plugin = vitePlugin) =>
 export const renderPresetMatrix = (plugin = vitePlugin) => {
     const rows = getOrderedRules(plugin).map((rule) => {
         const presetIcons = rule.configNames
-            .sort(
+            .toSorted(
                 /**
                  * @param {ViteConfigName} left
                  * @param {ViteConfigName} right
@@ -204,7 +216,7 @@ export const replacePresetMatrix = (markdown) => {
     const lineEnding = detectLineEnding(markdown);
     const matrix = renderPresetMatrix().replaceAll("\n", lineEnding);
     const pattern = new RegExp(
-        `${PRESET_MATRIX_START}[\\s\\S]*?${PRESET_MATRIX_END}`,
+        String.raw`${PRESET_MATRIX_START}[\s\S]*?${PRESET_MATRIX_END}`,
         "u"
     );
 
@@ -225,7 +237,7 @@ export const replacePresetRulesTable = (markdown, configName) => {
         lineEnding
     );
     const pattern = new RegExp(
-        `${PRESET_RULES_START}[\\s\\S]*?${PRESET_RULES_END}`,
+        String.raw`${PRESET_RULES_START}[\s\S]*?${PRESET_RULES_END}`,
         "u"
     );
 

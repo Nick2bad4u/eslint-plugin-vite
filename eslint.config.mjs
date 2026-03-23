@@ -103,7 +103,7 @@ const enableJsonSchemaValidation =
 
 const jsonSchemaValidatorPackageName = "eslint-plugin-json-schema-validator";
 
-let eslintPluginJsonSchemaValidator = undefined;
+let eslintPluginJsonSchemaValidator = null;
 
 if (enableJsonSchemaValidation) {
     eslintPluginJsonSchemaValidator =

@@ -33,6 +33,45 @@ const reportIfRelativeReplacement = (
     });
 };
 
+const isResolveAliasProperty = (node: Readonly<TSESTree.Property>): boolean =>
+    getStaticPropertyName(node) === "alias" &&
+    node.parent.type === "ObjectExpression" &&
+    node.parent.parent?.type === "Property" &&
+    getStaticPropertyName(node.parent.parent) === "resolve";
+
+const reportObjectAliasReplacements = (
+    context: Readonly<TSESLint.RuleContext<"relativeAliasReplacement", []>>,
+    aliasObject: Readonly<TSESTree.ObjectExpression>
+): void => {
+    for (const property of aliasObject.properties) {
+        if (property.type === "Property") {
+            reportIfRelativeReplacement(context, property.value);
+        }
+    }
+};
+
+const reportArrayAliasReplacements = (
+    context: Readonly<TSESLint.RuleContext<"relativeAliasReplacement", []>>,
+    aliasArray: Readonly<TSESTree.ArrayExpression>
+): void => {
+    for (const element of aliasArray.elements) {
+        if (element?.type !== "ObjectExpression") {
+            continue;
+        }
+
+        for (const property of element.properties) {
+            if (
+                property.type !== "Property" ||
+                getStaticPropertyName(property) !== "replacement"
+            ) {
+                continue;
+            }
+
+            reportIfRelativeReplacement(context, property.value);
+        }
+    }
+};
+
 /** Disallow relative filesystem replacements inside `resolve.alias`. */
 const noRelativeResolveAliasRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "relativeAliasReplacement">({
@@ -43,27 +82,12 @@ const noRelativeResolveAliasRule: ReturnType<typeof createTypedRule> =
 
             return {
                 Property(node) {
-                    if (getStaticPropertyName(node) !== "alias") {
-                        return;
-                    }
-
-                    if (
-                        node.parent.type !== "ObjectExpression" ||
-                        node.parent.parent?.type !== "Property" ||
-                        getStaticPropertyName(node.parent.parent) !== "resolve"
-                    ) {
+                    if (!isResolveAliasProperty(node)) {
                         return;
                     }
 
                     if (node.value.type === "ObjectExpression") {
-                        for (const property of node.value.properties) {
-                            if (property.type === "Property") {
-                                reportIfRelativeReplacement(
-                                    context,
-                                    property.value
-                                );
-                            }
-                        }
+                        reportObjectAliasReplacements(context, node.value);
 
                         return;
                     }
@@ -72,26 +96,7 @@ const noRelativeResolveAliasRule: ReturnType<typeof createTypedRule> =
                         return;
                     }
 
-                    for (const element of node.value.elements) {
-                        if (element?.type !== "ObjectExpression") {
-                            continue;
-                        }
-
-                        for (const property of element.properties) {
-                            if (
-                                property.type !== "Property" ||
-                                getStaticPropertyName(property) !==
-                                    "replacement"
-                            ) {
-                                continue;
-                            }
-
-                            reportIfRelativeReplacement(
-                                context,
-                                property.value
-                            );
-                        }
-                    }
+                    reportArrayAliasReplacements(context, node.value);
                 },
             };
         },

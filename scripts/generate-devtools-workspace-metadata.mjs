@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { inspect } from "node:util";
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(scriptDirectory, "..");
@@ -128,7 +129,9 @@ try {
     const message =
         error instanceof Error
             ? error.message
-            : String(error ?? "Unknown error");
+            : typeof error === "string"
+              ? error
+              : inspect(error ?? "Unknown error");
 
     console.error(message);
     process.exitCode = 1;

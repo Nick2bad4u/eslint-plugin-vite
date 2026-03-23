@@ -99,7 +99,8 @@ export const renderMarkdownTable = (rows, alignments) => {
      *
      * @returns {string}
      */
-    const renderRow = (row) => `| ${row.map(renderCell).join(" | ")} |`;
+    const renderRow = (row) =>
+        `| ${row.map((cell, columnIndex) => renderCell(cell, columnIndex)).join(" | ")} |`;
 
     const header = renderRow(firstRow);
     const separator = `| ${columnWidths
