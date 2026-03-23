@@ -236,6 +236,8 @@ export const replacePresetRulesTable = (markdown, configName) => {
 };
 
 const shouldWrite = process.argv.includes("--write");
+const shouldPrint = process.argv.includes("--print");
+const shouldCheck = !shouldWrite && !shouldPrint;
 
 if (
     process.argv[1] !== undefined &&
@@ -257,7 +259,40 @@ if (
 
             await writeFile(presetPath, nextPresetMarkdown);
         }
-    } else {
+
+        process.stdout.write("Preset docs matrix synced.\n");
+    } else if (shouldPrint) {
         process.stdout.write(nextPresetsIndex);
+    } else {
+        /** @type {string[]} */
+        const outOfSyncFiles = [];
+
+        if (presetsIndex !== nextPresetsIndex) {
+            outOfSyncFiles.push("docs/rules/presets/index.md");
+        }
+
+        for (const configName of viteConfigNames) {
+            const presetPath = PRESET_PAGE_PATHS[configName];
+            const presetMarkdown = await readFile(presetPath, "utf8");
+            const nextPresetMarkdown = replacePresetRulesTable(
+                presetMarkdown,
+                configName
+            );
+
+            if (presetMarkdown !== nextPresetMarkdown) {
+                outOfSyncFiles.push(fileURLToPath(presetPath));
+            }
+        }
+
+        if (shouldCheck && outOfSyncFiles.length > 0) {
+            process.stderr.write(
+                [
+                    "Generated preset docs are out of sync.",
+                    ...outOfSyncFiles.map((filePath) => `- ${filePath}`),
+                    "Run: npm run sync:presets-rules-matrix:write",
+                ].join("\n") + "\n"
+            );
+            process.exitCode = 1;
+        }
     }
 }

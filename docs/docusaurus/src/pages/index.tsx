@@ -3,7 +3,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 
-import styles from "./index.module.css";
+import styles from "../components/HomePage.module.css";
 
 const heroBadges = [
     {

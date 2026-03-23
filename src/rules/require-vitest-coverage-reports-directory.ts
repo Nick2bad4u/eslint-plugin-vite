@@ -43,8 +43,10 @@ const hasNonEmptyStaticString = (
     return false;
 };
 
-/** Require explicit non-empty `test.coverage.reportsDirectory` when coverage is
-enabled. */
+/**
+ * Require explicit non-empty `test.coverage.reportsDirectory` when coverage is
+ * enabled.
+ */
 const requireVitestCoverageReportsDirectoryRule: ReturnType<
     typeof createTypedRule
 > = createTypedRule<[], MessageId>({

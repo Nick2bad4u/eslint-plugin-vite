@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
+import { readFile, readdir, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -101,6 +102,201 @@ function runTypedoc(cwd, configFile) {
             stdio: "inherit",
         }
     );
+}
+
+const genericTypeStartTokens = new Set([
+    "[",
+    "`",
+    "{",
+    "_",
+]);
+
+/**
+ * Escape generic angle brackets in a single markdown line when the sequence is
+ * rendered as inline TypeDoc type syntax and would otherwise be parsed as MDX
+ * JSX.
+ *
+ * @param {string} line - Markdown line to sanitize.
+ *
+ * @returns {string} Sanitized markdown line.
+ */
+function sanitizeGeneratedApiMarkdownLine(line) {
+    let genericDepth = 0;
+    let sanitizedLine = "";
+
+    for (let index = 0; index < line.length; index += 1) {
+        const character = line[index];
+        const nextCharacter = line[index + 1];
+
+        if (
+            character === "<" &&
+            nextCharacter !== undefined &&
+            genericTypeStartTokens.has(nextCharacter)
+        ) {
+            genericDepth += 1;
+            sanitizedLine += "&lt;";
+            continue;
+        }
+
+        if (character === ">" && genericDepth > 0) {
+            genericDepth -= 1;
+            sanitizedLine += "&gt;";
+            continue;
+        }
+
+        if (character === "{") {
+            sanitizedLine += "&#123;";
+            continue;
+        }
+
+        if (character === "}") {
+            sanitizedLine += "&#125;";
+            continue;
+        }
+
+        sanitizedLine += character;
+    }
+
+    return sanitizedLine;
+}
+
+/**
+ * @param {string} markdownText - Sanitized markdown text.
+ *
+ * @returns {string} Plain-text representation suitable for a fenced code block.
+ */
+function toPlainTextTypeSnippet(markdownText) {
+    return markdownText
+        .replace(/^>\s*/u, "")
+        .replace(/\*\*/gu, "")
+        .replace(/\[([^\]]+)\]\([^)]*\)/gu, "$1")
+        .replaceAll("&lt;", "<")
+        .replaceAll("&gt;", ">")
+        .replaceAll("&#123;", "{")
+        .replaceAll("&#125;", "}")
+        .replace(/_typeof_/gu, "typeof")
+        .trim();
+}
+
+/**
+ * @param {string} line - Sanitized markdown line.
+ *
+ * @returns {boolean} Whether the line should be rendered as a fenced code block
+ *   to avoid MDX parser conflicts.
+ */
+function shouldRenderAsTypeCodeBlock(line) {
+    if (line.startsWith("> ")) {
+        return true;
+    }
+
+    if (
+        line.length === 0 ||
+        line.startsWith("#") ||
+        line.startsWith("<a ") ||
+        line.startsWith("Defined in:") ||
+        line.startsWith("-") ||
+        line.startsWith("|")
+    ) {
+        return false;
+    }
+
+    return (
+        line.startsWith("readonly ") ||
+        line.startsWith("[") ||
+        line.startsWith("`") ||
+        line.includes("&lt;") ||
+        line.includes("&#123;")
+    );
+}
+
+/**
+ * @param {string} markdown - Raw markdown content.
+ *
+ * @returns {string} Sanitized markdown content.
+ */
+function sanitizeGeneratedApiMarkdown(markdown) {
+    let isInFencedCodeBlock = false;
+
+    return markdown
+        .split(/\r?\n/u)
+        .map((line) => {
+            if (line.startsWith("```")) {
+                isInFencedCodeBlock = !isInFencedCodeBlock;
+                return line;
+            }
+
+            if (isInFencedCodeBlock) {
+                return line;
+            }
+
+            const sanitizedLine = sanitizeGeneratedApiMarkdownLine(line);
+
+            if (!shouldRenderAsTypeCodeBlock(sanitizedLine)) {
+                return sanitizedLine;
+            }
+
+            const typeSnippet = toPlainTextTypeSnippet(sanitizedLine);
+
+            return [
+                "```ts",
+                typeSnippet,
+                "```",
+            ].join("\n");
+        })
+        .join("\n");
+}
+
+/**
+ * @param {string} directoryPath - Directory to walk recursively.
+ *
+ * @returns {Promise<readonly string[]>} Markdown file paths under the
+ *   directory.
+ */
+async function getMarkdownFilePaths(directoryPath) {
+    const directoryEntries = await readdir(directoryPath, {
+        withFileTypes: true,
+    });
+
+    /** @type {string[]} */
+    const markdownFilePaths = [];
+
+    for (const directoryEntry of directoryEntries) {
+        const entryPath = resolve(directoryPath, directoryEntry.name);
+
+        if (directoryEntry.isDirectory()) {
+            markdownFilePaths.push(...(await getMarkdownFilePaths(entryPath)));
+            continue;
+        }
+
+        if (directoryEntry.isFile() && entryPath.endsWith(".md")) {
+            markdownFilePaths.push(entryPath);
+        }
+    }
+
+    return markdownFilePaths;
+}
+
+/**
+ * Sanitize generated TypeDoc markdown so Docusaurus MDX can compile inline
+ * generic type syntax.
+ *
+ * @param {string} apiDocsDirectory - Generated API docs directory.
+ */
+async function sanitizeGeneratedApiDocs(apiDocsDirectory) {
+    if (!existsSync(apiDocsDirectory)) {
+        return;
+    }
+
+    for (const markdownFilePath of await getMarkdownFilePaths(
+        apiDocsDirectory
+    )) {
+        const markdown = await readFile(markdownFilePath, "utf8");
+        const sanitizedMarkdown = sanitizeGeneratedApiMarkdown(markdown);
+
+        if (sanitizedMarkdown !== markdown) {
+            await writeFile(markdownFilePath, sanitizedMarkdown);
+        }
+    }
 }
 
 /**
@@ -329,6 +525,12 @@ function runViaTemporaryDrive(
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(scriptDirectory, "..");
 const docsWorkspaceDirectory = resolve(repositoryRoot, "docs", "docusaurus");
+const apiDocsDirectory = resolve(
+    docsWorkspaceDirectory,
+    "site-docs",
+    "developer",
+    "api"
+);
 const docsWorkspaceRelativePath = relative(
     repositoryRoot,
     docsWorkspaceDirectory
@@ -340,3 +542,5 @@ if (process.platform === "win32" && /[()]/u.test(repositoryRoot)) {
 } else {
     runTypedoc(docsWorkspaceDirectory, configFile);
 }
+
+await sanitizeGeneratedApiDocs(apiDocsDirectory);

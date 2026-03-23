@@ -19,6 +19,12 @@ describe("require-vitest-timeout-triplet", () => {
                     errors: [{ messageId: "missingTimeoutTriplet" }],
                     filename: "vitest.config.ts",
                 },
+                {
+                    code: "export default { test: {} };",
+                    errors: [{ messageId: "missingTimeoutTriplet" }],
+                    filename: "vitest.config.ts",
+                    options: [{ mode: "always" }],
+                },
             ],
             valid: [
                 {
@@ -28,6 +34,10 @@ describe("require-vitest-timeout-triplet", () => {
                 {
                     code: "export default {};",
                     filename: "vite.config.ts",
+                },
+                {
+                    code: "export default { test: {} };",
+                    filename: "vitest.config.ts",
                 },
                 {
                     code: "export default ['packages/*/vitest.config.ts'];",

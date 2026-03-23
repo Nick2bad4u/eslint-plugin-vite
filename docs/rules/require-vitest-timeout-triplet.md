@@ -14,6 +14,8 @@ Require `test.testTimeout`, `test.hookTimeout`, and `test.teardownTimeout` to be
 
 This rule reports when timeout settings are partially configured instead of provided as a complete triplet.
 
+By default, it only reports once any of the timeout keys is configured.
+
 ## Why this rule exists
 
 Partial timeout config often creates inconsistent behavior between test bodies, hooks, and teardown logic.
@@ -44,6 +46,10 @@ export default {
 
 - Applies to Vitest config files and Vite config files that define a `test` block.
 - Requires all three keys together; values are not compared by this rule.
+- Default mode: `[{ mode: "whenAnyConfigured" }]`
+  - only requires the triplet after at least one timeout key is configured
+- Optional stricter mode: `[{ mode: "always" }]`
+  - requires the triplet in Vitest-oriented config even when no timeout key is present yet
 
 ## ESLint flat config example
 

@@ -1,4 +1,5 @@
 ---
+id: 0002-hand-authored-docs-and-synced-catalogs
 title: ADR 0002 — Keep docs hand-authored and sync only derived catalogs
 sidebar_position: 3
 ---

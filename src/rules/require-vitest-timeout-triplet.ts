@@ -9,9 +9,21 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingTimeoutTriplet";
 
+type RuleOptions = [
+    Readonly<{
+        mode?: "always" | "whenAnyConfigured";
+    }>,
+];
+
 const testTimeoutPathSuffix = ["test", "testTimeout"] as const;
 const hookTimeoutPathSuffix = ["test", "hookTimeout"] as const;
 const teardownTimeoutPathSuffix = ["test", "teardownTimeout"] as const;
+
+const defaultOptions = [
+    {
+        mode: "whenAnyConfigured",
+    },
+] as const satisfies RuleOptions;
 
 const shouldRequireTimeoutTriplet = (
     configFileKind: ConfigFileKind,
@@ -23,8 +35,8 @@ const shouldRequireTimeoutTriplet = (
  * Vitest-oriented config.
  */
 const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
-    createTypedRule<[], MessageId>({
-        create(context) {
+    createTypedRule<RuleOptions, MessageId>({
+        create(context, [options]) {
             const configFileKind = getConfigFileKind(context.filename);
 
             if (configFileKind === null) {
@@ -36,6 +48,7 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
             let hasHookTimeout = false;
             let hasTeardownTimeout = false;
             let firstTestPropertyNode: null | TSESTree.Property = null;
+            const mode = options.mode ?? defaultOptions[0].mode;
 
             return {
                 "Program:exit"(programNode) {
@@ -44,6 +57,15 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
                             configFileKind,
                             hasAnyTestConfig
                         )
+                    ) {
+                        return;
+                    }
+
+                    if (
+                        mode === "whenAnyConfigured" &&
+                        !hasTestTimeout &&
+                        !hasHookTimeout &&
+                        !hasTeardownTimeout
                     ) {
                         return;
                     }
@@ -101,12 +123,17 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
+        defaultOptions,
         meta: {
+            defaultOptions: [
+                {
+                    mode: "whenAnyConfigured",
+                },
+            ],
             deprecated: false,
             docs: {
                 description:
-                    "require `testTimeout`, `hookTimeout`, and `teardownTimeout` to be configured together.",
+                    "require `testTimeout`, `hookTimeout`, and `teardownTimeout` to be configured together when timeout policy is explicitly used (or always, via option).",
                 frozen: false,
                 recommended: false,
                 requiresTypeChecking: false,
@@ -122,7 +149,20 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
                 missingTimeoutTriplet:
                     "Configure `test.testTimeout`, `test.hookTimeout`, and `test.teardownTimeout` together for consistent timeout behavior.",
             },
-            schema: [],
+            schema: [
+                {
+                    additionalProperties: false,
+                    properties: {
+                        mode: {
+                            description:
+                                "Whether to require the timeout triplet only when any timeout key is configured (`whenAnyConfigured`) or always in Vitest-oriented config (`always`).",
+                            enum: ["always", "whenAnyConfigured"],
+                            type: "string",
+                        },
+                    },
+                    type: "object",
+                },
+            ],
             type: "suggestion",
         },
         name: "require-vitest-timeout-triplet",

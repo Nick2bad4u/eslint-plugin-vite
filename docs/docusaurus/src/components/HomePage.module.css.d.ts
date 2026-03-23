@@ -43,4 +43,5 @@ declare const styles: {
     readonly sectionSubtitle: string;
     readonly sectionTitle: string;
 };
-export = styles;
+
+export default styles;

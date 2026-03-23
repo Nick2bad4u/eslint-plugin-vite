@@ -1,4 +1,5 @@
 ---
+id: 0001-vite-first-rule-scope
 title: ADR 0001 — Focus rules on Vite and Vitest runtime contracts
 sidebar_position: 2
 ---

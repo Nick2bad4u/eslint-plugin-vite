@@ -1,6 +1,8 @@
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
+import { suppressKnownWebpackWarningsPlugin } from "./src/plugins/suppressKnownWebpackWarningsPlugin";
+
 const organizationName = "Nick2bad4u";
 const projectName = "eslint-plugin-vite";
 const siteUrl = "https://nick2bad4u.github.io";
@@ -94,6 +96,7 @@ const config: Config = {
                 sidebarPath: "./sidebars.rules.ts",
             },
         ],
+        suppressKnownWebpackWarningsPlugin,
     ],
     themeConfig: {
         image: "img/logo.png",

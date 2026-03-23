@@ -28,8 +28,10 @@ const isVitestProjectFactoryCall = (
     (node.callee.name === "defineConfig" ||
         node.callee.name === "defineProject");
 
-/** Resolve the object expression for an inline Vitest project entry when
-possible. */
+/**
+ * Resolve the object expression for an inline Vitest project entry when
+ * possible.
+ */
 export const getInlineVitestProjectEntry = (
     element: Readonly<TSESTree.ArrayExpression["elements"][number]>,
     containerKind: VitestInlineProjectContainerKind
@@ -162,8 +164,10 @@ export const getStaticVitestProjectName = (
     return getStaticStringValueFromPropertyValue(nameValue);
 };
 
-/** Resolve the call-wrapper used for an inline Vitest project entry when
-present. */
+/**
+ * Resolve the call-wrapper used for an inline Vitest project entry when
+ * present.
+ */
 export const getVitestProjectFactoryCallName = (
     projectEntry: Readonly<VitestInlineProjectEntry>
 ): undefined | VitestProjectFactoryCallName =>

@@ -10,10 +10,12 @@ import type { KnipConfig } from "knip";
  * repository layout.
  */
 const knipConfig: KnipConfig = {
-    $schema: "https://unpkg.com/knip@5/schema.json",
+    $schema: "https://unpkg.com/knip@6/schema.json",
     entry: [],
     ignore: [
-        "docs/docusaurus/src/css/custom.css.d.ts",
+        "docs/docusaurus/src/components/HomePage.module.css.d.ts",
+        "docs/docusaurus/src/theme/prism-include-languages.js",
+        "docs/docusaurus/typedoc.local.config.mjs",
         "docs/docusaurus/typedoc-plugins/hashToBangLinks.mjs",
         "docs/docusaurus/typedoc-plugins/hashToBangLinksCore.d.mts",
         "docs/docusaurus/typedoc-plugins/hashToBangLinksCore.mjs",
@@ -32,7 +34,6 @@ const knipConfig: KnipConfig = {
         ".*prettier.*",
         "@docusaurus/faster",
         "@easyops-cn/docusaurus-search-local",
-        "@easyops-cn/docusaurus-theme-docusaurus-search-local",
         "@eslint.*",
         "@microsoft/tsdoc-config",
         "@secretlint/secretlint-rule-anthropic",
@@ -49,9 +50,10 @@ const knipConfig: KnipConfig = {
         "@secretlint/secretlint-rule-privatekey",
         "@secretlint/secretlint-rule-secp256k1-privatekey",
         "@stylelint.*",
+        "@stryker-ignorer/*",
+        "@stryker-mutator/*",
         "@types.*",
         "eslint.*",
-        "madge",
         "postcss.*",
         "remark.*",
         "stylelint.*",
@@ -69,7 +71,6 @@ const knipConfig: KnipConfig = {
         "leasot",
         "markdown-link-check",
         "sloc",
-        "storybook",
         "yamllint-js",
         "react",
     ],

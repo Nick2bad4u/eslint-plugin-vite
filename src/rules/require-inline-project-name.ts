@@ -8,8 +8,10 @@ import {
 
 type MessageId = "requireInlineProjectName";
 
-/** Require inline Vitest workspace and project entries to declare a project
-name. */
+/**
+ * Require inline Vitest workspace and project entries to declare a project
+ * name.
+ */
 const requireInlineProjectNameRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], MessageId>({
         create(context) {

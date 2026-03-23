@@ -213,6 +213,8 @@ export const replaceReadmeRulesTable = (markdown) => {
 };
 
 const shouldWrite = process.argv.includes("--write");
+const shouldPrint = process.argv.includes("--print");
+const shouldCheck = !shouldWrite && !shouldPrint;
 
 if (
     process.argv[1] !== undefined &&
@@ -223,7 +225,17 @@ if (
 
     if (shouldWrite) {
         await writeFile(README_PATH, nextReadme);
-    } else {
+
+        process.stdout.write("README rules table synced.\n");
+    } else if (shouldPrint) {
         process.stdout.write(nextReadme);
+    } else if (shouldCheck && readme !== nextReadme) {
+        process.stderr.write(
+            [
+                "README generated rules table is out of sync.",
+                "Run: npm run sync:readme-rules-table:write",
+            ].join("\n") + "\n"
+        );
+        process.exitCode = 1;
     }
 }
