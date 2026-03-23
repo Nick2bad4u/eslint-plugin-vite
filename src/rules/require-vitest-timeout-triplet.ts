@@ -1,3 +1,5 @@
+import type { TSESTree } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import {
     type ConfigFileKind,
@@ -33,9 +35,10 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
             let hasTestTimeout = false;
             let hasHookTimeout = false;
             let hasTeardownTimeout = false;
+            let firstTestPropertyNode: null | TSESTree.Property = null;
 
             return {
-                "Program:exit"(node) {
+                "Program:exit"(programNode) {
                     if (
                         !shouldRequireTimeoutTriplet(
                             configFileKind,
@@ -55,7 +58,7 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
 
                     context.report({
                         messageId: "missingTimeoutTriplet",
-                        node,
+                        node: firstTestPropertyNode ?? programNode,
                     });
                 },
                 Property(node) {
@@ -63,6 +66,10 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
 
                     if (propertyPath[0] === "test") {
                         hasAnyTestConfig = true;
+
+                        if (firstTestPropertyNode === null) {
+                            firstTestPropertyNode = node;
+                        }
                     }
 
                     if (

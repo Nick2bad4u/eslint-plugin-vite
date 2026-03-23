@@ -1,3 +1,5 @@
+import type { TSESTree } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import {
     type ConfigFileKind,
@@ -26,9 +28,10 @@ const requireVitestSlowTestThresholdRule: ReturnType<typeof createTypedRule> =
 
             let hasAnyTestConfig = false;
             let hasSlowTestThreshold = false;
+            let firstTestPropertyNode: null | TSESTree.Property = null;
 
             return {
-                "Program:exit"(node) {
+                "Program:exit"(programNode) {
                     if (
                         hasSlowTestThreshold ||
                         !shouldRequireSlowThreshold(
@@ -41,7 +44,7 @@ const requireVitestSlowTestThresholdRule: ReturnType<typeof createTypedRule> =
 
                     context.report({
                         messageId: "missingSlowTestThreshold",
-                        node,
+                        node: firstTestPropertyNode ?? programNode,
                     });
                 },
                 Property(node) {
@@ -49,6 +52,10 @@ const requireVitestSlowTestThresholdRule: ReturnType<typeof createTypedRule> =
 
                     if (propertyPath[0] === "test") {
                         hasAnyTestConfig = true;
+
+                        if (firstTestPropertyNode === null) {
+                            firstTestPropertyNode = node;
+                        }
                     }
 
                     if (

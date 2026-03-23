@@ -76,9 +76,12 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
         let hasAnyTestConfig = false;
         let hasExplicitCacheDir = false;
         let hasDefaultCacheDir = false;
+        let firstTestPropertyNode: null | TSESTree.Property = null;
+        let defaultCacheDirNode: null | TSESTree.Property = null;
+        let defaultCacheDirValue: null | string = null;
 
         return {
-            "Program:exit"(node) {
+            "Program:exit"(programNode) {
                 if (!hasAnyTestConfig && configFileKind !== "workspace") {
                     return;
                 }
@@ -86,7 +89,7 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
                 if (!hasExplicitCacheDir) {
                     context.report({
                         messageId: "missingCacheDirInMonorepo",
-                        node,
+                        node: firstTestPropertyNode ?? programNode,
                     });
 
                     return;
@@ -97,8 +100,14 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
                 }
 
                 context.report({
+                    data: {
+                        value: defaultCacheDirValue ?? "node_modules/.vitest",
+                    },
                     messageId: "defaultCacheDirInMonorepo",
-                    node,
+                    node:
+                        defaultCacheDirNode ??
+                        firstTestPropertyNode ??
+                        programNode,
                 });
             },
             Property(node) {
@@ -106,6 +115,10 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
 
                 if (propertyPath[0] === "test") {
                     hasAnyTestConfig = true;
+
+                    if (firstTestPropertyNode === null) {
+                        firstTestPropertyNode = node;
+                    }
                 }
 
                 if (
@@ -132,6 +145,8 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
 
                 if (defaultCacheDirValues.has(staticString)) {
                     hasDefaultCacheDir = true;
+                    defaultCacheDirNode = node;
+                    defaultCacheDirValue = staticString;
                 }
             },
         };
@@ -155,7 +170,7 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
         },
         messages: {
             defaultCacheDirInMonorepo:
-                "Use a non-default cache dir in monorepos to avoid cross-project cache collisions.",
+                "Use a non-default cache dir in monorepos to avoid cross-project cache collisions (current value: {{value}}).",
             missingCacheDirInMonorepo:
                 "Set an explicit Vitest cache dir in monorepos for deterministic cache ownership.",
         },

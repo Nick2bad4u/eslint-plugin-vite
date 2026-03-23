@@ -34,9 +34,11 @@ const noVitestTimeoutTripletMismatchRule: ReturnType<typeof createTypedRule> =
             let testTimeout: null | number = null;
             let hookTimeout: null | number = null;
             let teardownTimeout: null | number = null;
+            let hookTimeoutNode: null | TSESTree.Property = null;
+            let teardownTimeoutNode: null | TSESTree.Property = null;
 
             return {
-                "Program:exit"(node) {
+                "Program:exit"(programNode) {
                     if (
                         testTimeout === null ||
                         hookTimeout === null ||
@@ -47,8 +49,15 @@ const noVitestTimeoutTripletMismatchRule: ReturnType<typeof createTypedRule> =
                     }
 
                     context.report({
+                        data: {
+                            hookTimeout: String(hookTimeout),
+                            teardownTimeout: String(teardownTimeout),
+                        },
                         messageId: "timeoutTripletMismatch",
-                        node,
+                        node:
+                            teardownTimeoutNode ??
+                            hookTimeoutNode ??
+                            programNode,
                     });
                 },
                 Property(node) {
@@ -75,6 +84,7 @@ const noVitestTimeoutTripletMismatchRule: ReturnType<typeof createTypedRule> =
                         )
                     ) {
                         hookTimeout = value;
+                        hookTimeoutNode = node;
                     }
 
                     if (
@@ -84,6 +94,7 @@ const noVitestTimeoutTripletMismatchRule: ReturnType<typeof createTypedRule> =
                         )
                     ) {
                         teardownTimeout = value;
+                        teardownTimeoutNode = node;
                     }
                 },
             };
@@ -107,7 +118,7 @@ const noVitestTimeoutTripletMismatchRule: ReturnType<typeof createTypedRule> =
             },
             messages: {
                 timeoutTripletMismatch:
-                    "`test.teardownTimeout` should be greater than or equal to `test.hookTimeout` for consistent teardown behavior.",
+                    "`test.teardownTimeout` ({{teardownTimeout}}) should be greater than or equal to `test.hookTimeout` ({{hookTimeout}}) for consistent teardown behavior.",
             },
             schema: [],
             type: "problem",

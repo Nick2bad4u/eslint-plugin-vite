@@ -1,3 +1,5 @@
+import type { TSESTree } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import {
     type ConfigFileKind,
@@ -26,9 +28,10 @@ const requireVitestExplicitEnvironmentRule: ReturnType<typeof createTypedRule> =
 
             let hasAnyTestConfig = false;
             let hasExplicitEnvironment = false;
+            let firstTestPropertyNode: null | TSESTree.Property = null;
 
             return {
-                "Program:exit"(node) {
+                "Program:exit"(programNode) {
                     if (
                         hasExplicitEnvironment ||
                         !shouldRequireEnvironment(
@@ -41,7 +44,7 @@ const requireVitestExplicitEnvironmentRule: ReturnType<typeof createTypedRule> =
 
                     context.report({
                         messageId: "missingEnvironment",
-                        node,
+                        node: firstTestPropertyNode ?? programNode,
                     });
                 },
                 Property(node) {
@@ -49,6 +52,9 @@ const requireVitestExplicitEnvironmentRule: ReturnType<typeof createTypedRule> =
 
                     if (propertyPath[0] === "test") {
                         hasAnyTestConfig = true;
+                        if (firstTestPropertyNode === null) {
+                            firstTestPropertyNode = node;
+                        }
                     }
 
                     if (
