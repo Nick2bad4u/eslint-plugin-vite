@@ -209,7 +209,7 @@ export type ViteConfigs = typeof viteConfigs;
 const vitePlugin: VitePluginContract = {
     configs: viteConfigs,
     meta: {
-        name: "eslint-plugin-vite",
+        name: "@typpi/eslint-plugin-vite",
         namespace: "vite",
         version: getPackageVersion(packageJson),
     },

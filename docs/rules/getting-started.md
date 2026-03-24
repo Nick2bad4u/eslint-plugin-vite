@@ -10,7 +10,7 @@ description: Install and configure eslint-plugin-vite with modern flat config.
 ## Installation
 
 ```sh
-npm install --save-dev eslint-plugin-vite eslint
+npm install --save-dev @typpi/eslint-plugin-vite eslint
 ```
 
 If your repository already uses Vite or Vitest, you do not need to change how those tools run just to adopt this plugin.
@@ -18,7 +18,7 @@ If your repository already uses Vite or Vitest, you do not need to change how th
 ## Quick start
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended];
 ```
@@ -30,7 +30,7 @@ That preset already configures `@typescript-eslint/parser` for the files it targ
 ### Vite app with client-side env and glob usage
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended, vite.configs.client];
 ```
@@ -38,7 +38,7 @@ export default [vite.configs.recommended, vite.configs.client];
 ### Vitest monorepo with workspaces
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended, vite.configs.vitest];
 ```
@@ -46,7 +46,7 @@ export default [vite.configs.recommended, vite.configs.vitest];
 ### Repository with dedicated benchmark files
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended, vite.configs.vitest-bench];
 ```
@@ -54,7 +54,7 @@ export default [vite.configs.recommended, vite.configs.vitest-bench];
 ### Stricter rollout after the baseline is clean
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.strict];
 ```

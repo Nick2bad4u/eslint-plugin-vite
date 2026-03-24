@@ -176,7 +176,7 @@ const config: Config = {
                     items: [
                         {
                             label: "npm",
-                            href: "https://www.npmjs.com/package/eslint-plugin-vite",
+                            href: "https://www.npmjs.com/package/@typpi/eslint-plugin-vite",
                         },
                         {
                             label: "Repository",

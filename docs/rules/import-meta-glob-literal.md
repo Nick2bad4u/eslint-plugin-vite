@@ -59,7 +59,7 @@ const modules = import.meta.glob([
 ## ESLint flat config example
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.client];
 ```

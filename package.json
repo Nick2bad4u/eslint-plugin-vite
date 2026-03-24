@@ -1,6 +1,6 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
-    "name": "eslint-plugin-vite",
+    "name": "@typpi/eslint-plugin-vite",
     "version": "1.0.8",
     "private": false,
     "description": "ESLint rules for Vite, Vitest, and Vitest bench configuration and runtime patterns.",

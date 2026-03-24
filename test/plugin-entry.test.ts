@@ -4,7 +4,7 @@ import vitePlugin from "../src/plugin.js";
 
 describe("plugin entry", () => {
     it("exposes stable plugin metadata", () => {
-        expect(vitePlugin.meta.name).toBe("eslint-plugin-vite");
+        expect(vitePlugin.meta.name).toBe("@typpi/eslint-plugin-vite");
         expect(vitePlugin.meta.namespace).toBe("vite");
         expect(vitePlugin.meta.version).toMatch(/^\d+\.\d+\.\d+/v);
     });

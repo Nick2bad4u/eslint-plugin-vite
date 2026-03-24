@@ -5,9 +5,9 @@ import type {
     VitePresetConfig,
     ViteRuleId,
     ViteRuleName,
-} from "eslint-plugin-vite";
+} from "@typpi/eslint-plugin-vite";
 
-import vitePlugin from "eslint-plugin-vite";
+import vitePlugin from "@typpi/eslint-plugin-vite";
 
 declare const plugin: VitePlugin;
 declare const configName: ViteConfigName;

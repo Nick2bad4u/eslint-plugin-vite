@@ -7,7 +7,7 @@ This preset focuses on low-false-positive mistakes that often become build error
 ## Flat config
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended];
 ```
@@ -21,6 +21,7 @@ export default [vite.configs.recommended];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
+
 | Rule                                                                                | Fix |
 | :---------------------------------------------------------------------------------- | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)           |  —  |
@@ -33,4 +34,5 @@ export default [vite.configs.recommended];
 | [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  |
 | [`vite/require-inline-project-name`](../require-inline-project-name.md)             |  —  |
 | [`vite/no-unsupported-project-options`](../no-unsupported-project-options.md)       |  —  |
+
 <!-- end generated preset rules -->

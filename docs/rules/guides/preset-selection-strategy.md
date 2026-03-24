@@ -7,7 +7,7 @@ Choose presets by **where the risk lives** in your repository.
 If you are unsure, start with:
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended];
 ```

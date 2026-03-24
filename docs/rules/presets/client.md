@@ -7,7 +7,7 @@ This preset is useful alongside `recommended`, especially in front-end applicati
 ## Flat config
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended, vite.configs.client];
 ```
@@ -21,9 +21,11 @@ export default [vite.configs.recommended, vite.configs.client];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
+
 | Rule                                                                                | Fix |
 | :---------------------------------------------------------------------------------- | :-: |
 | [`vite/import-meta-glob-literal`](../import-meta-glob-literal.md)                   |  —  |
 | [`vite/no-dynamic-import-meta-env-access`](../no-dynamic-import-meta-env-access.md) |  —  |
 | [`vite/no-restricted-import-meta-env`](../no-restricted-import-meta-env.md)         |  —  |
+
 <!-- end generated preset rules -->

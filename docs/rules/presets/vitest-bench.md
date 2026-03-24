@@ -7,7 +7,7 @@ This preset helps keep benchmark suites separate from correctness tests.
 ## Flat config
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.vitest-bench];
 ```
@@ -21,6 +21,7 @@ export default [vite.configs.vitest-bench];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
+
 | Rule                                                                                            | Fix |
 | :---------------------------------------------------------------------------------------------- | :-: |
 | [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)                       |  —  |
@@ -31,4 +32,5 @@ export default [vite.configs.vitest-bench];
 | [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)         |  —  |
 | [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)           |  —  |
 | [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                   |  —  |
+
 <!-- end generated preset rules -->

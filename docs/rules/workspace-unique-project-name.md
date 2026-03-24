@@ -65,7 +65,7 @@ export default defineWorkspace([
 ## ESLint flat config example
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.vitest];
 ```

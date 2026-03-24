@@ -7,13 +7,13 @@ sidebar_position: 2
 Install the plugin:
 
 ```bash
-npm install --save-dev eslint-plugin-vite eslint
+npm install --save-dev @typpi/eslint-plugin-vite eslint
 ```
 
 Then enable a preset in your flat config:
 
 ```ts
-import vite from "eslint-plugin-vite";
+import vite from "@typpi/eslint-plugin-vite";
 
 export default [vite.configs.recommended];
 ```
