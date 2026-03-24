@@ -20,6 +20,8 @@ When Vite projects go wrong, the problem is often not a generic syntax issue. It
 
 That is why `eslint-plugin-vite` is intentionally centered on config safety and workspace correctness.
 
+<!-- truncate -->
+
 ## A focused scope keeps the plugin useful
 
 General-purpose ESLint stacks already cover broad style and correctness concerns. This plugin earns its place by catching issues that those broader stacks typically do not model.

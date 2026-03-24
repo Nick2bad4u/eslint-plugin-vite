@@ -15,6 +15,8 @@ tags:
 
 That baseline work matters because the project is no longer a generic plugin template. The site, manifest, and docs structure need to communicate that this package is about Vite config safety, client-runtime correctness, and Vitest workspace discipline.
 
+<!-- truncate -->
+
 ## What changed in the baseline pass
 
 - Vite-branded icons and favicon assets were generated for the docs site.

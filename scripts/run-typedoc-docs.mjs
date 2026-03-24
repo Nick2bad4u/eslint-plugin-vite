@@ -168,13 +168,13 @@ function sanitizeGeneratedApiMarkdownLine(line) {
 function toPlainTextTypeSnippet(markdownText) {
     return markdownText
         .replaceAll(/^>\s*/gu, "")
-        .replaceAll(/\*\*/gu, "")
+        .replaceAll("**", "")
         .replaceAll(/\[([^\]]+)\]\([^)]*\)/gu, "$1")
         .replaceAll("&lt;", "<")
         .replaceAll("&gt;", ">")
         .replaceAll("&#123;", "{")
         .replaceAll("&#125;", "}")
-        .replace(/_typeof_/gu, "typeof")
+        .replaceAll("_typeof_", "typeof")
         .trim();
 }
 

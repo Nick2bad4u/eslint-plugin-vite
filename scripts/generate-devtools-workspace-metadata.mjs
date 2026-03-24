@@ -81,17 +81,29 @@ function readExistingUuid() {
     }
 }
 
+/**
+ * @param {unknown} repositoryPackageName
+ *
+ * @returns {string}
+ */
+function getWorkspacePackageName(repositoryPackageName) {
+    if (
+        typeof repositoryPackageName === "string" &&
+        repositoryPackageName.length > 0
+    ) {
+        return repositoryPackageName;
+    }
+
+    return basename(repositoryRoot);
+}
+
 try {
     const repositoryPackageJson = loadRepositoryPackageJson();
     const repositoryPackageName = repositoryPackageJson["name"];
     const workspaceUuid = shouldRegenerateUuid
         ? randomUUID()
         : (readExistingUuid() ?? randomUUID());
-    const packageName =
-        typeof repositoryPackageName === "string" &&
-        repositoryPackageName.length > 0
-            ? repositoryPackageName
-            : basename(repositoryRoot);
+    const packageName = getWorkspacePackageName(repositoryPackageName);
     const metadataJson = `${JSON.stringify(
         {
             workspace: {

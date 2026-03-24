@@ -55,6 +55,9 @@ const config: Config = {
         },
     ],
     markdown: {
+        hooks: {
+            onBrokenMarkdownLinks: "warn",
+        },
         mermaid: true,
     },
     url: siteUrl,
@@ -62,7 +65,6 @@ const config: Config = {
     organizationName,
     projectName,
     onBrokenLinks: "throw",
-    onBrokenMarkdownLinks: "warn",
     i18n: {
         defaultLocale: "en",
         locales: ["en"],

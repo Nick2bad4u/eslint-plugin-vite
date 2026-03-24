@@ -67,10 +67,9 @@ export default function Home() {
                                 eslint-plugin-vite
                             </Heading>
                             <p className={styles.heroSubtitle}>
-                                ESLint rules for Vite config files, client-side
-                                <code>import.meta.*</code>
-                                patterns, Vitest workspaces, and Vitest
-                                benchmarks.
+                                ESLint rules for Vite config files, client-side{" "}
+                                <code>import.meta.*</code> patterns, Vitest
+                                workspaces, and Vitest benchmarks.
                             </p>
                             <div className={styles.heroActions}>
                                 <Link

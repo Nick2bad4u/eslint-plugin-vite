@@ -1,6 +1,8 @@
 // @ts-check
 
 const SCHEME_RE = /^[a-zA-Z][a-zA-Z+.-]*:/u;
+const MARKDOWN_EXTENSION_RE = /\.mdx?$/u;
+const DIRECTORY_INDEX_SUFFIX = "/index";
 
 /**
  * @typedef {{ marker: "`" | "~"; length: number }} FenceState
@@ -90,17 +92,29 @@ function prefixIfBareRelativeMarkdownFile(url) {
 
     const hashIndex = trimmed.indexOf("#");
     const beforeHash = hashIndex === -1 ? trimmed : trimmed.slice(0, hashIndex);
+    const afterHash = hashIndex === -1 ? "" : trimmed.slice(hashIndex);
 
     const queryIndex = beforeHash.indexOf("?");
     const pathname =
         queryIndex === -1 ? beforeHash : beforeHash.slice(0, queryIndex);
+    const suffix =
+        queryIndex === -1
+            ? afterHash
+            : `${beforeHash.slice(queryIndex)}${afterHash}`;
 
     // Only touch markdown-file links.
     if (!pathname.endsWith(".md") && !pathname.endsWith(".mdx")) {
         return url;
     }
 
-    return `${leadingWs}./${trimmed}${trailingWs}`;
+    const extensionlessPathname = pathname.replace(MARKDOWN_EXTENSION_RE, "");
+    const normalizedPathname = extensionlessPathname.endsWith(
+        DIRECTORY_INDEX_SUFFIX
+    )
+        ? extensionlessPathname.slice(0, -DIRECTORY_INDEX_SUFFIX.length)
+        : extensionlessPathname;
+
+    return `${leadingWs}./${normalizedPathname}${suffix}${trailingWs}`;
 }
 
 /**
@@ -154,6 +168,82 @@ function findInlineLinkClosingParen(input, startIndex) {
 }
 
 /**
+ * @param {string} core
+ *
+ * @returns {{ destination: string; remainder: string } | null}
+ */
+function splitAngleWrappedInlineLinkDestination(core) {
+    if (!core.startsWith("<")) {
+        return null;
+    }
+
+    let i = 1;
+    while (i < core.length) {
+        const ch = core.charAt(i);
+
+        if (ch === "\\") {
+            i += 2;
+            continue;
+        }
+
+        if (ch === ">") {
+            return {
+                destination: core.slice(0, i + 1),
+                remainder: core.slice(i + 1),
+            };
+        }
+
+        i += 1;
+    }
+
+    return { destination: core, remainder: "" };
+}
+
+/**
+ * @param {string} core
+ *
+ * @returns {{ destination: string; remainder: string }}
+ */
+function splitRawInlineLinkDestination(core) {
+    let depth = 0;
+    let i = 0;
+
+    while (i < core.length) {
+        const ch = core.charAt(i);
+
+        if (ch === "(") {
+            depth += 1;
+            i += 1;
+            continue;
+        }
+
+        if (ch === ")") {
+            if (depth > 0) {
+                depth -= 1;
+            }
+            i += 1;
+            continue;
+        }
+
+        if (ch === "\\") {
+            i += 2;
+            continue;
+        }
+
+        if (depth === 0 && /\s/u.test(ch)) {
+            return {
+                destination: core.slice(0, i),
+                remainder: core.slice(i),
+            };
+        }
+
+        i += 1;
+    }
+
+    return { destination: core, remainder: "" };
+}
+
+/**
  * Splits a Markdown inline link payload into destination + remainder.
  *
  * The payload is the text inside `(...)` for an inline link.
@@ -171,67 +261,81 @@ function splitInlineLinkDestination(payload) {
         return { destination: "", remainder: "" };
     }
 
-    // Destination in angle brackets: <...>
-    if (core.startsWith("<")) {
-        let i = 1;
-        while (i < core.length) {
-            const ch = core.charAt(i);
+    const angleWrappedDestination =
+        splitAngleWrappedInlineLinkDestination(core);
 
-            if (ch === "\\") {
-                i += 2;
-            } else if (ch === ">") {
-                return {
-                    destination: core.slice(0, i + 1),
-                    remainder: core.slice(i + 1),
-                };
-            } else {
-                i += 1;
-            }
-        }
-
-        // Unclosed `<...`; treat whole thing as destination.
-        return { destination: core, remainder: "" };
+    if (angleWrappedDestination !== null) {
+        return angleWrappedDestination;
     }
 
-    // Raw destination: ends at first whitespace at depth 0.
-    let depth = 0;
-    let i = 0;
-    while (i < core.length) {
-        const ch = core.charAt(i);
+    return splitRawInlineLinkDestination(core);
+}
 
-        switch (ch) {
-            case "(": {
-                depth += 1;
-                i += 1;
+/**
+ * @param {string} line
+ * @param {number} startIndex
+ * @param {string} char
+ *
+ * @returns {number}
+ */
+function countRun(line, startIndex, char) {
+    let count = 0;
+    while (
+        startIndex + count < line.length &&
+        line.charAt(startIndex + count) === char
+    ) {
+        count += 1;
+    }
+    return count;
+}
 
-                break;
-            }
-            case ")": {
-                if (depth > 0) {
-                    depth -= 1;
-                }
-                i += 1;
-
-                break;
-            }
-            case "\\": {
-                i += 2;
-
-                break;
-            }
-            default: {
-                if (depth === 0 && /\s/u.test(ch)) {
-                    return {
-                        destination: core.slice(0, i),
-                        remainder: core.slice(i),
-                    };
-                }
-                i += 1;
-            }
-        }
+/**
+ * @param {null | number} codeSpanLength
+ * @param {number} tickRun
+ *
+ * @returns {null | number}
+ */
+function getNextCodeSpanLength(codeSpanLength, tickRun) {
+    if (codeSpanLength === null) {
+        return tickRun;
     }
 
-    return { destination: core, remainder: "" };
+    return tickRun === codeSpanLength ? null : codeSpanLength;
+}
+
+/**
+ * @param {string} line
+ * @param {number} closeBracketIndex
+ *
+ * @returns {{ nextIndex: number; rewrittenText: string }}
+ */
+function rewriteInlineLinkAt(line, closeBracketIndex) {
+    const labelOpen = findInlineLinkLabelOpenBracket(line, closeBracketIndex);
+
+    if (labelOpen === -1) {
+        return {
+            nextIndex: closeBracketIndex + 1,
+            rewrittenText: line.charAt(closeBracketIndex),
+        };
+    }
+
+    const urlStart = closeBracketIndex + 2;
+    const end = findInlineLinkClosingParen(line, urlStart);
+
+    if (end === -1) {
+        return {
+            nextIndex: closeBracketIndex + 1,
+            rewrittenText: line.charAt(closeBracketIndex),
+        };
+    }
+
+    const payload = line.slice(urlStart, end);
+    const rewrittenPayload = prefixInlineLinkPayload(payload);
+
+    return {
+        nextIndex: end + 1,
+        rewrittenText: `](${rewrittenPayload})`,
+    };
 }
 
 /**
@@ -285,32 +389,11 @@ function prefixInlineMarkdownLinksInLine(line) {
     /** @type {null | number} */
     let codeSpanLength = null;
 
-    /**
-     * Counts how many times `char` repeats starting at `startIndex`.
-     *
-     * @param {number} startIndex
-     * @param {string} char
-     */
-    const countRun = (startIndex, char) => {
-        let count = 0;
-        while (
-            startIndex + count < line.length &&
-            line.charAt(startIndex + count) === char
-        ) {
-            count += 1;
-        }
-        return count;
-    };
-
     while (i < line.length) {
         // Inline code spans (backticks). Track the opening run length and only close on the same length.
-        const tickRun = line.charAt(i) === "`" ? countRun(i, "`") : 0;
+        const tickRun = line.charAt(i) === "`" ? countRun(line, i, "`") : 0;
         if (tickRun > 0) {
-            if (codeSpanLength === null) {
-                codeSpanLength = tickRun;
-            } else if (tickRun === codeSpanLength) {
-                codeSpanLength = null;
-            }
+            codeSpanLength = getNextCodeSpanLength(codeSpanLength, tickRun);
 
             out += line.slice(i, i + tickRun);
             i += tickRun;
@@ -319,27 +402,10 @@ function prefixInlineMarkdownLinksInLine(line) {
             line.charAt(i) === "]" &&
             line.charAt(i + 1) === "("
         ) {
-            // Ensure this is actually a `[label](` sequence, not random text containing `](`.
-            const labelOpen = findInlineLinkLabelOpenBracket(line, i);
+            const { nextIndex, rewrittenText } = rewriteInlineLinkAt(line, i);
 
-            if (labelOpen === -1) {
-                out += line.charAt(i);
-                i += 1;
-            } else {
-                const urlStart = i + 2;
-                const end = findInlineLinkClosingParen(line, urlStart);
-
-                if (end === -1) {
-                    out += line.charAt(i);
-                    i += 1;
-                } else {
-                    const payload = line.slice(urlStart, end);
-                    const rewrittenPayload = prefixInlineLinkPayload(payload);
-
-                    out += `](${rewrittenPayload})`;
-                    i = end + 1;
-                }
-            }
+            out += rewrittenText;
+            i = nextIndex;
         } else {
             out += line.charAt(i);
             i += 1;
