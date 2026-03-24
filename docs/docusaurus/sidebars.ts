@@ -21,7 +21,7 @@ const sidebars: SidebarsConfig = {
                         "adr/0001-vite-first-rule-scope",
                         "adr/0002-hand-authored-docs-and-synced-catalogs",
                     ],
-                    label: "ADRs",
+                    label: "🗺️ ADRs",
                     link: {
                         id: "adr/index",
                         type: "doc",
@@ -34,7 +34,7 @@ const sidebars: SidebarsConfig = {
                         "charts/plugin-architecture",
                         "charts/rule-lifecycle",
                     ],
-                    label: "Charts",
+                    label: "📊 Charts",
                     link: {
                         id: "charts/index",
                         type: "doc",
@@ -42,7 +42,7 @@ const sidebars: SidebarsConfig = {
                     type: "category",
                 },
             ],
-            label: "Developer",
+            label: "🧭 Developer",
             link: {
                 id: "developer/index",
                 type: "doc",

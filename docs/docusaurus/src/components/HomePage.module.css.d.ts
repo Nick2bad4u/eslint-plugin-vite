@@ -23,7 +23,13 @@ declare const styles: {
     readonly heroKicker: string;
     readonly heroLiveBadges: string;
     readonly heroPanel: string;
+    readonly heroPanelBody: string;
+    readonly heroPanelLink: string;
+    readonly heroPanelList: string;
     readonly heroPanelLogo: string;
+    readonly heroPanelSection: string;
+    readonly heroPanelSections: string;
+    readonly heroPanelTitle: string;
     readonly heroStatCard: string;
     readonly heroStatDescription: string;
     readonly heroStatHeading: string;

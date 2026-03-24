@@ -21,7 +21,6 @@ export default [vite.configs.recommended];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-
 | Rule                                                                                | Fix |
 | :---------------------------------------------------------------------------------- | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)           |  —  |
@@ -34,5 +33,4 @@ export default [vite.configs.recommended];
 | [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  |
 | [`vite/require-inline-project-name`](../require-inline-project-name.md)             |  —  |
 | [`vite/no-unsupported-project-options`](../no-unsupported-project-options.md)       |  —  |
-
 <!-- end generated preset rules -->

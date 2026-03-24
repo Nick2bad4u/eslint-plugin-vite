@@ -21,7 +21,6 @@ export default [vite.configs.recommended, vite.configs.vitepress];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-
 | Rule                                                                                              | Fix |
 | :------------------------------------------------------------------------------------------------ | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)                         |  —  |
@@ -34,5 +33,4 @@ export default [vite.configs.recommended, vite.configs.vitepress];
 | [`vite/no-vitepress-empty-head`](../no-vitepress-empty-head.md)                                   |  —  |
 | [`vite/require-vitepress-title-or-titletemplate`](../require-vitepress-title-or-titletemplate.md) |  —  |
 | [`vite/require-vitepress-clean-urls-explicit`](../require-vitepress-clean-urls-explicit.md)       |  —  |
-
 <!-- end generated preset rules -->

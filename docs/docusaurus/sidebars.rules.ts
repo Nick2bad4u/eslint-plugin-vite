@@ -15,7 +15,7 @@ const sidebars: SidebarsConfig = {
         {
             className: "sb-cat-guides",
             type: "category",
-            label: "Guides",
+            label: "📘 Guides",
             items: [
                 "guides/adoption-checklist",
                 "guides/rollout-and-fix-safety",
@@ -26,7 +26,7 @@ const sidebars: SidebarsConfig = {
         {
             className: "sb-cat-presets",
             type: "category",
-            label: "Presets",
+            label: "🛠️ Presets",
             link: {
                 type: "doc",
                 id: "presets/index",
@@ -77,7 +77,7 @@ const sidebars: SidebarsConfig = {
         {
             className: "sb-cat-rules",
             type: "category",
-            label: "Rules",
+            label: "📏 Rules",
             items: [
                 "config-require-define-config",
                 "import-meta-glob-literal",

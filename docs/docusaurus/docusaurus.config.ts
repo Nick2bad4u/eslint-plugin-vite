@@ -1,5 +1,6 @@
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import type { PluginOptions as SearchLocalPluginOptions } from "@easyops-cn/docusaurus-search-local";
 
 import { suppressKnownWebpackWarningsPlugin } from "./src/plugins/suppressKnownWebpackWarningsPlugin";
 
@@ -87,7 +88,23 @@ const config: Config = {
             } satisfies Preset.Options,
         ],
     ],
-    themes: ["@docusaurus/theme-mermaid"],
+    themes: [
+        "@docusaurus/theme-mermaid",
+        [
+            "@easyops-cn/docusaurus-search-local",
+            {
+                docsRouteBasePath: ["docs", "docs/rules"],
+                explicitSearchResultPath: true,
+                hashed: true,
+                indexBlog: true,
+                indexDocs: true,
+                indexPages: true,
+                searchBarPosition: "right",
+                searchBarShortcut: true,
+                searchBarShortcutHint: true,
+            } satisfies SearchLocalPluginOptions,
+        ],
+    ],
     plugins: [
         [
             "@docusaurus/plugin-content-docs",
@@ -116,71 +133,118 @@ const config: Config = {
             },
             items: [
                 {
-                    label: "Docs",
+                    label: "📚 Docs",
                     to: "/docs/intro",
                 },
                 {
-                    label: "Rules",
+                    label: "📜 Rules",
                     to: "/docs/rules/overview",
                 },
                 {
-                    label: "Presets",
+                    label: "🛠️ Presets",
                     to: "/docs/rules/presets",
                 },
                 {
-                    label: "Blog",
+                    label: "📰 Blog",
                     to: "/blog",
+                    position: "right",
+                },
+                {
+                    label: "🧭 Dev",
+                    position: "right",
+                    items: [
+                        {
+                            label: "Developer guide",
+                            to: "/docs/developer",
+                        },
+                        {
+                            label: "ADRs",
+                            to: "/docs/adr",
+                        },
+                        {
+                            label: "Charts",
+                            to: "/docs/charts",
+                        },
+                        {
+                            label: "API docs",
+                            to: "/docs/developer/api",
+                        },
+                    ],
                 },
                 {
                     href: "https://github.com/Nick2bad4u/eslint-plugin-vite",
-                    label: "GitHub",
+                    label: " GitHub",
                     position: "right",
+                },
+                {
+                    position: "right",
+                    type: "search",
                 },
             ],
         },
         footer: {
-            copyright: `Copyright © ${new Date().getFullYear()} ${organizationName}.`,
+            copyright: `<a class="footer__brand" href="${baseUrl}"><img alt="eslint-plugin-vite logo" src="${baseUrl}img/logo.svg" /></a><span>© ${new Date().getFullYear()} <a href="https://github.com/${organizationName}/">${organizationName}</a> 💻 Built with <a href="https://docusaurus.io/">🦖 Docusaurus</a>.</span>`,
             links: [
                 {
-                    title: "Docs",
+                    title: "📚 Explore",
                     items: [
                         {
-                            label: "Getting started",
-                            to: "/docs/getting-started",
-                        },
-                        {
-                            label: "Rule overview",
+                            label: "🏁 Overview",
                             to: "/docs/rules/overview",
                         },
                         {
-                            label: "Preset reference",
+                            label: "📖 Getting started",
+                            to: "/docs/getting-started",
+                        },
+                        {
+                            label: "🛠️ Presets",
                             to: "/docs/rules/presets",
                         },
                         {
-                            label: "Architecture decisions",
-                            to: "/docs/adr",
+                            label: "📏 Rule reference",
+                            to: "/docs/rules/overview",
                         },
                     ],
                 },
                 {
-                    title: "Updates",
+                    title: "📁 Project",
                     items: [
                         {
-                            label: "Maintainer blog",
-                            to: "/blog",
+                            label: " Releases",
+                            href: "https://github.com/Nick2bad4u/eslint-plugin-vite/releases",
+                        },
+                        {
+                            label: " ESLint Inspector",
+                            href: `${siteUrl}${baseUrl}eslint-inspector/`,
+                        },
+                        {
+                            label: " Stylelint Inspector",
+                            href: `${siteUrl}${baseUrl}stylelint-inspector/`,
+                        },
+                        {
+                            label: "📘 API docs",
+                            to: "/docs/developer/api",
                         },
                     ],
                 },
                 {
-                    title: "Project",
+                    title: "⚙️ Support",
                     items: [
                         {
-                            label: "npm",
-                            href: "https://www.npmjs.com/package/@typpi/eslint-plugin-vite",
-                        },
-                        {
-                            label: "Repository",
+                            label: " GitHub Repository",
                             href: "https://github.com/Nick2bad4u/eslint-plugin-vite",
+                        },
+                        {
+                            label: " Report Issues",
+                            href: "https://github.com/Nick2bad4u/eslint-plugin-vite/issues",
+                        },
+                        {
+                            label: "🛡️ Security Policy",
+                            href: "https://github.com/Nick2bad4u/eslint-plugin-vite/security/policy",
+                        },
+                        {
+                            label: " NPM",
+                            href: "https://www.npmjs.com/package/@typpi/eslint-plugin-vite",
                         },
                     ],
                 },

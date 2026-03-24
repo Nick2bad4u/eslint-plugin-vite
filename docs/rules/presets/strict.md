@@ -23,7 +23,6 @@ export default [vite.configs.strict];
 ## Rules in this preset
 
 <!-- begin generated preset rules -->
-
 | Rule                                                                                                              | Fix |
 | :---------------------------------------------------------------------------------------------------------------- | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)                                         |  —  |
@@ -98,5 +97,4 @@ export default [vite.configs.strict];
 | [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)                           |  —  |
 | [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)                             |  —  |
 | [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  |
-
 <!-- end generated preset rules -->
