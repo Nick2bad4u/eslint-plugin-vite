@@ -82,6 +82,9 @@ const config: Config = {
                     routeBasePath: "docs",
                     sidebarPath: "./sidebars.ts",
                 },
+                googleTagManager: {
+                    containerId: "GTM-T8J6HPLF",
+                },
                 theme: {
                     customCss: "./src/css/custom.css",
                 },
