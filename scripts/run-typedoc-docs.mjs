@@ -287,16 +287,104 @@ async function sanitizeGeneratedApiDocs(apiDocsDirectory) {
         return;
     }
 
-    for (const markdownFilePath of await getMarkdownFilePaths(
-        apiDocsDirectory
-    )) {
+    const markdownFilePaths = await getMarkdownFilePaths(apiDocsDirectory);
+    const knownMarkdownPaths = new Set(
+        markdownFilePaths.map((markdownFilePath) =>
+            normalizeWindowsPath(markdownFilePath)
+        )
+    );
+
+    for (const markdownFilePath of markdownFilePaths) {
         const markdown = await readFile(markdownFilePath, "utf8");
-        const sanitizedMarkdown = sanitizeGeneratedApiMarkdown(markdown);
+        const sanitizedMarkdown = stripBrokenGeneratedMarkdownLinks(
+            sanitizeGeneratedApiMarkdown(markdown),
+            markdownFilePath,
+            knownMarkdownPaths
+        );
 
         if (sanitizedMarkdown !== markdown) {
             await writeFile(markdownFilePath, sanitizedMarkdown);
         }
     }
+}
+
+/**
+ * @param {string} target
+ *
+ * @returns {boolean}
+ */
+function isRelativeGeneratedMarkdownTarget(target) {
+    return (
+        (target.startsWith("./") || target.startsWith("../")) &&
+        !target.startsWith("//")
+    );
+}
+
+/**
+ * @param {string} target
+ *
+ * @returns {string}
+ */
+function stripLinkSuffix(target) {
+    const hashIndex = target.indexOf("#");
+    const beforeHash = hashIndex === -1 ? target : target.slice(0, hashIndex);
+    const queryIndex = beforeHash.indexOf("?");
+
+    return queryIndex === -1 ? beforeHash : beforeHash.slice(0, queryIndex);
+}
+
+/**
+ * @param {string} markdownFilePath
+ * @param {string} target
+ * @param {ReadonlySet<string>} knownMarkdownPaths
+ *
+ * @returns {boolean}
+ */
+function doesGeneratedMarkdownTargetExist(
+    markdownFilePath,
+    target,
+    knownMarkdownPaths
+) {
+    const normalizedBaseTarget = normalizeWindowsPath(
+        resolve(dirname(markdownFilePath), stripLinkSuffix(target))
+    );
+    const fileCandidate = `${normalizedBaseTarget}.md`;
+    const directoryIndexCandidate = resolve(normalizedBaseTarget, "index.md");
+
+    return (
+        knownMarkdownPaths.has(fileCandidate) ||
+        knownMarkdownPaths.has(normalizeWindowsPath(directoryIndexCandidate))
+    );
+}
+
+/**
+ * @param {string} markdown
+ * @param {string} markdownFilePath
+ * @param {ReadonlySet<string>} knownMarkdownPaths
+ *
+ * @returns {string}
+ */
+function stripBrokenGeneratedMarkdownLinks(
+    markdown,
+    markdownFilePath,
+    knownMarkdownPaths
+) {
+    return markdown.replace(
+        /\[([^\]]+)\]\(([^)]+)\)/gu,
+        (fullMatch, label, target) => {
+            if (!isRelativeGeneratedMarkdownTarget(target)) {
+                return fullMatch;
+            }
+
+            return doesGeneratedMarkdownTargetExist(
+                markdownFilePath,
+                target,
+                knownMarkdownPaths
+            )
+                ? fullMatch
+                : label;
+        }
+    );
 }
 
 /**

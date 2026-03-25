@@ -24,6 +24,11 @@ describe("config-require-define-config", () => {
                     errors: [{ messageId: "requireDefineConfig" }],
                     filename: ".vitepress/config.ts",
                 },
+                {
+                    code: "const config = { server: { port: 5173 } }; export default config;",
+                    errors: [{ messageId: "requireDefineConfig" }],
+                    filename: "vite.config.ts",
+                },
             ],
             valid: [
                 {
@@ -41,6 +46,18 @@ describe("config-require-define-config", () => {
                 {
                     code: "import { defineConfig } from 'vitepress'; export default defineConfig({ title: 'Docs' });",
                     filename: ".vitepress/config.ts",
+                },
+                {
+                    code: "import { defineConfig } from 'vitest/config'; const vitestConfig: ReturnType<typeof defineConfig> = defineConfig({}); export default vitestConfig;",
+                    filename: "vite.config.ts",
+                },
+                {
+                    code: "import { mergeConfig } from 'vitest/config'; const base = mergeConfig({}, {}); export default base;",
+                    filename: "vitest.config.ts",
+                },
+                {
+                    code: "import { defineWorkspace } from 'vitest/config'; const workspace = defineWorkspace([]); export default workspace;",
+                    filename: "vitest.workspace.ts",
                 },
             ],
         }

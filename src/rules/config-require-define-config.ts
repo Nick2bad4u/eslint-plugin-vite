@@ -11,6 +11,26 @@ const acceptedCallNamesByKind = {
     workspace: new Set(["defineWorkspace"]),
 } as const;
 
+const unwrapExpression = (
+    expression: Readonly<TSESTree.Expression>
+): Readonly<TSESTree.Expression> => {
+    if (expression.type === AST_NODE_TYPES.ChainExpression) {
+        return unwrapExpression(expression.expression);
+    }
+
+    if (
+        expression.type === AST_NODE_TYPES.TSAsExpression ||
+        expression.type === AST_NODE_TYPES.TSInstantiationExpression ||
+        expression.type === AST_NODE_TYPES.TSNonNullExpression ||
+        expression.type === AST_NODE_TYPES.TSSatisfiesExpression ||
+        expression.type === AST_NODE_TYPES.TSTypeAssertion
+    ) {
+        return unwrapExpression(expression.expression);
+    }
+
+    return expression;
+};
+
 const expressionNodeTypes = new Set<TSESTree.Expression["type"]>([
     AST_NODE_TYPES.ArrayExpression,
     AST_NODE_TYPES.ArrowFunctionExpression,
@@ -62,6 +82,71 @@ const isAcceptedExportExpression = (
     expression.callee.type === "Identifier" &&
     acceptedCallNamesByKind[fileKind].has(expression.callee.name);
 
+const getTopLevelVariableInitializers = (
+    programBody: readonly Readonly<TSESTree.ProgramStatement>[]
+): ReadonlyMap<string, Readonly<TSESTree.Expression>> => {
+    const initializers = new Map<string, Readonly<TSESTree.Expression>>();
+
+    for (const statement of programBody) {
+        if (statement.type !== AST_NODE_TYPES.VariableDeclaration) {
+            continue;
+        }
+
+        for (const declarator of statement.declarations) {
+            if (
+                declarator.id.type !== AST_NODE_TYPES.Identifier ||
+                declarator.init === null
+            ) {
+                continue;
+            }
+
+            initializers.set(
+                declarator.id.name,
+                unwrapExpression(declarator.init)
+            );
+        }
+    }
+
+    return initializers;
+};
+
+const resolvesToAcceptedExportExpression = (
+    expression: Readonly<TSESTree.Expression>,
+    fileKind: keyof typeof acceptedCallNamesByKind,
+    variableInitializers: ReadonlyMap<string, Readonly<TSESTree.Expression>>,
+    visitedIdentifiers: ReadonlySet<string> = new Set<string>()
+): boolean => {
+    const unwrappedExpression = unwrapExpression(expression);
+
+    if (isAcceptedExportExpression(unwrappedExpression, fileKind)) {
+        return true;
+    }
+
+    if (unwrappedExpression.type !== AST_NODE_TYPES.Identifier) {
+        return false;
+    }
+
+    if (visitedIdentifiers.has(unwrappedExpression.name)) {
+        return false;
+    }
+
+    const nextVisitedIdentifiers = new Set(visitedIdentifiers);
+
+    nextVisitedIdentifiers.add(unwrappedExpression.name);
+
+    const initializer = variableInitializers.get(unwrappedExpression.name);
+
+    return (
+        initializer !== undefined &&
+        resolvesToAcceptedExportExpression(
+            initializer,
+            fileKind,
+            variableInitializers,
+            nextVisitedIdentifiers
+        )
+    );
+};
+
 /** Require Vite and Vitest config files to export the canonical helper wrappers. */
 const configRequireDefineConfigRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], MessageId>({
@@ -71,6 +156,10 @@ const configRequireDefineConfigRule: ReturnType<typeof createTypedRule> =
             if (fileKind === null) {
                 return {};
             }
+
+            const variableInitializers = getTopLevelVariableInitializers(
+                context.sourceCode.ast.body
+            );
 
             return {
                 ExportDefaultDeclaration(node) {
@@ -83,7 +172,11 @@ const configRequireDefineConfigRule: ReturnType<typeof createTypedRule> =
                     }
 
                     if (
-                        isAcceptedExportExpression(exportedExpression, fileKind)
+                        resolvesToAcceptedExportExpression(
+                            exportedExpression,
+                            fileKind,
+                            variableInitializers
+                        )
                     ) {
                         return;
                     }

@@ -2,8 +2,7 @@
 
 ESLint rules for Vite, Vitest, and Vitest bench configuration and runtime patterns.
 
-[![npm version.](https://img.shields.io/npm/v/%40typpi%2Feslint-plugin-vite?logo=npm\&label=npm)](https://www.npmjs.com/package/@typpi/eslint-plugin-vite)
-[![CI status.](https://img.shields.io/github/actions/workflow/status/Nick2bad4u/eslint-plugin-vite/ci.yml?branch=main\&label=ci)](https://github.com/Nick2bad4u/eslint-plugin-vite/actions/workflows/ci.yml)
+[![npm license.](https://flat.badgen.net/npm/license/eslint-plugin-vite?color=purple)](https://github.com/Nick2bad4u/eslint-plugin-vite/blob/main/LICENSE) [![npm total downloads.](https://flat.badgen.net/npm/dt/%40typpi%2Feslint-plugin-vite?color=pink)](https://www.npmjs.com/package/%40typpi%2Feslint-plugin-vite) [![latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-vite?color=cyan)](https://github.com/Nick2bad4u/eslint-plugin-vite/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-vite?color=yellow)](https://github.com/Nick2bad4u/eslint-plugin-vite/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-vite?color=green)](https://github.com/Nick2bad4u/eslint-plugin-vite/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-vite?color=red)](https://github.com/Nick2bad4u/eslint-plugin-vite/issues) [![codecov.](https://codecov.io/gh/Nick2bad4u/eslint-plugin-vite/branch/main/graph/badge.svg)](https://codecov.io/gh/Nick2bad4u/eslint-plugin-vite) [![CI status.](https://img.shields.io/github/actions/workflow/status/Nick2bad4u/eslint-plugin-vite/ci.yml?branch=main\&label=ci)](https://github.com/Nick2bad4u/eslint-plugin-vite/actions/workflows/ci.yml)
 
 ## Why this plugin exists
 

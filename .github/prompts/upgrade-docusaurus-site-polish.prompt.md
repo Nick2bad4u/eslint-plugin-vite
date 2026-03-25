@@ -66,6 +66,7 @@ Must-have homepage features:
 - feature/value cards or badges
 - strong primary calls to action
 - live badges/status indicators
+- place live badges near the hero CTAs when that layout fits the site, instead of isolating them in a detached status block
 - quick-entry cards for:
   - getting started
   - presets
@@ -131,6 +132,9 @@ Requirements:
 - left docs/rules/presets navigation should be coherent and easy to scan
 - if the repo has maintainer/developer docs, those should be organized intentionally
 - use consistent labels and icon/visual accents where appropriate
+- when the repo has a stable rule catalog or rule numbering system, use that to make the left rule sidebar easier to scan
+- consider rendering numeric rule markers in the sidebar in a way that feels lightweight for end users (for example `1`, `2`, `3` instead of heavier internal prefixes like `R001`, `R002` when appropriate)
+- use varied left-border or accent colors for rule groups and maintainer categories when the design system supports it
 - avoid random category clutter or hidden important sections
 
 ### 9. Preserve doc integrity
@@ -167,11 +171,13 @@ Use the repository's own assets and structure first, but inspect this reference 
 When reviewing that reference, pay attention to these patterns:
 - a balanced navbar with primary docs links on the left and developer/support/search surfaces on the right
 - a polished hero with strong calls to action
-- live badge usage near the top of the homepage
+- live badge usage directly under or near the primary hero CTAs
 - homepage cards for getting started, presets, and rules
 - a visible developer path
 - a balanced three-column footer
 - logo and icon usage that improves scannability without clutter
+- a user-first docs entry route (avoid routing the main `Docs` navbar item to a developer-only landing page)
+- a presets navbar dropdown that links to the overview page and the individual preset pages when the repo has multiple preset docs
 
 Do **not** copy branding or project-specific text from the reference site.
 Use it only as a quality and layout reference.
@@ -191,6 +197,7 @@ Use it only as a quality and layout reference.
 - Do not change ESLint plugin namespace/rule IDs unless explicitly requested.
 - Do not invent fake docs or placeholder sections.
 - Do not silently remove maintainer resources.
+- For end-user-focused plugin/package sites, avoid letting maintainer-heavy homepage sections dominate the first screen.
 - Do not break docs build or docs typecheck.
 - Prefer maintainable source changes over generated-output patching.
 - If a search package is already present, use it.

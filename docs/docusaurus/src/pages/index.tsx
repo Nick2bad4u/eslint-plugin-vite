@@ -18,13 +18,6 @@ type Card = Readonly<{
     to: string;
 }>;
 
-type ExternalCard = Readonly<{
-    description: string;
-    href: string;
-    icon: string;
-    title: string;
-}>;
-
 const heroBadges = [
     {
         description:
@@ -48,39 +41,44 @@ const heroBadges = [
 
 const liveBadges = [
     {
-        alt: "npm version",
-        href: "https://www.npmjs.com/package/@typpi/eslint-plugin-vite",
-        src: "https://img.shields.io/npm/v/%40typpi%2Feslint-plugin-vite?logo=npm&label=npm",
+        alt: "npm license",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/blob/main/LICENSE",
+        src: "https://flat.badgen.net/npm/license/eslint-plugin-vite?color=purple",
     },
     {
         alt: "npm total downloads",
         href: "https://www.npmjs.com/package/@typpi/eslint-plugin-vite",
-        src: "https://img.shields.io/npm/dt/%40typpi%2Feslint-plugin-vite?logo=npm&label=downloads",
+        src: "https://flat.badgen.net/npm/dt/%40typpi%2Feslint-plugin-vite?color=pink",
     },
     {
         alt: "latest GitHub release",
         href: "https://github.com/Nick2bad4u/eslint-plugin-vite/releases",
-        src: "https://img.shields.io/github/v/release/Nick2bad4u/eslint-plugin-vite?label=release",
+        src: "https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-vite?color=cyan",
+    },
+    {
+        alt: "GitHub stars",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/stargazers",
+        src: "https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-vite?color=yellow",
+    },
+    {
+        alt: "GitHub forks",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/forks",
+        src: "https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-vite?color=green",
+    },
+    {
+        alt: "GitHub open issues",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/issues",
+        src: "https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-vite?color=red",
+    },
+    {
+        alt: "codecov",
+        href: "https://codecov.io/gh/Nick2bad4u/eslint-plugin-vite",
+        src: "https://codecov.io/gh/Nick2bad4u/eslint-plugin-vite/branch/main/graph/badge.svg",
     },
     {
         alt: "CI status",
         href: "https://github.com/Nick2bad4u/eslint-plugin-vite/actions/workflows/ci.yml",
         src: "https://img.shields.io/github/actions/workflow/status/Nick2bad4u/eslint-plugin-vite/ci.yml?branch=main&label=ci",
-    },
-    {
-        alt: "GitHub stars",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/stargazers",
-        src: "https://img.shields.io/github/stars/Nick2bad4u/eslint-plugin-vite?label=stars",
-    },
-    {
-        alt: "GitHub open issues",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/issues",
-        src: "https://img.shields.io/github/issues/Nick2bad4u/eslint-plugin-vite?label=issues",
-    },
-    {
-        alt: "mutation testing badge",
-        href: "https://dashboard.stryker-mutator.io/reports/github.com/Nick2bad4u/eslint-plugin-vite/main",
-        src: "https://img.shields.io/badge/mutation%20testing-stryker-informational",
     },
 ] as const satisfies readonly Badge[];
 
@@ -126,72 +124,6 @@ const cards = [
     },
 ] as const satisfies readonly Card[];
 
-const developerLinks = [
-    {
-        description:
-            "Architecture notes, maintainer workflow, and project rationale.",
-        to: "/docs/developer",
-        title: "Developer guide",
-    },
-    {
-        description:
-            "Decision records and charts that explain how the plugin and docs pipeline fit together.",
-        to: "/docs/adr",
-        title: "ADRs & charts",
-    },
-    {
-        description:
-            "Generated runtime API documentation for internals and public plugin wiring.",
-        to: "/docs/developer/api",
-        title: "API docs",
-    },
-] as const;
-
-const resourceCards = [
-    {
-        description:
-            "Browse release notes and published tags for the latest shipped changes.",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/releases",
-        icon: "",
-        title: "Releases",
-    },
-    {
-        description:
-            "Inspect the resolved flat config visually to understand how the plugin composes with your stack.",
-        href: "/eslint-plugin-vite/eslint-inspector/",
-        icon: "",
-        title: "ESLint Inspector",
-    },
-    {
-        description:
-            "Review stylelint configuration output for the docs app and site assets.",
-        href: "/eslint-plugin-vite/stylelint-inspector/",
-        icon: "",
-        title: "Stylelint Inspector",
-    },
-    {
-        description:
-            "Open the scoped npm package page users install from and verify the current published metadata.",
-        href: "https://www.npmjs.com/package/@typpi/eslint-plugin-vite",
-        icon: "",
-        title: "NPM package",
-    },
-    {
-        description:
-            "Report bugs, request rules, and track open work directly in GitHub issues.",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-vite/issues",
-        icon: "",
-        title: "Report issues",
-    },
-    {
-        description:
-            "Review the repository and contribution surfaces that back the published package and docs site.",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-vite",
-        icon: "",
-        title: "GitHub repository",
-    },
-] as const satisfies readonly ExternalCard[];
-
 export default function Home() {
     const logoUrl = useBaseUrl("/img/logo.svg");
 
@@ -230,6 +162,29 @@ export default function Home() {
                                     󱒒 Compare Presets
                                 </Link>
                             </div>
+                            <ul className={styles.heroLiveBadges}>
+                                {liveBadges.map((badge) => (
+                                    <li
+                                        key={badge.alt}
+                                        className={styles.liveBadgeListItem}
+                                    >
+                                        <Link
+                                            className={styles.liveBadgeAnchor}
+                                            to={badge.href}
+                                            rel="noreferrer"
+                                            target="_blank"
+                                        >
+                                            <img
+                                                alt={badge.alt}
+                                                className={
+                                                    styles.liveBadgeImage
+                                                }
+                                                src={badge.src}
+                                            />
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
                             <div className={styles.heroBadgeRow}>
                                 {heroBadges.map((badge) => (
                                     <article
@@ -257,75 +212,11 @@ export default function Home() {
                             </div>
                         </div>
                         <aside className={styles.heroPanel}>
-                            <div className={styles.heroPanelBody}>
-                                <img
-                                    alt="The Vite lightning-bolt mark used as the eslint-plugin-vite site logo."
-                                    className={styles.heroPanelLogo}
-                                    src={logoUrl}
-                                />
-                                <div className={styles.heroPanelSections}>
-                                    <section
-                                        className={styles.heroPanelSection}
-                                    >
-                                        <p className={styles.heroPanelTitle}>
-                                            📚 Explore
-                                        </p>
-                                        <ul className={styles.heroPanelList}>
-                                            <li>
-                                                <Link
-                                                    className={
-                                                        styles.heroPanelLink
-                                                    }
-                                                    to="/docs/rules/overview"
-                                                >
-                                                    🏁 Overview
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    className={
-                                                        styles.heroPanelLink
-                                                    }
-                                                    to="/docs/rules/getting-started"
-                                                >
-                                                    📖 Getting Started
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    className={
-                                                        styles.heroPanelLink
-                                                    }
-                                                    to="/docs/rules/presets"
-                                                >
-                                                    🛠️ Presets
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                    <section
-                                        className={styles.heroPanelSection}
-                                    >
-                                        <p className={styles.heroPanelTitle}>
-                                            🧭 Developer
-                                        </p>
-                                        <ul className={styles.heroPanelList}>
-                                            {developerLinks.map((link) => (
-                                                <li key={link.title}>
-                                                    <Link
-                                                        className={
-                                                            styles.heroPanelLink
-                                                        }
-                                                        to={link.to}
-                                                    >
-                                                        {link.title}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </section>
-                                </div>
-                            </div>
+                            <img
+                                alt="The Vite lightning-bolt mark used as the eslint-plugin-vite site logo."
+                                className={styles.heroPanelLogo}
+                                src={logoUrl}
+                            />
                         </aside>
                     </div>
                     <div className={styles.heroStats}>
@@ -350,58 +241,7 @@ export default function Home() {
             </main>
             <main className={styles.mainContent}>
                 <div className="container">
-                    <section className={styles.liveStatsSection}>
-                        <div className={styles.liveStatsHeader}>
-                            <p className={styles.liveStatsKicker}>
-                                Live badges
-                            </p>
-                            <Heading as="h2" className={styles.sectionTitle}>
-                                Keep the project surface visible
-                            </Heading>
-                            <p className={styles.liveStatsDescription}>
-                                Version, release, CI, popularity, and maintainer
-                                signals should be easy to spot from the first
-                                screen.
-                            </p>
-                            <Link
-                                className={styles.liveStatsLink}
-                                to="/docs/rules/getting-started"
-                            >
-                                Open getting started →
-                            </Link>
-                        </div>
-                        <ul className={styles.liveBadgeList}>
-                            {liveBadges.map((badge) => (
-                                <li
-                                    key={badge.alt}
-                                    className={styles.liveBadgeListItem}
-                                >
-                                    <Link
-                                        className={styles.liveBadgeAnchor}
-                                        to={badge.href}
-                                        rel="noreferrer"
-                                        target="_blank"
-                                    >
-                                        <img
-                                            alt={badge.alt}
-                                            className={styles.liveBadgeImage}
-                                            src={badge.src}
-                                        />
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </section>
-
-                    <section>
-                        <Heading as="h2" className={styles.sectionTitle}>
-                            Core docs paths
-                        </Heading>
-                        <p className={styles.sectionSubtitle}>
-                            Keep the primary docs surfaces clear: overview
-                            first, presets second, detailed rule reference close
-                            behind.
-                        </p>
+                    <section className={styles.cardSection}>
                         <div className={styles.cardGrid}>
                             {cards.map((card) => (
                                 <article
@@ -427,48 +267,6 @@ export default function Home() {
                                         to={card.to}
                                     >
                                         Open section →
-                                    </Link>
-                                </article>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section>
-                        <Heading as="h2" className={styles.sectionTitle}>
-                            Developer and project resources
-                        </Heading>
-                        <p className={styles.sectionSubtitle}>
-                            Put maintainer-facing material on the right side of
-                            the experience and keep operational links easy to
-                            discover.
-                        </p>
-                        <div className={styles.cardGrid}>
-                            {resourceCards.map((card) => (
-                                <article
-                                    key={card.title}
-                                    className={styles.card}
-                                >
-                                    <div className={styles.cardHeader}>
-                                        <p className={styles.cardIcon}>
-                                            {card.icon}
-                                        </p>
-                                        <Heading
-                                            as="h3"
-                                            className={styles.cardTitle}
-                                        >
-                                            {card.title}
-                                        </Heading>
-                                    </div>
-                                    <p className={styles.cardDescription}>
-                                        {card.description}
-                                    </p>
-                                    <Link
-                                        className={styles.cardLink}
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        to={card.href}
-                                    >
-                                        Open resource →
                                     </Link>
                                 </article>
                             ))}

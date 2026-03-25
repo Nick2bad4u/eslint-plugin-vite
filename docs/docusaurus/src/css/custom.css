@@ -241,6 +241,71 @@
     border-inline-start-color: var(--sb-accent-rules);
 }
 
+.sb-rule-doc > .menu__link {
+    display: flex;
+    align-items: center;
+    gap: 0.46rem;
+    border-inline-start: 3px solid var(--sb-accent-rules);
+    padding-inline-start: calc(var(--ifm-menu-link-padding-horizontal) - 3px);
+}
+
+.sb-cat-rules .menu__list {
+    counter-reset: rule-doc;
+}
+
+.sb-rule-doc > .menu__link::before {
+    counter-increment: rule-doc;
+    color: var(--sb-prefix-rule-number);
+    content: counter(rule-doc);
+    font-family: var(--ifm-font-family-monospace);
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    inline-size: 1.35rem;
+    margin-inline-end: 0.08rem;
+    text-align: end;
+}
+
+.sb-rule-config > .menu__link {
+    border-inline-start-color: #41d1ff;
+}
+
+.sb-rule-config > .menu__link::before {
+    color: #41d1ff;
+}
+
+.sb-rule-safety > .menu__link {
+    border-inline-start-color: #ffd052;
+}
+
+.sb-rule-safety > .menu__link::before {
+    color: #ffd052;
+}
+
+.sb-rule-vitest > .menu__link {
+    border-inline-start-color: #bd34fe;
+}
+
+.sb-rule-vitest > .menu__link::before {
+    color: #bd34fe;
+}
+
+.sb-rule-vitepress > .menu__link {
+    border-inline-start-color: #8b5cf6;
+}
+
+.sb-rule-vitepress > .menu__link::before {
+    color: #8b5cf6;
+}
+
+.sb-rule-general > .menu__link {
+    border-inline-start-color: #10b981;
+}
+
+.sb-rule-general > .menu__link::before {
+    color: #10b981;
+}
+
 .sb-cat-developer > .menu__link,
 .sb-cat-developer-adr > .menu__list-item-collapsible .menu__link,
 .sb-cat-presets > .menu__list-item-collapsible .menu__link,

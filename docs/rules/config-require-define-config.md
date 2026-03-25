@@ -75,6 +75,7 @@ export default defineWorkspace([
 
 - `vite.config.*` and `vitest.config.*` accept either `defineConfig(...)` or `mergeConfig(...)`.
 - `vitest.workspace.*` should use `defineWorkspace(...)`.
+- Exporting an identifier is also valid when that identifier is initialized from the correct helper call, such as `const config = defineConfig({...}); export default config;`.
 - This rule does not rewrite imports automatically because the correct helper depends on the file type.
 
 ## ESLint flat config example

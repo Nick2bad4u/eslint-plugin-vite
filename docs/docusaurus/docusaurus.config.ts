@@ -134,7 +134,7 @@ const config: Config = {
             items: [
                 {
                     label: "📚 Docs",
-                    to: "/docs/intro",
+                    to: "/docs/rules/overview",
                 },
                 {
                     label: "📜 Rules",
@@ -142,7 +142,44 @@ const config: Config = {
                 },
                 {
                     label: "🛠️ Presets",
-                    to: "/docs/rules/presets",
+                    items: [
+                        {
+                            label: "Overview",
+                            to: "/docs/rules/presets",
+                        },
+                        {
+                            label: "Recommended",
+                            to: "/docs/rules/presets/recommended",
+                        },
+                        {
+                            label: "Strict",
+                            to: "/docs/rules/presets/strict",
+                        },
+                        {
+                            label: "All",
+                            to: "/docs/rules/presets/all",
+                        },
+                        {
+                            label: "Configs",
+                            to: "/docs/rules/presets/configs",
+                        },
+                        {
+                            label: "Client",
+                            to: "/docs/rules/presets/client",
+                        },
+                        {
+                            label: "VitePress",
+                            to: "/docs/rules/presets/vitepress",
+                        },
+                        {
+                            label: "Vitest",
+                            to: "/docs/rules/presets/vitest",
+                        },
+                        {
+                            label: "Vitest bench",
+                            to: "/docs/rules/presets/vitest-bench",
+                        },
+                    ],
                 },
                 {
                     label: "📰 Blog",
@@ -222,8 +259,8 @@ const config: Config = {
                             href: `${siteUrl}${baseUrl}stylelint-inspector/`,
                         },
                         {
-                            label: "📘 API docs",
-                            to: "/docs/developer/api",
+                            label: "⚡ Vite",
+                            href: "https://vite.dev/",
                         },
                     ],
                 },

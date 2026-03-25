@@ -1,10 +1,15 @@
 declare const styles: {
+    readonly adoptionLink: string;
+    readonly adoptionList: string;
+    readonly adoptionListItem: string;
+    readonly adoptionSection: string;
     readonly card: string;
     readonly cardDescription: string;
     readonly cardGrid: string;
     readonly cardHeader: string;
     readonly cardIcon: string;
     readonly cardLink: string;
+    readonly cardSection: string;
     readonly cardTitle: string;
     readonly "hero-panel-shimmer": string;
     readonly heroActionButton: string;
@@ -23,13 +28,7 @@ declare const styles: {
     readonly heroKicker: string;
     readonly heroLiveBadges: string;
     readonly heroPanel: string;
-    readonly heroPanelBody: string;
-    readonly heroPanelLink: string;
-    readonly heroPanelList: string;
     readonly heroPanelLogo: string;
-    readonly heroPanelSection: string;
-    readonly heroPanelSections: string;
-    readonly heroPanelTitle: string;
     readonly heroStatCard: string;
     readonly heroStatDescription: string;
     readonly heroStatHeading: string;
@@ -38,15 +37,8 @@ declare const styles: {
     readonly heroTitle: string;
     readonly liveBadgeAnchor: string;
     readonly liveBadgeImage: string;
-    readonly liveBadgeList: string;
     readonly liveBadgeListItem: string;
-    readonly liveStatsDescription: string;
-    readonly liveStatsHeader: string;
-    readonly liveStatsKicker: string;
-    readonly liveStatsLink: string;
-    readonly liveStatsSection: string;
     readonly mainContent: string;
-    readonly sectionSubtitle: string;
     readonly sectionTitle: string;
 };
 
