@@ -1,4 +1,4 @@
-# strict
+# 🔴 Strict
 
 Use `vite.configs.strict` when the recommended baseline is already clean and you want tighter policy enforcement.
 

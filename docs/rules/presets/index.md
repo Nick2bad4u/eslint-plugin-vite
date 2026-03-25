@@ -1,20 +1,15 @@
 ---
-title: Presets
+title: 🛠️ Presets
 description: Preset reference and selection guide for eslint-plugin-vite.
+keywords:
+    - presets
+    - preset reference
+    - preset selection strategy
 ---
 
 # Presets
 
 Use one of these presets based on where Vite or Vitest mistakes are most likely to happen in your repository.
-
-- `Preset key` legend:
-  - [🟡](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/recommended) — [`vite.configs.recommended`](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/recommended)
-  - [🔴](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/strict) — [`vite.configs.strict`](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/strict)
-  - [🟣](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/all) — [`vite.configs.all`](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/all)
-  - [⚙️](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/configs) — [`vite.configs.configs`](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/configs)
-  - [🌐](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/client) — [`vite.configs.client`](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/client)
-  - [🧪](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/vitest) — [`vite.configs.vitest`](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/vitest)
-  - [🏎️](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/vitest-bench) — [`vite.configs["vitest-bench"]`](https://nick2bad4u.github.io/eslint-plugin-vite/docs/rules/presets/vitest-bench)
 
 Each preset page in this section includes:
 
@@ -25,20 +20,30 @@ Each preset page in this section includes:
 
 Related guides:
 
-- [Preset selection strategy](../guides/preset-selection-strategy.md)
-- [Adoption checklist](../guides/adoption-checklist.md)
-- [Rollout and fix safety](../guides/rollout-and-fix-safety.md)
+- [🎯 Preset selection strategy](../guides/preset-selection-strategy.md)
+- [📝 Adoption checklist](../guides/adoption-checklist.md)
+- [🛠️ Rollout and fix safety](../guides/rollout-and-fix-safety.md)
 
 ## Rule matrix
 
 <!-- begin generated preset matrix -->
+- `Preset key` legend:
+  - [🟡](./recommended.md) — [`vite.configs.recommended`](./recommended.md)
+  - [🔴](./strict.md) — [`vite.configs.strict`](./strict.md)
+  - [🟣](./all.md) — [`vite.configs.all`](./all.md)
+  - [⚙️](./configs.md) — [`vite.configs.configs`](./configs.md)
+  - [🌐](./client.md) — [`vite.configs.client`](./client.md)
+  - [📚](./vitepress.md) — [`vite.configs.vitepress`](./vitepress.md)
+  - [🧪](./vitest.md) — [`vite.configs.vitest`](./vitest.md)
+  - [👟](./vitest-bench.md) — [`vite.configs["vitest-bench"]`](./vitest-bench.md)
+
 | Rule                                                                                                              | Fix | Preset key                                                                                                        |
 | :---------------------------------------------------------------------------------------------------------------- | :-: | :---------------------------------------------------------------------------------------------------------------- |
 | [`vite/config-require-define-config`](../config-require-define-config.md)                                         |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [📚](./vitepress.md) [🧪](./vitest.md) |
 | [`vite/import-meta-glob-literal`](../import-meta-glob-literal.md)                                                 |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md) [📚](./vitepress.md)                    |
 | [`vite/no-dynamic-import-meta-env-access`](../no-dynamic-import-meta-env-access.md)                               |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md) [📚](./vitepress.md)                    |
 | [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md)                                                           |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [📚](./vitepress.md)                   |
-| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)                                         |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                |
+| [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)                                         |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                 |
 | [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md)                                               |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md)                                        |
 | [`vite/no-restricted-import-meta-env`](../no-restricted-import-meta-env.md)                                       |  —  | [🔴](./strict.md) [🟣](./all.md) [🌐](./client.md) [📚](./vitepress.md)                                           |
 | [`vite/prefer-define-project`](../prefer-define-project.md)                                                       |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md)                                                                |
@@ -61,8 +66,8 @@ Related guides:
 | [`vite/no-empty-vitest-include`](../no-empty-vitest-include.md)                                                   |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 | [`vite/no-empty-vitest-project-name`](../no-empty-vitest-project-name.md)                                         |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 | [`vite/no-empty-vitest-exclude`](../no-empty-vitest-exclude.md)                                                   |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
-| [`vite/no-empty-vitest-bench-include`](../no-empty-vitest-bench-include.md)                                       |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🏎️](./vitest-bench.md)                                      |
-| [`vite/no-empty-vitest-bench-exclude`](../no-empty-vitest-bench-exclude.md)                                       |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🏎️](./vitest-bench.md)                                      |
+| [`vite/no-empty-vitest-bench-include`](../no-empty-vitest-bench-include.md)                                       |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [👟](./vitest-bench.md)                                       |
+| [`vite/no-empty-vitest-bench-exclude`](../no-empty-vitest-bench-exclude.md)                                       |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [👟](./vitest-bench.md)                                       |
 | [`vite/no-empty-vitest-coverage-include`](../no-empty-vitest-coverage-include.md)                                 |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 | [`vite/no-empty-vitest-coverage-reporter`](../no-empty-vitest-coverage-reporter.md)                               |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 | [`vite/no-empty-vitest-coverage-reports-directory`](../no-empty-vitest-coverage-reports-directory.md)             |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
@@ -101,9 +106,9 @@ Related guides:
 | [`vite/no-vitepress-empty-head`](../no-vitepress-empty-head.md)                                                   |  —  | [🔴](./strict.md) [🟣](./all.md) [📚](./vitepress.md)                                                             |
 | [`vite/require-vitepress-title-or-titletemplate`](../require-vitepress-title-or-titletemplate.md)                 |  —  | [🔴](./strict.md) [🟣](./all.md) [📚](./vitepress.md)                                                             |
 | [`vite/require-vitepress-clean-urls-explicit`](../require-vitepress-clean-urls-explicit.md)                       |  —  | [🔴](./strict.md) [🟣](./all.md) [📚](./vitepress.md)                                                             |
-| [`vite/no-vitest-default-cache-dir-in-monorepo`](../no-vitest-default-cache-dir-in-monorepo.md)                   |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
-| [`vite/no-vitest-timeout-triplet-mismatch`](../no-vitest-timeout-triplet-mismatch.md)                             |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
-| [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)                           |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
-| [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)                             |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
-| [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [🏎️](./vitest-bench.md)                                       |
+| [`vite/no-vitest-default-cache-dir-in-monorepo`](../no-vitest-default-cache-dir-in-monorepo.md)                   |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
+| [`vite/no-vitest-timeout-triplet-mismatch`](../no-vitest-timeout-triplet-mismatch.md)                             |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
+| [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)                           |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
+| [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)                             |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
+| [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
 <!-- end generated preset matrix -->

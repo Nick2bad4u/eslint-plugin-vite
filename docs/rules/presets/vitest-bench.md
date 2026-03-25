@@ -1,4 +1,4 @@
-# vitest-bench
+# 👟 Vitest Bench
 
 Use `vite.configs["vitest-bench"]` when your repository contains benchmark files built on Vitest bench APIs.
 

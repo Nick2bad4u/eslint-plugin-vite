@@ -144,39 +144,39 @@ const config: Config = {
                     label: "🛠️ Presets",
                     items: [
                         {
-                            label: "Overview",
+                            label: "🛠️ Overview",
                             to: "/docs/rules/presets",
                         },
                         {
-                            label: "Recommended",
+                            label: "🟡 Recommended",
                             to: "/docs/rules/presets/recommended",
                         },
                         {
-                            label: "Strict",
+                            label: "🔴 Strict",
                             to: "/docs/rules/presets/strict",
                         },
                         {
-                            label: "All",
+                            label: "🟣 All",
                             to: "/docs/rules/presets/all",
                         },
                         {
-                            label: "Configs",
+                            label: "⚙️ Configs",
                             to: "/docs/rules/presets/configs",
                         },
                         {
-                            label: "Client",
+                            label: "🌐 Client",
                             to: "/docs/rules/presets/client",
                         },
                         {
-                            label: "VitePress",
+                            label: "📚 VitePress",
                             to: "/docs/rules/presets/vitepress",
                         },
                         {
-                            label: "Vitest",
+                            label: "🧪 Vitest",
                             to: "/docs/rules/presets/vitest",
                         },
                         {
-                            label: "Vitest bench",
+                            label: "👟 Vitest Bench",
                             to: "/docs/rules/presets/vitest-bench",
                         },
                     ],
@@ -191,19 +191,19 @@ const config: Config = {
                     position: "right",
                     items: [
                         {
-                            label: "Developer guide",
+                            label: "🛠️ Developer Guide",
                             to: "/docs/developer",
                         },
                         {
-                            label: "ADRs",
+                            label: "📝 ADRs",
                             to: "/docs/adr",
                         },
                         {
-                            label: "Charts",
+                            label: "📊 Charts",
                             to: "/docs/charts",
                         },
                         {
-                            label: "API docs",
+                            label: "🧩 API docs",
                             to: "/docs/developer/api",
                         },
                     ],

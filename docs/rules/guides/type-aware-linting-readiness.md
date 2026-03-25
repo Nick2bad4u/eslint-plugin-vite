@@ -1,4 +1,4 @@
-# Type-aware linting readiness
+# 🧩 Type-aware linting readiness
 
 The current `eslint-plugin-vite` rule set does **not** require TypeScript type information.
 

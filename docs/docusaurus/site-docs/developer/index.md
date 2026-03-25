@@ -1,5 +1,11 @@
 ---
-title: Developer guide
+title: 🛠️ Developer guide
+description: Explore the maintainer-facing documentation for eslint-plugin-vite, including architecture decision records, charts, and release notes.
+keywords:
+    - developer guide
+    - maintainer documentation
+    - architecture decision records
+    - architecture charts
 sidebar_position: 1
 ---
 

@@ -1,4 +1,4 @@
-# vitest
+# 🧪 Vitest
 
 Use `vite.configs.vitest` when your repository uses Vitest configuration files, workspaces, or multi-project setups.
 

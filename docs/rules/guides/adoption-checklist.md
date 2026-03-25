@@ -1,4 +1,4 @@
-# Adoption checklist
+# 📝 Adoption checklist
 
 Use this checklist when introducing `eslint-plugin-vite` to an existing codebase.
 
@@ -32,5 +32,5 @@ Use this checklist when introducing `eslint-plugin-vite` to an existing codebase
 
 ## Further reading
 
-- [Preset selection strategy](./preset-selection-strategy.md)
-- [Rollout and fix safety](./rollout-and-fix-safety.md)
+- [🎯 Preset selection strategy](./preset-selection-strategy.md)
+- [🛠️ Rollout and fix safety](./rollout-and-fix-safety.md)

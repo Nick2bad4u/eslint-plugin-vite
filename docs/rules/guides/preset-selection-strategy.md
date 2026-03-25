@@ -1,4 +1,4 @@
-# Preset selection strategy
+# 🎯 Preset selection strategy
 
 Choose presets by **where the risk lives** in your repository.
 
@@ -43,4 +43,4 @@ Move to `vite.configs.strict` or `vite.configs.all`.
 ## Further reading
 
 - [Presets index](../presets/index.md)
-- [Adoption checklist](./adoption-checklist.md)
+- [📝 Adoption checklist](./adoption-checklist.md)

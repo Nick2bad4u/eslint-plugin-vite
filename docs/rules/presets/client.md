@@ -1,4 +1,4 @@
-# client
+# 🌐 Client
 
 Use `vite.configs.client` when your app relies on `import.meta.env` and `import.meta.glob` in browser-bound code.
 

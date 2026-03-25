@@ -1,4 +1,10 @@
 ---
+title: 🏁 Getting started
+description: Install and configure eslint-plugin-vite with modern flat config.
+keywords:
+    - getting started
+    - installation
+    - quick start
 sidebar_position: 2
 ---
 
@@ -30,4 +36,4 @@ export default [vite.configs.recommended];
 
 - `Rule overview`
 - `Preset reference`
-- `Adoption checklist`
+- `📝 Adoption checklist`

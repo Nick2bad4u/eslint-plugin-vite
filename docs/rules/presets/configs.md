@@ -1,4 +1,4 @@
-# configs
+# ⚙️ Configs
 
 Use `vite.configs.configs` when you only want rules that target Vite and Vitest configuration files.
 

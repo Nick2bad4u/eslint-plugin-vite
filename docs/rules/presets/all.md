@@ -1,4 +1,4 @@
-# all
+# 🟣 All
 
 Use `vite.configs.all` when you want every rule from `eslint-plugin-vite` enabled at once.
 

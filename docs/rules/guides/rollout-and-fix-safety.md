@@ -1,4 +1,4 @@
-# Rollout and fix safety
+# 🛠️ Rollout and fix safety
 
 `eslint-plugin-vite` currently focuses on report-only rules.
 

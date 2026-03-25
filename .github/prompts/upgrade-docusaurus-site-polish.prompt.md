@@ -67,6 +67,8 @@ Must-have homepage features:
 - strong primary calls to action
 - live badges/status indicators
 - place live badges near the hero CTAs when that layout fits the site, instead of isolating them in a detached status block
+- prefer flatter badge styles when the repository already uses them or when they visually match the site better
+- for end-user-focused sites, avoid adding extra homepage sections that merely restate navigation choices when the cards themselves already communicate the path clearly
 - quick-entry cards for:
   - getting started
   - presets
@@ -135,6 +137,7 @@ Requirements:
 - when the repo has a stable rule catalog or rule numbering system, use that to make the left rule sidebar easier to scan
 - consider rendering numeric rule markers in the sidebar in a way that feels lightweight for end users (for example `1`, `2`, `3` instead of heavier internal prefixes like `R001`, `R002` when appropriate)
 - use varied left-border or accent colors for rule groups and maintainer categories when the design system supports it
+- if the repository has many rule pages, make the left rule-sidebar color treatment feel alive and scan-friendly rather than one flat repeated accent
 - avoid random category clutter or hidden important sections
 
 ### 9. Preserve doc integrity
@@ -145,6 +148,7 @@ Rules:
 - do not break markdown structure
 - do not hand-edit generated API docs unless the repo explicitly treats them as source
 - if generated doc links are broken, fix the generator or post-processing source
+- if preset legends, matrices, README rule tables, or other docs catalogs are generated, update the generator/source-of-truth so those surfaces stay synchronized instead of hand-editing only one copy
 - preserve route integrity and sidebar correctness
 
 ### 10. Keep the site repo-aware
@@ -173,11 +177,13 @@ When reviewing that reference, pay attention to these patterns:
 - a polished hero with strong calls to action
 - live badge usage directly under or near the primary hero CTAs
 - homepage cards for getting started, presets, and rules
+- end-user-focused homepages that avoid unnecessary maintainer-heavy or redundant explanatory blocks below the hero
 - a visible developer path
 - a balanced three-column footer
 - logo and icon usage that improves scannability without clutter
 - a user-first docs entry route (avoid routing the main `Docs` navbar item to a developer-only landing page)
 - a presets navbar dropdown that links to the overview page and the individual preset pages when the repo has multiple preset docs
+- lightweight numbered rule sidebars with strong left-color accents, similar to the visual rhythm of the typefest site
 
 Do **not** copy branding or project-specific text from the reference site.
 Use it only as a quality and layout reference.

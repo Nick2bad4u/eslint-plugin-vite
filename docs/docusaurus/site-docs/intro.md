@@ -1,5 +1,11 @@
 ---
 sidebar_position: 1
+title: ✨ Introduction
+description: Learn about eslint-plugin-vite's focus on Vite and Vitest runtime contracts, hand-authored docs strategy, and how to get started with the plugin.
+keywords:
+    - introduction
+    - overview
+    - getting started
 ---
 
 # eslint-plugin-vite

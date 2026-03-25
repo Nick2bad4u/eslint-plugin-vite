@@ -34,7 +34,7 @@ const heroBadges = [
     {
         description:
             "Keep Vitest workspaces, benchmarks, and test projects organized as your monorepo grows.",
-        icon: "🏎️",
+        icon: "👟",
         title: "Vitest discipline",
     },
 ] as const;
@@ -43,7 +43,7 @@ const liveBadges = [
     {
         alt: "npm license",
         href: "https://github.com/Nick2bad4u/eslint-plugin-vite/blob/main/LICENSE",
-        src: "https://flat.badgen.net/npm/license/eslint-plugin-vite?color=purple",
+        src: "https://flat.badgen.net/npm/license/%40typpi%2Feslint-plugin-vite?color=purple",
     },
     {
         alt: "npm total downloads",
@@ -78,7 +78,7 @@ const liveBadges = [
     {
         alt: "CI status",
         href: "https://github.com/Nick2bad4u/eslint-plugin-vite/actions/workflows/ci.yml",
-        src: "https://img.shields.io/github/actions/workflow/status/Nick2bad4u/eslint-plugin-vite/ci.yml?branch=main&label=ci",
+        src: "https://img.shields.io/github/actions/workflow/status/Nick2bad4u/eslint-plugin-vite/ci.yml?branch=main&style=flat-square&label=CI&color=teal",
     },
 ] as const satisfies readonly Badge[];
 

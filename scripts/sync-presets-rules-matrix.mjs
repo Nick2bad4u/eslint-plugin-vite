@@ -41,6 +41,18 @@ const PRESET_PAGE_PATHS = {
     ),
 };
 
+/** @type {Readonly<Record<ViteConfigName, string>>} */
+const PRESET_PAGE_LINKS = {
+    all: "./all.md",
+    client: "./client.md",
+    configs: "./configs.md",
+    recommended: "./recommended.md",
+    strict: "./strict.md",
+    vitepress: "./vitepress.md",
+    vitest: "./vitest.md",
+    "vitest-bench": "./vitest-bench.md",
+};
+
 export const PRESET_MATRIX_START = "<!-- begin generated preset matrix -->";
 export const PRESET_MATRIX_END = "<!-- end generated preset matrix -->";
 export const PRESET_RULES_START = "<!-- begin generated preset rules -->";
@@ -107,6 +119,19 @@ const getFixLabel = (ruleModule) => {
 };
 
 /**
+ * @param {ViteConfigName} configName
+ *
+ * @returns {string}
+ */
+const getConfigAccessor = (configName) => {
+    if (configName === "vitest-bench") {
+        return 'vite.configs["vitest-bench"]';
+    }
+
+    return `vite.configs.${configName}`;
+};
+
+/**
  * @param {string} ruleName
  * @param {RuleModule} ruleModule
  *
@@ -147,6 +172,18 @@ const getOrderedRules = (plugin = vitePlugin) =>
         )
         .toSorted((left, right) => left.ruleNumber - right.ruleNumber);
 
+export const renderPresetLegend = () =>
+    [
+        "- `Preset key` legend:",
+        ...viteConfigNamesByReadmeOrder.map((configName) => {
+            const metadata = viteConfigMetadataByName[configName];
+            const docsPath = PRESET_PAGE_LINKS[configName];
+            const configAccessor = getConfigAccessor(configName);
+
+            return `  - [${metadata.icon}](${docsPath}) — [\`${configAccessor}\`](${docsPath})`;
+        }),
+    ].join("\n");
+
 /**
  * @param {VitePlugin} [plugin]
  */
@@ -177,21 +214,25 @@ export const renderPresetMatrix = (plugin = vitePlugin) => {
         ];
     });
 
-    return renderMarkdownTable(
-        [
+    return [
+        renderPresetLegend(),
+        "",
+        renderMarkdownTable(
             [
-                "Rule",
-                "Fix",
-                "Preset key",
+                [
+                    "Rule",
+                    "Fix",
+                    "Preset key",
+                ],
+                ...rows,
             ],
-            ...rows,
-        ],
-        [
-            "left",
-            "center",
-            "left",
-        ]
-    );
+            [
+                "left",
+                "center",
+                "left",
+            ]
+        ),
+    ].join("\n");
 };
 
 /**

@@ -84,7 +84,7 @@ export const viteConfigMetadataByName: Readonly<
     "vitest-bench": {
         description:
             "Rules focused on Vitest bench files and keeping benchmark suites separate from test suites.",
-        icon: "🏎️",
+        icon: "👟",
         presetName: "vite:vitest-bench",
         readmeOrder: 8,
         requiresTypeChecking: false,

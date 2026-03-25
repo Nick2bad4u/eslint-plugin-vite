@@ -1,4 +1,4 @@
-# recommended
+# 🟡 Recommended
 
 Use `vite.configs.recommended` when you want a practical default for most Vite repositories.
 

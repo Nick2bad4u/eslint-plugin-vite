@@ -72,4 +72,4 @@ Disable this rule only if your repository does not use filesystem alias replacem
 ## Further reading
 
 - [configs preset](./presets/configs.md)
-- [Adoption checklist](./guides/adoption-checklist.md)
+- [📝 Adoption checklist](./guides/adoption-checklist.md)

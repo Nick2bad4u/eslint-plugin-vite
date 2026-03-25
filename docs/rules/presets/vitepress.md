@@ -1,4 +1,4 @@
-# vitepress
+# 📚 VitePress
 
 Use `vite.configs.vitepress` when your docs site is powered by VitePress and uses Vite client APIs such as `import.meta.env` and `import.meta.glob`.
 
