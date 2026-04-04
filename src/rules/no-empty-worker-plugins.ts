@@ -39,7 +39,6 @@ const noEmptyWorkerPluginsRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

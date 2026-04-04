@@ -101,7 +101,6 @@ const requireVitestEnvironmentMatchGlobsRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

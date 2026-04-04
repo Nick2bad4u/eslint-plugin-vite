@@ -86,7 +86,6 @@ const noMixedDefineWorkspaceAndTestProjectsRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

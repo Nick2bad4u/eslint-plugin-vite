@@ -57,7 +57,6 @@ const requireVitePressCleanUrlsExplicitRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

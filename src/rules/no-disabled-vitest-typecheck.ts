@@ -83,7 +83,6 @@ const noDisabledVitestTypecheckRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

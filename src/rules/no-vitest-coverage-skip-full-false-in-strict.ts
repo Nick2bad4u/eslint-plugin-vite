@@ -48,7 +48,6 @@ const noVitestCoverageSkipFullFalseInStrictRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

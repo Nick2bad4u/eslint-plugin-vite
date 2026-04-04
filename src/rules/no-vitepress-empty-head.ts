@@ -51,7 +51,6 @@ const noVitePressEmptyHeadRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

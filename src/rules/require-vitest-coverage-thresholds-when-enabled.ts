@@ -95,7 +95,6 @@ const requireVitestCoverageThresholdsWhenEnabledRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

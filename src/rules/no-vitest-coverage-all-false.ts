@@ -44,7 +44,6 @@ const noVitestCoverageAllFalseRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

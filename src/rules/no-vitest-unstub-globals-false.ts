@@ -40,7 +40,6 @@ const noVitestUnstubGlobalsFalseRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

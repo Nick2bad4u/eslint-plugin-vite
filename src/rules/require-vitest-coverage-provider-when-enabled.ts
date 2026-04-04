@@ -105,7 +105,6 @@ const requireVitestCoverageProviderWhenEnabledRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

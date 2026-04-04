@@ -93,7 +93,6 @@ const noVitestCoverageEnabledFalseWithThresholdsRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

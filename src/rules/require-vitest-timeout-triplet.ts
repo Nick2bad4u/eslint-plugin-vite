@@ -123,7 +123,6 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions,
         meta: {
             defaultOptions: [
                 {

@@ -125,7 +125,6 @@ const noVitestMinWorkersGreaterThanMaxWorkersRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

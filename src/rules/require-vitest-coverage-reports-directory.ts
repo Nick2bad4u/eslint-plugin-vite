@@ -114,7 +114,6 @@ const requireVitestCoverageReportsDirectoryRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

@@ -40,7 +40,6 @@ const noVitestFileParallelismDisabledRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

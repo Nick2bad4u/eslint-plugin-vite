@@ -65,7 +65,6 @@ const noEmptyVitestProjectsRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

@@ -45,7 +45,6 @@ const noVitestGlobalsRule: ReturnType<typeof createTypedRule> = createTypedRule<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

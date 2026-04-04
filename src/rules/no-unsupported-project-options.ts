@@ -142,7 +142,6 @@ const noUnsupportedProjectOptionsRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

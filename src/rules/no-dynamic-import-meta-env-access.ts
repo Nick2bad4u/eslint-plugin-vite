@@ -22,7 +22,6 @@ const noDynamicImportMetaEnvAccessRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

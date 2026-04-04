@@ -52,7 +52,6 @@ const noEmptyVitestCoverageReportsDirectoryRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

@@ -74,7 +74,6 @@ const noVitestCoverageTempDirInRepoRootRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

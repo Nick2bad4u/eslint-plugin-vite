@@ -57,7 +57,6 @@ const requireVitePressTitleOrTitleTemplateRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

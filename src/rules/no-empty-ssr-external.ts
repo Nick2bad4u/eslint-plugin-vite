@@ -39,7 +39,6 @@ const noEmptySsrExternalRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

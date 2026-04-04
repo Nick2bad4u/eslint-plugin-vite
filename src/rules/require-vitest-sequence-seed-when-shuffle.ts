@@ -88,7 +88,6 @@ const requireVitestSequenceSeedWhenShuffleRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

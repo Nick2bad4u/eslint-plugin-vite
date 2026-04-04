@@ -40,7 +40,6 @@ const noVitestUnstubEnvsFalseRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

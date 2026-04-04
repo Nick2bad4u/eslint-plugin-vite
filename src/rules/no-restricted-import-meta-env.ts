@@ -86,7 +86,6 @@ const noRestrictedImportMetaEnvRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions,
         meta: {
             defaultOptions: [
                 {

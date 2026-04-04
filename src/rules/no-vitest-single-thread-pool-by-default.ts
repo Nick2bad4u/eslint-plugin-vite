@@ -73,7 +73,6 @@ const noVitestSingleThreadPoolByDefaultRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {

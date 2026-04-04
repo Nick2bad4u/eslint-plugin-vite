@@ -40,7 +40,6 @@ const noEmptyVitestIncludeRule: ReturnType<typeof createTypedRule> =
                 },
             };
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

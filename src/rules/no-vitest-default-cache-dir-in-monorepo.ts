@@ -151,7 +151,6 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
             },
         };
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
