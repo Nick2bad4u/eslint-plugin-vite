@@ -43,6 +43,7 @@ describe("no-vitest-default-cache-dir-in-monorepo", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noVitestDefaultCacheDirInMonorepoRule.meta.messages
         ).toBeDefined();

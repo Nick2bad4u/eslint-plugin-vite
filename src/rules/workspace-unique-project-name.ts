@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, isDefined } from "ts-extras";
+
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 import {
@@ -27,7 +29,7 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                         projectEntry.projectObject
                     );
 
-                    if (name === undefined) {
+                    if (!isDefined(name)) {
                         continue;
                     }
 
@@ -57,17 +59,19 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
 
             return {
                 CallExpression(node) {
+                    const firstArgument = arrayFirst(node.arguments);
+
                     if (
                         node.callee.type !== "Identifier" ||
                         node.callee.name !== "defineWorkspace" ||
-                        node.arguments[0]?.type !== "ArrayExpression"
+                        firstArgument?.type !== "ArrayExpression"
                     ) {
                         return;
                     }
 
                     reportDuplicateNames(
                         getInlineVitestProjectEntries(
-                            node.arguments[0],
+                            firstArgument,
                             "workspace"
                         )
                     );

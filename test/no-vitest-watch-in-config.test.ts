@@ -29,6 +29,7 @@ describe("no-vitest-watch-in-config", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestWatchInConfigRule.meta.messages).toBeDefined();
     });
 });

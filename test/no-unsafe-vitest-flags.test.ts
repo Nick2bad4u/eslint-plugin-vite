@@ -35,6 +35,7 @@ describe("no-unsafe-vitest-flags", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noUnsafeVitestFlagsRule.meta.messages).toBeDefined();
     });
 });

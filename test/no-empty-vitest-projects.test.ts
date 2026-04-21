@@ -38,6 +38,7 @@ describe("no-empty-vitest-projects", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyVitestProjectsRule.meta.messages).toBeDefined();
     });
 });

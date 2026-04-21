@@ -1,4 +1,7 @@
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
+import { objectHasOwn } from "ts-extras";
+
+/** Canonical ordered preset keys exposed via `plugin.configs`. */
 export const viteConfigNames = [
     "recommended",
     "strict",
@@ -133,4 +136,4 @@ export type ViteConfigReference = keyof typeof viteConfigReferenceToName;
 export const isViteConfigReference = (
     value: string
 ): value is ViteConfigReference =>
-    Object.hasOwn(viteConfigReferenceToName, value);
+    objectHasOwn(viteConfigReferenceToName, value);

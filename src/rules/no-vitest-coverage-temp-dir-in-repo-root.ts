@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -27,7 +29,7 @@ const isRootLikeCoverageDirectory = (
         rawValue = getStaticStringValue(node);
     }
 
-    if (rawValue === undefined) {
+    if (!isDefined(rawValue)) {
         return false;
     }
 

@@ -39,6 +39,7 @@ describe("no-vitest-globals", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestGlobalsRule.meta.messages).toBeDefined();
     });
 });

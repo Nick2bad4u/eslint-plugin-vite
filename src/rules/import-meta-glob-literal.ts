@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, isDefined } from "ts-extras";
+
 import {
     getStaticStringValue,
     isImportMetaGlobMemberExpression,
@@ -10,7 +12,7 @@ const isStaticPatternNode = (
     node: Readonly<TSESTree.CallExpression["arguments"][number]>
 ): boolean => {
     if (node.type === "Literal" || node.type === "TemplateLiteral") {
-        return getStaticStringValue(node) !== undefined;
+        return isDefined(getStaticStringValue(node));
     }
 
     return false;
@@ -42,13 +44,15 @@ const importMetaGlobLiteralRule: ReturnType<typeof createTypedRule> =
                         return;
                     }
 
-                    if (isStaticGlobPatternArgument(node.arguments[0])) {
+                    if (
+                        isStaticGlobPatternArgument(arrayFirst(node.arguments))
+                    ) {
                         return;
                     }
 
                     context.report({
                         messageId: "literalPattern",
-                        node: node.arguments[0] ?? node,
+                        node: arrayFirst(node.arguments) ?? node,
                     });
                 },
             };

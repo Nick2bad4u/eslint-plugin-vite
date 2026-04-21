@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -71,7 +73,7 @@ const noDisabledVitestTypecheckRule: ReturnType<typeof createTypedRule> =
                 Property(node) {
                     const unsafeOption = getUnsafeTypecheckOption(node);
 
-                    if (unsafeOption === undefined) {
+                    if (!isDefined(unsafeOption)) {
                         return;
                     }
 

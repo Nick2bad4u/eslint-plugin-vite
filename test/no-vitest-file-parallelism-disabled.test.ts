@@ -29,6 +29,7 @@ describe("no-vitest-file-parallelism-disabled", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestFileParallelismDisabledRule.meta.messages).toBeDefined();
     });
 });

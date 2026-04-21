@@ -29,6 +29,7 @@ describe("no-vitest-coverage-enabled-false-with-thresholds", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noVitestCoverageEnabledFalseWithThresholdsRule.meta.messages
         ).toBeDefined();

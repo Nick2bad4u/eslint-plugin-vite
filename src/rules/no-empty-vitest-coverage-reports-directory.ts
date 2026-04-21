@@ -1,3 +1,5 @@
+import { isDefined } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -39,7 +41,7 @@ const noEmptyVitestCoverageReportsDirectoryRule: ReturnType<
                 const staticDirectory = getStaticStringValue(node.value);
 
                 if (
-                    staticDirectory === undefined ||
+                    !isDefined(staticDirectory) ||
                     staticDirectory.trim().length > 0
                 ) {
                     return;

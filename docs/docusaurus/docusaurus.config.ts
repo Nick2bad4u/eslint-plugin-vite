@@ -9,7 +9,7 @@ const projectName = "eslint-plugin-vite";
 const siteUrl = "https://nick2bad4u.github.io";
 const baseUrl = process.env["DOCUSAURUS_BASE_URL"] ?? "/eslint-plugin-vite/";
 
-const config: Config = {
+const config = {
     title: "eslint-plugin-vite",
     tagline: "ESLint rules for Vite, Vitest, and Vitest bench.",
     favicon: "img/favicon.ico",
@@ -63,9 +63,14 @@ const config: Config = {
     },
     url: siteUrl,
     baseUrl,
+    baseUrlIssueBanner: true,
+    deploymentBranch: "gh-pages",
     organizationName,
+    onBrokenAnchors: "warn",
     projectName,
     onBrokenLinks: "throw",
+    onDuplicateRoutes: "warn",
+    trailingSlash: false,
     i18n: {
         defaultLocale: "en",
         locales: ["en"],
@@ -113,6 +118,29 @@ const config: Config = {
     ],
     plugins: [
         [
+            "@docusaurus/plugin-pwa",
+            {
+                debug: process.env["DOCUSAURUS_PWA_DEBUG"] === "true",
+                offlineModeActivationStrategies: [
+                    "appInstalled",
+                    "standalone",
+                    "queryString",
+                ],
+                pwaHead: [
+                    {
+                        href: `${baseUrl}manifest.json`,
+                        rel: "manifest",
+                        tagName: "link",
+                    },
+                    {
+                        content: "#101010",
+                        name: "theme-color",
+                        tagName: "meta",
+                    },
+                ],
+            },
+        ],
+        [
             "@docusaurus/plugin-content-docs",
             {
                 id: "rules",
@@ -124,6 +152,11 @@ const config: Config = {
         suppressKnownWebpackWarningsPlugin,
     ],
     themeConfig: {
+        colorMode: {
+            defaultMode: "dark",
+            disableSwitch: false,
+            respectPrefersColorScheme: true,
+        },
         image: "img/logo.png",
         mermaid: {
             theme: {
@@ -144,7 +177,7 @@ const config: Config = {
                 },
                 {
                     label: "📜 Rules",
-                    to: "/docs/rules/overview",
+                    to: "/docs/rules",
                 },
                 {
                     label: "🛠️ Presets",
@@ -245,7 +278,7 @@ const config: Config = {
                         },
                         {
                             label: "📏 Rule reference",
-                            to: "/docs/rules/overview",
+                            to: "/docs/rules",
                         },
                     ],
                 },
@@ -294,6 +327,6 @@ const config: Config = {
             ],
         },
     } satisfies Preset.ThemeConfig,
-};
+} satisfies Config;
 
 export default config;

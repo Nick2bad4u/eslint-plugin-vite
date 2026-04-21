@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isPresent } from "ts-extras";
+
 import { getStaticPropertyName } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -12,7 +14,7 @@ const hasAncestorPropertyName = (
 ): boolean => {
     let current = node.parent;
 
-    while (current !== undefined && current !== null) {
+    while (isPresent(current)) {
         if (
             current.type === "Property" &&
             getStaticPropertyName(current) === propertyName

@@ -29,6 +29,7 @@ describe("require-vitest-coverage-provider-when-enabled", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitestCoverageProviderWhenEnabledRule.meta.messages
         ).toBeDefined();

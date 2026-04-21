@@ -38,6 +38,7 @@ describe("no-vitest-env-leakage-combo", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestEnvLeakageComboRule.meta.messages).toBeDefined();
     });
 });

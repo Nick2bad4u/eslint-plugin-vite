@@ -29,6 +29,7 @@ describe("no-empty-vitest-coverage-reporter", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyVitestCoverageReporterRule.meta.messages).toBeDefined();
     });
 });

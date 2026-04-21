@@ -29,6 +29,7 @@ describe("no-empty-ssr-noexternal", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptySsrNoExternalRule.meta.messages).toBeDefined();
     });
 });

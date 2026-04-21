@@ -48,6 +48,7 @@ describe("no-unsupported-project-options", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noUnsupportedProjectOptionsRule.meta.messages).toBeDefined();
     });
 });

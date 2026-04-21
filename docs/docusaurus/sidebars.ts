@@ -1,6 +1,6 @@
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
-const sidebars: SidebarsConfig = {
+const sidebars = {
     docs: [
         {
             className: "sb-doc-overview",
@@ -50,6 +50,6 @@ const sidebars: SidebarsConfig = {
             type: "category",
         },
     ],
-};
+} satisfies SidebarsConfig;
 
 export default sidebars;

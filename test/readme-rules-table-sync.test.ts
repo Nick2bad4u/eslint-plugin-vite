@@ -9,6 +9,8 @@ const readmePath = path.join(process.cwd(), "README.md");
 
 describe("rEADME rules table sync", () => {
     it("matches the generated rules table", () => {
+        expect.hasAssertions();
+
         const readme = readFileSync(readmePath, "utf8");
 
         expect(() => {

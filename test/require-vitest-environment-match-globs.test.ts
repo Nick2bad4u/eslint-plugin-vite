@@ -33,6 +33,7 @@ describe("require-vitest-environment-match-globs", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitestEnvironmentMatchGlobsRule.meta.messages
         ).toBeDefined();

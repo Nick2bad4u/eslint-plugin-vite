@@ -34,6 +34,7 @@ describe("require-vitest-coverage-thresholds-when-enabled", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitestCoverageThresholdsWhenEnabledRule.meta.messages
         ).toBeDefined();

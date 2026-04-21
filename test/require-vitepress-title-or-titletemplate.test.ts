@@ -33,6 +33,7 @@ describe("require-vitepress-title-or-titletemplate", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitePressTitleOrTitleTemplateRule.meta.messages
         ).toBeDefined();

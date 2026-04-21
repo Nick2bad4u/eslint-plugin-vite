@@ -1,5 +1,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayIncludes } from "ts-extras";
+
 import { findPropertyByName } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -92,7 +94,8 @@ const noUnsupportedProjectOptionsRule: ReturnType<typeof createTypedRule> =
                 CallExpression(node) {
                     if (
                         node.callee.type !== "Identifier" ||
-                        !["defineProject", "defineWorkspace"].includes(
+                        !arrayIncludes(
+                            ["defineProject", "defineWorkspace"] as const,
                             node.callee.name
                         )
                     ) {

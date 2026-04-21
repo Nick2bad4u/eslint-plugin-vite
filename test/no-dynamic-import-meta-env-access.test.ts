@@ -26,6 +26,7 @@ describe("no-dynamic-import-meta-env-access", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noDynamicImportMetaEnvAccessRule.meta.messages).toBeDefined();
     });
 });

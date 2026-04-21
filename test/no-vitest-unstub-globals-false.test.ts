@@ -29,6 +29,7 @@ describe("no-vitest-unstub-globals-false", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestUnstubGlobalsFalseRule.meta.messages).toBeDefined();
     });
 });

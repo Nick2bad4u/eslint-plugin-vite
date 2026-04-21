@@ -5,6 +5,14 @@
 import type { ESLint, Linter } from "eslint";
 
 import typeScriptParser from "@typescript-eslint/parser";
+import {
+    arrayIncludes,
+    isDefined,
+    isEmpty,
+    objectEntries,
+    objectFromEntries,
+    safeCastTo,
+} from "ts-extras";
 
 import packageJson from "../package.json" with { type: "json" };
 import { viteRules } from "./_internal/rules-registry.js";
@@ -93,12 +101,12 @@ const normalizeViteConfigNames = (
             ? viteConfigReferenceToName[rawValue]
             : viteConfigNames.find((name) => name === rawValue);
 
-        if (configName !== undefined && !configNames.includes(configName)) {
+        if (isDefined(configName) && !arrayIncludes(configNames, configName)) {
             configNames.push(configName);
         }
     }
 
-    if (configNames.length === 0) {
+    if (isEmpty(configNames)) {
         throw new TypeError(
             "Every rule must declare at least one docs.viteConfigs preset reference."
         );
@@ -110,14 +118,16 @@ const normalizeViteConfigNames = (
 const derivePresetRuleNamesByConfig = (): Readonly<
     Record<ViteConfigName, readonly ViteRuleName[]>
 > => {
-    const presetRuleNamesByConfig = Object.fromEntries(
-        viteConfigNames.map((configName) => [configName, [] as ViteRuleName[]])
+    const presetRuleNamesByConfig = objectFromEntries(
+        viteConfigNames.map((configName) => [
+            configName,
+            safeCastTo<ViteRuleName[]>([]),
+        ])
     ) as Record<ViteConfigName, ViteRuleName[]>;
 
-    for (const [ruleName, ruleModule] of Object.entries(viteRules) as readonly [
-        ViteRuleName,
-        (typeof viteRules)[ViteRuleName],
-    ][]) {
+    for (const [ruleName, ruleModule] of safeCastTo<
+        readonly [ViteRuleName, (typeof viteRules)[ViteRuleName]][]
+    >(objectEntries(viteRules))) {
         const docs = ruleModule.meta.docs;
         const configNames = normalizeViteConfigNames(
             (docs as { viteConfigs?: unknown }).viteConfigs

@@ -29,6 +29,7 @@ describe("no-vitepress-empty-theme-config", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitePressEmptyThemeConfigRule.meta.messages).toBeDefined();
     });
 });

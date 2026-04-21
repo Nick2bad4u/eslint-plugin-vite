@@ -23,6 +23,8 @@ const requiredHeadings = [
 
 describe("rule docs integrity", () => {
     it("keeps every rule doc file present and aligned", () => {
+        expect.hasAssertions();
+
         for (const [ruleName, ruleModule] of Object.entries(vitePlugin.rules)) {
             const docsPath = path.join(
                 process.cwd(),

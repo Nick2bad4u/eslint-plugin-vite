@@ -1,4 +1,5 @@
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
+import { isDefined, setHas } from "ts-extras";
 
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -70,7 +71,7 @@ const expressionNodeTypes = new Set<TSESTree.Expression["type"]>([
 const getExportedExpression = (
     declaration: Readonly<TSESTree.ExportDefaultDeclaration["declaration"]>
 ): null | TSESTree.Expression =>
-    expressionNodeTypes.has(declaration.type as TSESTree.Expression["type"])
+    setHas(expressionNodeTypes, declaration.type as TSESTree.Expression["type"])
         ? (declaration as TSESTree.Expression)
         : null;
 
@@ -80,7 +81,7 @@ const isAcceptedExportExpression = (
 ): boolean =>
     expression.type === "CallExpression" &&
     expression.callee.type === "Identifier" &&
-    acceptedCallNamesByKind[fileKind].has(expression.callee.name);
+    setHas(acceptedCallNamesByKind[fileKind], expression.callee.name);
 
 const getTopLevelVariableInitializers = (
     programBody: readonly Readonly<TSESTree.ProgramStatement>[]
@@ -126,7 +127,7 @@ const resolvesToAcceptedExportExpression = (
         return false;
     }
 
-    if (visitedIdentifiers.has(unwrappedExpression.name)) {
+    if (setHas(visitedIdentifiers, unwrappedExpression.name)) {
         return false;
     }
 
@@ -137,7 +138,7 @@ const resolvesToAcceptedExportExpression = (
     const initializer = variableInitializers.get(unwrappedExpression.name);
 
     return (
-        initializer !== undefined &&
+        isDefined(initializer) &&
         resolvesToAcceptedExportExpression(
             initializer,
             fileKind,

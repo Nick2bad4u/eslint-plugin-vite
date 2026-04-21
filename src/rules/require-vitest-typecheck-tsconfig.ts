@@ -1,3 +1,7 @@
+import type { UnknownRecord } from "type-fest";
+
+import { isDefined, keyIn } from "ts-extras";
+
 import {
     findPropertyByName,
     getPropertyPath,
@@ -14,10 +18,16 @@ const typecheckPathSuffix = ["test", "typecheck"] as const;
 const isBooleanLiteral = (value: unknown, expected: boolean): boolean =>
     typeof value === "object" &&
     value !== null &&
-    "type" in value &&
-    value.type === "Literal" &&
-    "value" in value &&
-    value.value === expected;
+    (() => {
+        const record = value as UnknownRecord;
+
+        return (
+            keyIn(record, "type") &&
+            record["type"] === "Literal" &&
+            keyIn(record, "value") &&
+            record["value"] === expected
+        );
+    })();
 
 const isTypecheckEnabled = (
     typecheckObject: Parameters<typeof findPropertyByName>[0]
@@ -82,7 +92,7 @@ const requireVitestTypecheckTsconfigRule: ReturnType<typeof createTypedRule> =
                     );
 
                     if (
-                        staticTsconfigValue === undefined ||
+                        !isDefined(staticTsconfigValue) ||
                         staticTsconfigValue.trim().length === 0
                     ) {
                         context.report({

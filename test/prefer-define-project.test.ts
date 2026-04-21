@@ -30,6 +30,7 @@ describe("prefer-define-project", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(preferDefineProjectRule.meta.messages).toBeDefined();
     });
 });

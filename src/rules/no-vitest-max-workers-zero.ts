@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayIncludes, isDefined, isFinite } from "ts-extras";
+
 import { getPropertyPath, getStaticStringValue } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -20,19 +22,19 @@ const getStaticNumericValue = (
     ) {
         const parsed = Number(node.value);
 
-        return Number.isFinite(parsed) ? parsed : undefined;
+        return isFinite(parsed) ? parsed : undefined;
     }
 
     if (node.type === "TemplateLiteral") {
         const staticValue = getStaticStringValue(node);
 
-        if (staticValue === undefined || staticValue.trim().length === 0) {
+        if (!isDefined(staticValue) || staticValue.trim().length === 0) {
             return undefined;
         }
 
         const parsed = Number(staticValue);
 
-        return Number.isFinite(parsed) ? parsed : undefined;
+        return isFinite(parsed) ? parsed : undefined;
     }
 
     return undefined;
@@ -67,8 +69,8 @@ const noVitestMaxWorkersZeroRule: ReturnType<typeof createTypedRule> =
                     const propertyPath = getPropertyPath(node);
 
                     if (
-                        !propertyPath.includes("test") ||
-                        propertyPath.at(-1) !== "maxWorkers"
+                        !arrayIncludes(propertyPath, "test") ||
+                        arrayAt(propertyPath, -1) !== "maxWorkers"
                     ) {
                         return;
                     }

@@ -30,6 +30,7 @@ describe("import-meta-glob-literal", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(importMetaGlobLiteralRule.meta.messages).toBeDefined();
     });
 });

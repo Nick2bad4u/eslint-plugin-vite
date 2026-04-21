@@ -129,7 +129,7 @@ const numberedRuleSidebarItems = ruleDocIds.map((ruleDocId) => {
     } as const;
 });
 
-const sidebars: SidebarsConfig = {
+const sidebars = {
     rules: [
         {
             className: "sb-doc-overview",
@@ -210,6 +210,6 @@ const sidebars: SidebarsConfig = {
             items: numberedRuleSidebarItems,
         },
     ],
-};
+} satisfies SidebarsConfig;
 
 export default sidebars;

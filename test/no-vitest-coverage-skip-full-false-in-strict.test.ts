@@ -29,6 +29,7 @@ describe("no-vitest-coverage-skip-full-false-in-strict", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noVitestCoverageSkipFullFalseInStrictRule.meta.messages
         ).toBeDefined();

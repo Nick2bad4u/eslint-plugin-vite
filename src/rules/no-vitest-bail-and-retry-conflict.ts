@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined, isFinite } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -35,19 +37,19 @@ const getStaticNumericValue = (
     ) {
         const parsed = Number(node.value);
 
-        return Number.isFinite(parsed) ? parsed : undefined;
+        return isFinite(parsed) ? parsed : undefined;
     }
 
     if (node.type === "TemplateLiteral") {
         const staticValue = getStaticStringValue(node);
 
-        if (staticValue === undefined || staticValue.trim().length === 0) {
+        if (!isDefined(staticValue) || staticValue.trim().length === 0) {
             return undefined;
         }
 
         const parsed = Number(staticValue);
 
-        return Number.isFinite(parsed) ? parsed : undefined;
+        return isFinite(parsed) ? parsed : undefined;
     }
 
     return undefined;
@@ -60,7 +62,7 @@ const isEnabledBail = (node: Readonly<TSESTree.Property["value"]>): boolean => {
 
     const staticNumeric = getStaticNumericValue(node);
 
-    return staticNumeric !== undefined && staticNumeric > 0;
+    return isDefined(staticNumeric) && staticNumeric > 0;
 };
 
 const isEnabledRetry = (
@@ -68,7 +70,7 @@ const isEnabledRetry = (
 ): boolean => {
     const staticNumeric = getStaticNumericValue(node);
 
-    return staticNumeric !== undefined && staticNumeric > 0;
+    return isDefined(staticNumeric) && staticNumeric > 0;
 };
 
 /** Disallow enabling both strict bailout and retry in same Vitest test scope. */

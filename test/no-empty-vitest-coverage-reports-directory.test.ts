@@ -34,6 +34,7 @@ describe("no-empty-vitest-coverage-reports-directory", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noEmptyVitestCoverageReportsDirectoryRule.meta.messages
         ).toBeDefined();

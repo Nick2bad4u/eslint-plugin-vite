@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -41,7 +43,7 @@ const hasNonEmptyReporter = (
     if (node.type === "TemplateLiteral") {
         const staticValue = getStaticStringValue(node);
 
-        return staticValue !== undefined && staticValue.trim().length > 0;
+        return isDefined(staticValue) && staticValue.trim().length > 0;
     }
 
     return false;

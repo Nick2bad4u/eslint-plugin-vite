@@ -29,6 +29,7 @@ describe("require-vitest-sequence-seed-when-shuffle", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitestSequenceSeedWhenShuffleRule.meta.messages
         ).toBeDefined();

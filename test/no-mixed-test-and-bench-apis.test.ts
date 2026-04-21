@@ -29,6 +29,7 @@ describe("no-mixed-test-and-bench-apis", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noMixedTestAndBenchApisRule.meta.messages).toBeDefined();
     });
 });

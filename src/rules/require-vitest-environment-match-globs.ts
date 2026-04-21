@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -90,7 +92,7 @@ const requireVitestEnvironmentMatchGlobsRule: ReturnType<
                 const environmentName = getStaticString(node.value);
 
                 if (
-                    environmentName === undefined ||
+                    !isDefined(environmentName) ||
                     environmentName.length === 0
                 ) {
                     return;

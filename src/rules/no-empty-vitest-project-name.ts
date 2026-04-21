@@ -1,3 +1,5 @@
+import { isDefined } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -37,7 +39,7 @@ const noEmptyVitestProjectNameRule: ReturnType<typeof createTypedRule> =
                     const staticName = getStaticStringValue(node.value);
 
                     if (
-                        staticName === undefined ||
+                        !isDefined(staticName) ||
                         staticName.trim().length > 0
                     ) {
                         return;

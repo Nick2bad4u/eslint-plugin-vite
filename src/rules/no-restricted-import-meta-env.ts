@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined, setHas } from "ts-extras";
+
 import {
     getStaticStringValue,
     isImportMetaEnvMemberExpression,
@@ -15,7 +17,7 @@ type RuleOptions = [
     }>,
 ];
 
-const builtInImportMetaEnvKeys = new Set([
+const builtInImportMetaEnvKeys: ReadonlySet<string> = new Set([
     "BASE_URL",
     "DEV",
     "MODE",
@@ -23,11 +25,8 @@ const builtInImportMetaEnvKeys = new Set([
     "SSR",
 ]);
 
-const defaultOptions = [
-    {
-        allowPrefixes: ["VITE_"],
-    },
-] as const satisfies RuleOptions;
+const isBuiltInImportMetaEnvKey = (value: string): boolean =>
+    setHas(builtInImportMetaEnvKeys, value);
 
 const getStaticEnvKey = (
     node: Readonly<TSESTree.MemberExpression>
@@ -50,8 +49,13 @@ const noRestrictedImportMetaEnvRule: ReturnType<typeof createTypedRule> =
                 return {};
             }
 
-            const allowPrefixes =
-                options.allowPrefixes ?? defaultOptions[0].allowPrefixes;
+            const allowPrefixes: readonly string[] = Array.isArray(
+                options.allowPrefixes
+            )
+                ? options.allowPrefixes.filter(
+                      (prefix): prefix is string => typeof prefix === "string"
+                  )
+                : ["VITE_"];
 
             return {
                 MemberExpression(node) {
@@ -61,10 +65,10 @@ const noRestrictedImportMetaEnvRule: ReturnType<typeof createTypedRule> =
 
                     const envKey = getStaticEnvKey(node);
 
-                    if (
-                        envKey === undefined ||
-                        builtInImportMetaEnvKeys.has(envKey)
-                    ) {
+                    const isBuiltInEnvKey =
+                        isDefined(envKey) && isBuiltInImportMetaEnvKey(envKey);
+
+                    if (!isDefined(envKey) || isBuiltInEnvKey) {
                         return;
                     }
 

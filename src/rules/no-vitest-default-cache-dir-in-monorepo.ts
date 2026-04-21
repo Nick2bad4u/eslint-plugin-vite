@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, setHas } from "ts-extras";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import {
     getConfigFileKind,
@@ -39,7 +41,7 @@ const getStaticString = (
         node.expressions.length === 0 &&
         node.quasis.length === 1
     ) {
-        return node.quasis[0]?.value.cooked ?? null;
+        return arrayFirst(node.quasis)?.value.cooked ?? null;
     }
 
     return null;
@@ -113,7 +115,7 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
             Property(node) {
                 const propertyPath = getPropertyPath(node);
 
-                if (propertyPath[0] === "test") {
+                if (arrayFirst(propertyPath) === "test") {
                     hasAnyTestConfig = true;
 
                     if (firstTestPropertyNode === null) {
@@ -143,7 +145,7 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
                     return;
                 }
 
-                if (defaultCacheDirValues.has(staticString)) {
+                if (setHas(defaultCacheDirValues, staticString)) {
                     hasDefaultCacheDir = true;
                     defaultCacheDirNode = node;
                     defaultCacheDirValue = staticString;

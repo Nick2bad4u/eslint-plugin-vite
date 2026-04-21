@@ -64,6 +64,7 @@ describe("config-require-define-config", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(configRequireDefineConfigRule.meta.messages).toBeDefined();
     });
 });

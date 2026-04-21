@@ -57,6 +57,7 @@ describe("no-deprecated-config-options", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noDeprecatedConfigOptionsRule.meta.messages).toBeDefined();
     });
 });

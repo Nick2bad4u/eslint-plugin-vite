@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import {
     type ConfigFileKind,
@@ -48,7 +50,7 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
             let hasHookTimeout = false;
             let hasTeardownTimeout = false;
             let firstTestPropertyNode: null | TSESTree.Property = null;
-            const mode = options.mode ?? defaultOptions[0].mode;
+            const mode = options.mode ?? arrayFirst(defaultOptions).mode;
 
             return {
                 "Program:exit"(programNode) {
@@ -86,7 +88,7 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
                 Property(node) {
                     const propertyPath = getPropertyPath(node);
 
-                    if (propertyPath[0] === "test") {
+                    if (arrayFirst(propertyPath) === "test") {
                         hasAnyTestConfig = true;
 
                         if (firstTestPropertyNode === null) {

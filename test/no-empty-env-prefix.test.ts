@@ -31,6 +31,7 @@ describe("no-empty-env-prefix", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyEnvPrefixRule.meta.messages).toBeDefined();
     });
 });

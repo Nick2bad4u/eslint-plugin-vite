@@ -43,6 +43,7 @@ describe("no-import-meta-env-in-config", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noImportMetaEnvInConfigRule.meta.messages).toBeDefined();
     });
 });

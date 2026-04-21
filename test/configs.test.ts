@@ -11,11 +11,12 @@ const getRuleIds = (configName: ViteConfigName) =>
 
 describe("plugin configs", () => {
     it("exposes every documented preset key", () => {
+        expect.hasAssertions();
         expect(
             Object.keys(vitePlugin.configs).toSorted((left, right) =>
                 left.localeCompare(right)
             )
-        ).toEqual([
+        ).toStrictEqual([
             "all",
             "client",
             "configs",
@@ -28,6 +29,8 @@ describe("plugin configs", () => {
     });
 
     it("registers the plugin on every config", () => {
+        expect.hasAssertions();
+
         for (const config of Object.values(vitePlugin.configs)) {
             expect(config.plugins?.["vite"]).toBeDefined();
             expect(config.languageOptions?.["parser"]).toBeDefined();
@@ -35,6 +38,8 @@ describe("plugin configs", () => {
     });
 
     it("keeps strict and all as supersets", () => {
+        expect.hasAssertions();
+
         const recommendedRuleIds = new Set(getRuleIds("recommended"));
         const strictRuleIds = new Set(getRuleIds("strict"));
         const allRuleIds = new Set(getRuleIds("all"));

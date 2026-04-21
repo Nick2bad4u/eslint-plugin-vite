@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined, setHas } from "ts-extras";
+
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "mixedApis";
@@ -45,16 +47,14 @@ const noMixedTestAndBenchApisRule: ReturnType<typeof createTypedRule> =
 
                     const importedName = importedNames.get(node.callee.name);
 
-                    const isTestApi =
-                        importedName === undefined
-                            ? hasVitestImport &&
-                              testApiNames.has(node.callee.name)
-                            : testApiNames.has(importedName);
-                    const isBenchApi =
-                        importedName === undefined
-                            ? hasVitestImport &&
-                              benchApiNames.has(node.callee.name)
-                            : benchApiNames.has(importedName);
+                    const isTestApi = isDefined(importedName)
+                        ? setHas(testApiNames, importedName)
+                        : hasVitestImport &&
+                          setHas(testApiNames, node.callee.name);
+                    const isBenchApi = isDefined(importedName)
+                        ? setHas(benchApiNames, importedName)
+                        : hasVitestImport &&
+                          setHas(benchApiNames, node.callee.name);
 
                     if (isTestApi && firstTestCall === null) {
                         firstTestCall = node;

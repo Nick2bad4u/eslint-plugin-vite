@@ -29,6 +29,7 @@ describe("no-empty-optimize-deps-exclude", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyOptimizeDepsExcludeRule.meta.messages).toBeDefined();
     });
 });

@@ -29,6 +29,7 @@ describe("no-empty-vitest-coverage-include", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyVitestCoverageIncludeRule.meta.messages).toBeDefined();
     });
 });

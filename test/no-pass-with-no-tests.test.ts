@@ -39,6 +39,7 @@ describe("no-pass-with-no-tests", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noPassWithNoTestsRule.meta.messages).toBeDefined();
     });
 });

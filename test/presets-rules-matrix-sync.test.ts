@@ -28,6 +28,8 @@ const presetNames: readonly Parameters<typeof replacePresetRulesTable>[1][] = [
 
 describe("preset docs sync", () => {
     it("matches the generated preset matrix", () => {
+        expect.hasAssertions();
+
         const presetsIndexPath = path.join(presetsDirectoryPath, "index.md");
         const presetsIndexContents = readFileSync(presetsIndexPath, "utf8");
 
@@ -42,6 +44,8 @@ describe("preset docs sync", () => {
     });
 
     it("matches the generated per-preset rule tables", () => {
+        expect.hasAssertions();
+
         for (const presetName of presetNames) {
             const presetPath = path.join(
                 presetsDirectoryPath,

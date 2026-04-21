@@ -125,6 +125,10 @@ const vscodeLanguageServerTypesEsmEntry = resolvePreferredEntry(
     "vscode-languageserver-types"
 );
 
+/**
+ * Docusaurus plugin that aliases known ESM package entries and suppresses the
+ * corresponding webpack UMD warning noise.
+ */
 export const suppressKnownWebpackWarningsPlugin: PluginModule = (
     _context: LoadContext,
     _options: unknown

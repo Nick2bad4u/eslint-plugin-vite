@@ -33,6 +33,7 @@ describe("no-vitest-timeout-triplet-mismatch", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestTimeoutTripletMismatchRule.meta.messages).toBeDefined();
     });
 });

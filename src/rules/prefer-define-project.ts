@@ -1,3 +1,5 @@
+import { arrayFirst } from "ts-extras";
+
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 import {
@@ -38,17 +40,19 @@ const preferDefineProjectRule: ReturnType<typeof createTypedRule> =
 
             return {
                 CallExpression(node) {
+                    const firstArgument = arrayFirst(node.arguments);
+
                     if (
                         node.callee.type !== "Identifier" ||
                         node.callee.name !== "defineWorkspace" ||
-                        node.arguments[0]?.type !== "ArrayExpression"
+                        firstArgument?.type !== "ArrayExpression"
                     ) {
                         return;
                     }
 
                     reportDefineConfigProjects(
                         getInlineVitestProjectEntries(
-                            node.arguments[0],
+                            firstArgument,
                             "workspace"
                         )
                     );

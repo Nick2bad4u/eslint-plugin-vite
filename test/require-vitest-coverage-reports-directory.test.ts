@@ -29,6 +29,7 @@ describe("require-vitest-coverage-reports-directory", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitestCoverageReportsDirectoryRule.meta.messages
         ).toBeDefined();

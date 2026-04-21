@@ -34,6 +34,7 @@ describe("no-vitest-bail-and-retry-conflict", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestBailAndRetryConflictRule.meta.messages).toBeDefined();
     });
 });

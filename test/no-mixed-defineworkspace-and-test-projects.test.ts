@@ -34,6 +34,7 @@ describe("no-mixed-defineworkspace-and-test-projects", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noMixedDefineWorkspaceAndTestProjectsRule.meta.messages
         ).toBeDefined();

@@ -29,6 +29,7 @@ describe("no-vitest-unstub-envs-false", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestUnstubEnvsFalseRule.meta.messages).toBeDefined();
     });
 });

@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -37,7 +39,7 @@ const hasStaticSeedValue = (
     if (node.type === "TemplateLiteral") {
         const staticValue = getStaticStringValue(node);
 
-        return staticValue !== undefined;
+        return isDefined(staticValue);
     }
 
     return false;

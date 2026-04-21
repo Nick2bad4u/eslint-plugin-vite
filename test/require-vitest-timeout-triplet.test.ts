@@ -48,6 +48,7 @@ describe("require-vitest-timeout-triplet", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(requireVitestTimeoutTripletRule.meta.messages).toBeDefined();
     });
 });

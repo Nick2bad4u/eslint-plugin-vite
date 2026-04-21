@@ -29,6 +29,7 @@ describe("no-empty-worker-plugins", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyWorkerPluginsRule.meta.messages).toBeDefined();
     });
 });

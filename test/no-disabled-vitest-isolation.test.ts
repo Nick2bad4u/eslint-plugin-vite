@@ -43,6 +43,7 @@ describe("no-disabled-vitest-isolation", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noDisabledVitestIsolationRule.meta.messages).toBeDefined();
     });
 });

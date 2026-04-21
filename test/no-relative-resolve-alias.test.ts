@@ -30,6 +30,7 @@ describe("no-relative-resolve-alias", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noRelativeResolveAliasRule.meta.messages).toBeDefined();
     });
 });

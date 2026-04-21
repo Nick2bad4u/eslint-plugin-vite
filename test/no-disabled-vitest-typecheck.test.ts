@@ -48,6 +48,7 @@ describe("no-disabled-vitest-typecheck", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noDisabledVitestTypecheckRule.meta.messages).toBeDefined();
     });
 });

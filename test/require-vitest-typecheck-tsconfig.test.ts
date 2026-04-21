@@ -52,6 +52,7 @@ describe("require-vitest-typecheck-tsconfig", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(requireVitestTypecheckTsconfigRule.meta.messages).toBeDefined();
     });
 });

@@ -34,6 +34,7 @@ describe("no-vitest-coverage-temp-dir-in-repo-root", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noVitestCoverageTempDirInRepoRootRule.meta.messages
         ).toBeDefined();

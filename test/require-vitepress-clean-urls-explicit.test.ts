@@ -33,6 +33,7 @@ describe("require-vitepress-clean-urls-explicit", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitePressCleanUrlsExplicitRule.meta.messages
         ).toBeDefined();

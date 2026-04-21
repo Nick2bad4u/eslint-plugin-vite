@@ -1,6 +1,8 @@
 import type { TSESLint } from "@typescript-eslint/utils";
+import type { Except } from "type-fest";
 
 import { ESLintUtils } from "@typescript-eslint/utils";
+import { assertDefined, isDefined } from "ts-extras";
 
 import type { ViteConfigReference } from "./vite-config-references.js";
 
@@ -27,7 +29,7 @@ type ViteRuleDocs = {
 };
 
 /** Rule authoring metadata contract accepted by `RuleCreator`. */
-type ViteRuleInputDocs = Omit<
+type ViteRuleInputDocs = Except<
     ViteRuleDocs,
     "ruleCatalogId" | "ruleId" | "ruleNumber"
 > & {
@@ -44,11 +46,7 @@ export const createTypedRule: ViteRuleCreator = (ruleDefinition) => {
     const createdRule = ESLintUtils.RuleCreator.withoutDocs(ruleDefinition);
     const ruleDocs = createdRule.meta.docs;
 
-    if (ruleDocs === undefined) {
-        throw new TypeError(
-            `Rule '${ruleDefinition.name}' must declare meta.docs.`
-        );
-    }
+    assertDefined(ruleDocs);
 
     const canonicalDocsUrl = createRuleDocsUrl(ruleDefinition.name);
 
@@ -78,9 +76,9 @@ export const createTypedRule: ViteRuleCreator = (ruleDefinition) => {
         ...createdRule,
         meta: {
             ...createdRule.meta,
-            ...(metaDefaultOptions === undefined
-                ? {}
-                : { defaultOptions: metaDefaultOptions }),
+            ...(isDefined(metaDefaultOptions)
+                ? { defaultOptions: metaDefaultOptions }
+                : {}),
             docs: docsWithCatalog,
         },
         name: ruleDefinition.name,

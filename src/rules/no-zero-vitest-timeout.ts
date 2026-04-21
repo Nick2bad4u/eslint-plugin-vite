@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayIncludes, isDefined } from "ts-extras";
+
 import { getPropertyPath } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -14,7 +16,7 @@ const timeoutOptionNames = [
 ] as const;
 
 const isTimeoutOptionName = (value: string): value is TimeoutOptionName =>
-    timeoutOptionNames.includes(value as TimeoutOptionName);
+    arrayIncludes(timeoutOptionNames, value as TimeoutOptionName);
 
 const isNumberLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
@@ -25,11 +27,11 @@ const getZeroTimeoutOptionName = (
     node: Readonly<TSESTree.Property>
 ): null | TimeoutOptionName => {
     const propertyPath = getPropertyPath(node);
-    const optionName = propertyPath.at(-1);
-    const parentSegment = propertyPath.at(-2);
+    const optionName = arrayAt(propertyPath, -1);
+    const parentSegment = arrayAt(propertyPath, -2);
 
     if (
-        optionName === undefined ||
+        !isDefined(optionName) ||
         parentSegment !== "test" ||
         !isTimeoutOptionName(optionName)
     ) {

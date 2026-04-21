@@ -4,17 +4,19 @@ import vitePlugin from "../src/plugin.js";
 
 describe("plugin entry", () => {
     it("exposes stable plugin metadata", () => {
+        expect.hasAssertions();
         expect(vitePlugin.meta.name).toBe("@typpi/eslint-plugin-vite");
         expect(vitePlugin.meta.namespace).toBe("vite");
         expect(vitePlugin.meta.version).toMatch(/^\d+\.\d+\.\d+/v);
     });
 
     it("exposes the expected rule ids", () => {
+        expect.hasAssertions();
         expect(
             Object.keys(vitePlugin.rules).toSorted((left, right) =>
                 left.localeCompare(right)
             )
-        ).toEqual([
+        ).toStrictEqual([
             "config-require-define-config",
             "import-meta-glob-literal",
             "no-deprecated-config-options",

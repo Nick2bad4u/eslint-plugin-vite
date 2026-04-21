@@ -25,6 +25,7 @@ describe("no-empty-ssr-external", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptySsrExternalRule.meta.messages).toBeDefined();
     });
 });

@@ -49,6 +49,7 @@ describe("no-unsafe-server-options", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noUnsafeServerOptionsRule.meta.messages).toBeDefined();
     });
 });

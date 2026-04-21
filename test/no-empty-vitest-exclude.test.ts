@@ -29,6 +29,7 @@ describe("no-empty-vitest-exclude", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyVitestExcludeRule.meta.messages).toBeDefined();
     });
 });

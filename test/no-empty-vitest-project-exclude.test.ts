@@ -34,6 +34,7 @@ describe("no-empty-vitest-project-exclude", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyVitestProjectExcludeRule.meta.messages).toBeDefined();
     });
 });

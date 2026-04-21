@@ -29,6 +29,7 @@ describe("no-vitest-coverage-clean-false", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestCoverageCleanFalseRule.meta.messages).toBeDefined();
     });
 });

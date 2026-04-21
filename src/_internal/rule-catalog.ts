@@ -1,4 +1,6 @@
 /** Stable rule names used for docs numbering and rule catalog ids. */
+import { objectFromEntries, setHas } from "ts-extras";
+
 const orderedRuleNames = [
     "config-require-define-config",
     "import-meta-glob-literal",
@@ -101,9 +103,9 @@ export const viteRuleCatalogEntries: readonly ViteRuleCatalogEntry[] =
 /** Fast lookup map for rule catalog metadata by rule name. */
 export const viteRuleCatalogByRuleName: Readonly<
     Partial<Record<ViteRuleCatalogName, ViteRuleCatalogEntry>>
-> = Object.fromEntries(
+> = objectFromEntries(
     viteRuleCatalogEntries.map((entry) => [entry.ruleName, entry])
-) as Readonly<Partial<Record<ViteRuleCatalogName, ViteRuleCatalogEntry>>>;
+);
 
 /** Resolve stable catalog metadata for a rule name when available. */
 export const getRuleCatalogEntryForRuleNameOrNull = (
@@ -143,7 +145,7 @@ export const validateRuleCatalogIntegrity = (): boolean => {
     const seenRuleIds = new Set<ViteRuleCatalogId>();
 
     for (const [index, entry] of entries.entries()) {
-        if (seenRuleIds.has(entry.ruleId)) {
+        if (setHas(seenRuleIds, entry.ruleId)) {
             return false;
         }
 

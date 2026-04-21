@@ -5,6 +5,7 @@
 
 import type { ESLint, Linter } from "eslint";
 
+/** Canonical flat-config preset key names exposed via `plugin.configs`. */
 export type ViteConfigName =
     | "all"
     | "client"
@@ -15,8 +16,10 @@ export type ViteConfigName =
     | "vitest"
     | "vitest-bench";
 
+/** Mapping of preset key names to generated flat-config definitions. */
 export type ViteConfigs = Record<ViteConfigName, VitePresetConfig>;
 
+/** Public plugin contract surface for the ESM entrypoint. */
 export interface VitePlugin extends ESLint.Plugin {
     configs: ViteConfigs;
     meta: {
@@ -28,12 +31,15 @@ export interface VitePlugin extends ESLint.Plugin {
     rules: Record<ViteRuleName, NonNullable<ESLint.Plugin["rules"]>[string]>;
 }
 
+/** Flat-config preset shape produced by this plugin. */
 export type VitePresetConfig = Linter.Config & {
     rules: NonNullable<Linter.Config["rules"]>;
 };
 
+/** Fully-qualified rule id type (`vite/<rule-name>`). */
 export type ViteRuleId = `vite/${ViteRuleName}`;
 
+/** Canonical unqualified rule-name union exposed by this plugin. */
 export type ViteRuleName =
     | "config-require-define-config"
     | "import-meta-glob-literal"

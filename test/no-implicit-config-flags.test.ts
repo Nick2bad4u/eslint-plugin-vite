@@ -60,6 +60,7 @@ describe("no-implicit-config-flags", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noImplicitConfigFlagsRule.meta.messages).toBeDefined();
     });
 });

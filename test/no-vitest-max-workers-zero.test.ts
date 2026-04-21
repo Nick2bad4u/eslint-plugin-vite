@@ -34,6 +34,7 @@ describe("no-vitest-max-workers-zero", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestMaxWorkersZeroRule.meta.messages).toBeDefined();
     });
 });

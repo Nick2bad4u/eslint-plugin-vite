@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayFirst, arrayIncludes, isDefined } from "ts-extras";
+
 import { getStaticPropertyName } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -32,7 +34,8 @@ const isConfigFlagName = (value: string): value is ConfigFlagName =>
 const isExplicitBooleanComparisonOperator = (
     operator: TSESTree.BinaryExpression["operator"]
 ): operator is (typeof explicitBooleanComparisonOperators)[number] =>
-    explicitBooleanComparisonOperators.includes(
+    arrayIncludes(
+        explicitBooleanComparisonOperators,
         operator as (typeof explicitBooleanComparisonOperators)[number]
     );
 
@@ -68,7 +71,7 @@ const isViteConfigFactoryFunction = (node: FunctionNode): boolean => {
 
     if (
         parentNode.type === "CallExpression" &&
-        parentNode.arguments[0] === node &&
+        arrayFirst(parentNode.arguments) === node &&
         parentNode.callee.type === "Identifier"
     ) {
         return parentNode.callee.name === "defineConfig";
@@ -94,7 +97,7 @@ const getBindingIdentifier = (
 const getConfigFlagBindings = (
     node: FunctionNode
 ): ReadonlyMap<string, ConfigFlagName> => {
-    const firstParameter = node.params[0];
+    const firstParameter = arrayFirst(node.params);
 
     if (firstParameter?.type !== "ObjectPattern") {
         return new Map();
@@ -109,7 +112,7 @@ const getConfigFlagBindings = (
 
         const flagName = getStaticPropertyName(property);
 
-        if (flagName === undefined || !isConfigFlagName(flagName)) {
+        if (!isDefined(flagName) || !isConfigFlagName(flagName)) {
             continue;
         }
 
@@ -163,7 +166,7 @@ const getFlagUsageForIdentifier = (
 
     const flagName = bindings.get(unwrappedExpression.name);
 
-    if (flagName === undefined) {
+    if (!isDefined(flagName)) {
         return null;
     }
 
@@ -367,7 +370,7 @@ const noImplicitConfigFlagsRule: ReturnType<typeof createTypedRule> =
             };
 
             const exitFunction = (node: FunctionNode): void => {
-                const activeScope = targetFunctionScopes.at(-1);
+                const activeScope = arrayAt(targetFunctionScopes, -1);
 
                 if (activeScope?.node !== node) {
                     return;
@@ -380,9 +383,9 @@ const noImplicitConfigFlagsRule: ReturnType<typeof createTypedRule> =
                 node: Readonly<TSESTree.Node>,
                 testExpression: null | Readonly<TSESTree.Expression>
             ): void => {
-                const activeScope = targetFunctionScopes.at(-1);
+                const activeScope = arrayAt(targetFunctionScopes, -1);
 
-                if (activeScope === undefined || testExpression === null) {
+                if (!isDefined(activeScope) || testExpression === null) {
                     return;
                 }
 

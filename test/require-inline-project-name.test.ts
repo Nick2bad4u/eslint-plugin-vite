@@ -43,6 +43,7 @@ describe("require-inline-project-name", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(requireInlineProjectNameRule.meta.messages).toBeDefined();
     });
 });

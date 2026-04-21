@@ -34,6 +34,7 @@ describe("require-vitest-explicit-environment", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             requireVitestExplicitEnvironmentRule.meta.messages
         ).toBeDefined();

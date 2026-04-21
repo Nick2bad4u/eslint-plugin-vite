@@ -124,6 +124,7 @@ const cards = [
     },
 ] as const satisfies readonly Card[];
 
+/** Home page component for the docs site's landing route. */
 export default function Home() {
     const logoUrl = useBaseUrl("/img/logo.svg");
 

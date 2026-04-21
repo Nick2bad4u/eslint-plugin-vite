@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayIncludes, isDefined, isFinite } from "ts-extras";
+
 import { getPropertyPath, getStaticStringValue } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -27,19 +29,19 @@ const getStaticNumericValue = (
     ) {
         const parsed = Number(node.value);
 
-        return Number.isFinite(parsed) ? parsed : undefined;
+        return isFinite(parsed) ? parsed : undefined;
     }
 
     if (node.type === "TemplateLiteral") {
         const staticValue = getStaticStringValue(node);
 
-        if (staticValue === undefined || staticValue.trim().length === 0) {
+        if (!isDefined(staticValue) || staticValue.trim().length === 0) {
             return undefined;
         }
 
         const parsed = Number(staticValue);
 
-        return Number.isFinite(parsed) ? parsed : undefined;
+        return isFinite(parsed) ? parsed : undefined;
     }
 
     return undefined;
@@ -63,8 +65,8 @@ const noVitestMinWorkersGreaterThanMaxWorkersRule: ReturnType<
             "Program:exit"() {
                 for (const state of perObject.values()) {
                     if (
-                        state.maxWorkersValue === undefined ||
-                        state.minWorkersValue === undefined ||
+                        !isDefined(state.maxWorkersValue) ||
+                        !isDefined(state.minWorkersValue) ||
                         state.minWorkersValue <= state.maxWorkersValue
                     ) {
                         continue;
@@ -89,10 +91,10 @@ const noVitestMinWorkersGreaterThanMaxWorkersRule: ReturnType<
                 }
 
                 const propertyPath = getPropertyPath(node);
-                const lastSegment = propertyPath.at(-1);
+                const lastSegment = arrayAt(propertyPath, -1);
 
                 if (
-                    !propertyPath.includes("test") ||
+                    !arrayIncludes(propertyPath, "test") ||
                     (lastSegment !== "minWorkers" &&
                         lastSegment !== "maxWorkers")
                 ) {
@@ -101,7 +103,7 @@ const noVitestMinWorkersGreaterThanMaxWorkersRule: ReturnType<
 
                 const staticNumeric = getStaticNumericValue(node.value);
 
-                if (staticNumeric === undefined) {
+                if (!isDefined(staticNumeric)) {
                     return;
                 }
 

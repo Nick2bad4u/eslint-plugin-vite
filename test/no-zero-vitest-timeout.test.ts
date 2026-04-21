@@ -44,6 +44,7 @@ describe("no-zero-vitest-timeout", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noZeroVitestTimeoutRule.meta.messages).toBeDefined();
     });
 });

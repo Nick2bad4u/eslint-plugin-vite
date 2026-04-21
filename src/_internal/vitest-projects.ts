@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     asObjectExpression,
     findPropertyByName,
@@ -84,7 +86,7 @@ export const getInlineVitestProjectEntries = (
             containerKind
         );
 
-        if (projectEntry !== undefined) {
+        if (isDefined(projectEntry)) {
             projectEntries.push(projectEntry);
         }
     }

@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -63,7 +65,7 @@ const noUnsafeVitestFlagsRule: ReturnType<typeof createTypedRule> =
                 Property(node) {
                     const unsafeFlag = getUnsafeVitestFlag(node);
 
-                    if (unsafeFlag === undefined) {
+                    if (!isDefined(unsafeFlag)) {
                         return;
                     }
 

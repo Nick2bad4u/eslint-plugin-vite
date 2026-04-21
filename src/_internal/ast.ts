@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, isDefined } from "ts-extras";
+
 /** Convert a static string-ish AST node into its runtime string value. */
 export const getStaticStringValue = (
     node:
@@ -16,7 +18,7 @@ export const getStaticStringValue = (
     }
 
     if (node.type === "TemplateLiteral" && node.expressions.length === 0) {
-        return node.quasis[0]?.value.cooked ?? undefined;
+        return arrayFirst(node.quasis)?.value.cooked ?? undefined;
     }
 
     return undefined;
@@ -69,7 +71,7 @@ export const getPropertyPath = (
     while (currentNode.type === "Property") {
         const propertyName = getStaticPropertyName(currentNode);
 
-        if (propertyName === undefined) {
+        if (!isDefined(propertyName)) {
             return [];
         }
 

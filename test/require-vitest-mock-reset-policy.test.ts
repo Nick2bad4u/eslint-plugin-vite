@@ -38,6 +38,7 @@ describe("require-vitest-mock-reset-policy", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(requireVitestMockResetPolicyRule.meta.messages).toBeDefined();
     });
 });

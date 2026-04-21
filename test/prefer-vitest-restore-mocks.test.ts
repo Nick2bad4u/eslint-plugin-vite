@@ -38,6 +38,7 @@ describe("prefer-vitest-restore-mocks", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(preferVitestRestoreMocksRule.meta.messages).toBeDefined();
     });
 });

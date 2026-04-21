@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import {
     type ConfigFileKind,
@@ -50,7 +52,7 @@ const requireVitestExplicitEnvironmentRule: ReturnType<typeof createTypedRule> =
                 Property(node) {
                     const propertyPath = getPropertyPath(node);
 
-                    if (propertyPath[0] === "test") {
+                    if (arrayFirst(propertyPath) === "test") {
                         hasAnyTestConfig = true;
                         if (firstTestPropertyNode === null) {
                             firstTestPropertyNode = node;

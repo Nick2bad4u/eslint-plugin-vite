@@ -29,6 +29,7 @@ describe("no-vitepress-empty-head", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitePressEmptyHeadRule.meta.messages).toBeDefined();
     });
 });

@@ -43,6 +43,7 @@ describe("no-empty-vitest-project-name", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyVitestProjectNameRule.meta.messages).toBeDefined();
     });
 });

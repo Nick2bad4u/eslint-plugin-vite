@@ -34,6 +34,7 @@ describe("no-vitest-coverage-reporter-text-only", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noVitestCoverageReporterTextOnlyRule.meta.messages
         ).toBeDefined();

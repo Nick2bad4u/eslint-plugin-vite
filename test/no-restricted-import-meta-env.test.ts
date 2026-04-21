@@ -34,6 +34,7 @@ describe("no-restricted-import-meta-env", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noRestrictedImportMetaEnvRule.meta.messages).toBeDefined();
     });
 });

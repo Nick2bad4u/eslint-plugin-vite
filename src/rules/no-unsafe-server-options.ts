@@ -1,3 +1,7 @@
+import type { UnknownRecord } from "type-fest";
+
+import { keyIn } from "ts-extras";
+
 import { matchesPropertyPath } from "../_internal/ast.js";
 import { isConfigFile } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -7,10 +11,16 @@ type MessageId = "unsafeServerOption";
 const isBooleanLiteral = (value: unknown, expected: boolean): boolean =>
     typeof value === "object" &&
     value !== null &&
-    "type" in value &&
-    value.type === "Literal" &&
-    "value" in value &&
-    value.value === expected;
+    (() => {
+        const record = value as UnknownRecord;
+
+        return (
+            keyIn(record, "type") &&
+            record["type"] === "Literal" &&
+            keyIn(record, "value") &&
+            record["value"] === expected
+        );
+    })();
 
 /**
  * Disallow unsafe Vite server and preview settings that weaken default

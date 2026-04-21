@@ -34,6 +34,7 @@ describe("no-vitest-single-thread-pool-by-default", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noVitestSingleThreadPoolByDefaultRule.meta.messages
         ).toBeDefined();

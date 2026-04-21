@@ -34,6 +34,7 @@ describe("workspace-unique-project-name", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(workspaceUniqueProjectNameRule.meta.messages).toBeDefined();
     });
 });

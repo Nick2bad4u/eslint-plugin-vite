@@ -34,6 +34,7 @@ describe("no-vitest-min-workers-greater-than-max-workers", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(
             noVitestMinWorkersGreaterThanMaxWorkersRule.meta.messages
         ).toBeDefined();

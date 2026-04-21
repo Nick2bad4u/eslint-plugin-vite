@@ -1,5 +1,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     getStaticPropertyName,
     getStaticStringValue,
@@ -16,7 +18,7 @@ const isRelativeReplacementString = (
 
     const value = getStaticStringValue(node);
 
-    return value !== undefined && /^\.{1,2}(?:\/|\\|$)/u.test(value);
+    return isDefined(value) && /^\.{1,2}(?:\/|\\|$)/u.test(value);
 };
 
 const reportIfRelativeReplacement = (

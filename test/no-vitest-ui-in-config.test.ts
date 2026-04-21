@@ -25,6 +25,7 @@ describe("no-vitest-ui-in-config", () => {
     });
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noVitestUiInConfigRule.meta.messages).toBeDefined();
     });
 });

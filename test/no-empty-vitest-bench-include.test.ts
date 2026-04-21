@@ -29,6 +29,7 @@ describe("no-empty-vitest-bench-include", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noEmptyVitestBenchIncludeRule.meta.messages).toBeDefined();
     });
 });

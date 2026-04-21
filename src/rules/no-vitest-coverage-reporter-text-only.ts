@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, isDefined, isPresent } from "ts-extras";
+
 import {
     getPropertyPath,
     getStaticStringValue,
@@ -37,7 +39,7 @@ const isTextOnlyReporter = (
 ): boolean => {
     const staticString = getStaticLowercaseString(node);
 
-    if (staticString !== undefined) {
+    if (isDefined(staticString)) {
         return staticString === "text";
     }
 
@@ -49,13 +51,9 @@ const isTextOnlyReporter = (
         return false;
     }
 
-    const firstElement = node.elements.at(0);
+    const firstElement = arrayAt(node.elements, 0);
 
-    if (
-        firstElement === undefined ||
-        firstElement === null ||
-        firstElement.type === "SpreadElement"
-    ) {
+    if (!isPresent(firstElement) || firstElement.type === "SpreadElement") {
         return false;
     }
 

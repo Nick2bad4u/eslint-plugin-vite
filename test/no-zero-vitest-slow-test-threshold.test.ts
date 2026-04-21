@@ -43,6 +43,7 @@ describe("no-zero-vitest-slow-test-threshold", () => {
     );
 
     it("exposes rule metadata", () => {
+        expect.hasAssertions();
         expect(noZeroVitestSlowTestThresholdRule.meta.messages).toBeDefined();
     });
 });

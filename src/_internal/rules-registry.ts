@@ -1,5 +1,6 @@
 /* eslint-disable canonical/no-re-export -- The plugin rule registry intentionally exposes imported rule modules as runtime plugin metadata. */
 import type { TSESLint } from "@typescript-eslint/utils";
+import type { UnknownArray } from "type-fest";
 
 import configRequireDefineConfigRule from "../rules/config-require-define-config.js";
 import importMetaGlobLiteralRule from "../rules/import-meta-glob-literal.js";
@@ -75,7 +76,7 @@ import requireVitestTypecheckTsconfigRule from "../rules/require-vitest-typechec
 import workspaceUniqueProjectNameRule from "../rules/workspace-unique-project-name.js";
 
 /** Runtime rule module shape used by registry and preset builders. */
-export type RuleWithDocs = TSESLint.RuleModule<string, readonly unknown[]>;
+export type RuleWithDocs = TSESLint.RuleModule<string, Readonly<UnknownArray>>;
 
 /** Runtime map of all rule modules keyed by unqualified rule name. */
 export type ViteRuleModules = Readonly<{
