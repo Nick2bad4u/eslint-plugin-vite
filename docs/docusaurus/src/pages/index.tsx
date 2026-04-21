@@ -73,7 +73,7 @@ const liveBadges = [
     {
         alt: "codecov",
         href: "https://codecov.io/gh/Nick2bad4u/eslint-plugin-vite",
-        src: "https://codecov.io/gh/Nick2bad4u/eslint-plugin-vite/branch/main/graph/badge.svg",
+        src: "https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-vite?color=blue",
     },
     {
         alt: "CI status",
