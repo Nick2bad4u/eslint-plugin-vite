@@ -369,7 +369,7 @@ function stripBrokenGeneratedMarkdownLinks(
     markdownFilePath,
     knownMarkdownPaths
 ) {
-    return markdown.replace(
+    return markdown.replaceAll(
         /\[([^\]]+)\]\(([^)]+)\)/gu,
         (fullMatch, label, target) => {
             if (!isRelativeGeneratedMarkdownTarget(target)) {
