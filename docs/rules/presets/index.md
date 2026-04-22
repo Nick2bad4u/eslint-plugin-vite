@@ -26,7 +26,7 @@ Related guides:
 
 ## Rule matrix
 
-<!-- begin generated preset matrix -->
+{/*begin-generated-preset-matrix*/}
 - `Preset key` legend:
   - [🟡](./recommended.md) — [`vite.configs.recommended`](./recommended.md)
   - [🔴](./strict.md) — [`vite.configs.strict`](./strict.md)
@@ -111,4 +111,4 @@ Related guides:
 | [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)                           |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
 | [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)                             |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
 | [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
-<!-- end generated preset matrix -->
+{/*end-generated-preset-matrix*/}

@@ -620,6 +620,7 @@ export default defineConfig([
                 jsDocParsingMode: "all",
                 projectService: {
                     allowDefaultProject: [
+                        "docs/docusaurus/scripts/*.cjs",
                         "docs/docusaurus/typedoc.local.config.mjs",
                         "docs/docusaurus/typedoc-plugins/*.mjs",
                         "docs/docusaurus/typedoc-plugins/*.mts",
@@ -2257,6 +2258,22 @@ export default defineConfig([
             "markdown/no-unused-definitions": "warn",
             "markdown/require-alt-text": "warn",
             "markdown/table-column-count": "warn",
+        },
+    },
+    // Blog files use `{/* truncate */}` JSX comment markers for Docusaurus
+    // truncation. The `/*` and `*/` sequences contain asterisks adjacent to
+    // spaces which the `no-space-in-emphasis` rule flags as a false positive.
+    // These are not emphasis spans — they are MDX JSX comments, not authored
+    // content — so the rule is suppressed for blog markdown files only.
+    {
+        files: ["docs/docusaurus/blog/*.{md,mdx}"],
+        language: "markdown/gfm",
+        name: "MD - docs/docusaurus/blog - JSX truncate marker false-positive overrides",
+        plugins: {
+            markdown: markdown,
+        },
+        rules: {
+            "markdown/no-space-in-emphasis": "off",
         },
     },
     // #endregion

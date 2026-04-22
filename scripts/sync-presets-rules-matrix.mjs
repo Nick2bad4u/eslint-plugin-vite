@@ -53,10 +53,32 @@ const PRESET_PAGE_LINKS = {
     "vitest-bench": "./vitest-bench.md",
 };
 
-export const PRESET_MATRIX_START = "<!-- begin generated preset matrix -->";
-export const PRESET_MATRIX_END = "<!-- end generated preset matrix -->";
-export const PRESET_RULES_START = "<!-- begin generated preset rules -->";
-export const PRESET_RULES_END = "<!-- end generated preset rules -->";
+export const PRESET_MATRIX_START = "{/*begin-generated-preset-matrix*/}";
+export const PRESET_MATRIX_END = "{/*end-generated-preset-matrix*/}";
+export const PRESET_RULES_START = "{/*begin-generated-preset-rules*/}";
+export const PRESET_RULES_END = "{/*end-generated-preset-rules*/}";
+
+// Legacy marker variants matched for backward-compatible replacement of older generated files.
+const PRESET_MATRIX_START_LEGACY_HTML =
+    "<!-- begin generated preset matrix -->";
+const PRESET_MATRIX_END_LEGACY_HTML = "<!-- end generated preset matrix -->";
+const PRESET_RULES_START_LEGACY_HTML = "<!-- begin generated preset rules -->";
+const PRESET_RULES_END_LEGACY_HTML = "<!-- end generated preset rules -->";
+const PRESET_MATRIX_START_LEGACY_REF =
+    "[//]: # (begin generated preset matrix)";
+const PRESET_MATRIX_END_LEGACY_REF = "[//]: # (end generated preset matrix)";
+const PRESET_RULES_START_LEGACY_REF = "[//]: # (begin generated preset rules)";
+const PRESET_RULES_END_LEGACY_REF = "[//]: # (end generated preset rules)";
+const PRESET_MATRIX_START_LEGACY_MDX = "{/* begin generated preset matrix */}";
+const PRESET_MATRIX_END_LEGACY_MDX = "{/* end generated preset matrix */}";
+const PRESET_RULES_START_LEGACY_MDX = "{/* begin generated preset rules */}";
+const PRESET_RULES_END_LEGACY_MDX = "{/* end generated preset rules */}";
+
+/**
+ * @param {string} value
+ */
+const escapeRegexLiteral = (value) =>
+    value.replaceAll(/[.*+?^${}()|[\]\\]/gu, "\\$&");
 
 /**
  * @typedef {Readonly<{
@@ -256,8 +278,24 @@ export const renderPresetRulesTable = (configName, plugin = vitePlugin) => {
 export const replacePresetMatrix = (markdown) => {
     const lineEnding = detectLineEnding(markdown);
     const matrix = renderPresetMatrix().replaceAll("\n", lineEnding);
+    const startMarkerPattern = [
+        PRESET_MATRIX_START,
+        PRESET_MATRIX_START_LEGACY_MDX,
+        PRESET_MATRIX_START_LEGACY_REF,
+        PRESET_MATRIX_START_LEGACY_HTML,
+    ]
+        .map(escapeRegexLiteral)
+        .join("|");
+    const endMarkerPattern = [
+        PRESET_MATRIX_END,
+        PRESET_MATRIX_END_LEGACY_MDX,
+        PRESET_MATRIX_END_LEGACY_REF,
+        PRESET_MATRIX_END_LEGACY_HTML,
+    ]
+        .map(escapeRegexLiteral)
+        .join("|");
     const pattern = new RegExp(
-        String.raw`${PRESET_MATRIX_START}[\s\S]*?${PRESET_MATRIX_END}`,
+        String.raw`(?:${startMarkerPattern})[\s\S]*?(?:${endMarkerPattern})`,
         "u"
     );
 
@@ -277,8 +315,24 @@ export const replacePresetRulesTable = (markdown, configName) => {
         "\n",
         lineEnding
     );
+    const startMarkerPattern = [
+        PRESET_RULES_START,
+        PRESET_RULES_START_LEGACY_MDX,
+        PRESET_RULES_START_LEGACY_REF,
+        PRESET_RULES_START_LEGACY_HTML,
+    ]
+        .map(escapeRegexLiteral)
+        .join("|");
+    const endMarkerPattern = [
+        PRESET_RULES_END,
+        PRESET_RULES_END_LEGACY_MDX,
+        PRESET_RULES_END_LEGACY_REF,
+        PRESET_RULES_END_LEGACY_HTML,
+    ]
+        .map(escapeRegexLiteral)
+        .join("|");
     const pattern = new RegExp(
-        String.raw`${PRESET_RULES_START}[\s\S]*?${PRESET_RULES_END}`,
+        String.raw`(?:${startMarkerPattern})[\s\S]*?(?:${endMarkerPattern})`,
         "u"
     );
 

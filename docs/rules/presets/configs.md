@@ -24,7 +24,7 @@ export default [vite.configs.configs];
 
 ## Rules in this preset
 
-<!-- begin generated preset rules -->
+{/*begin-generated-preset-rules*/}
 | Rule                                                                                                              | Fix |
 | :---------------------------------------------------------------------------------------------------------------- | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)                                         |  —  |
@@ -82,4 +82,4 @@ export default [vite.configs.configs];
 | [`vite/no-empty-ssr-noexternal`](../no-empty-ssr-noexternal.md)                                                   |  —  |
 | [`vite/no-empty-ssr-external`](../no-empty-ssr-external.md)                                                       |  —  |
 | [`vite/no-empty-worker-plugins`](../no-empty-worker-plugins.md)                                                   |  —  |
-<!-- end generated preset rules -->
+{/*end-generated-preset-rules*/}

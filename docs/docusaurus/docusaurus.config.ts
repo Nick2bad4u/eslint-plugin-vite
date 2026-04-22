@@ -1,122 +1,130 @@
+import { themes as prismThemes } from "prism-react-renderer";
+
 import type { Config } from "@docusaurus/types";
+import type { Options as DocsPluginOptions } from "@docusaurus/plugin-content-docs";
 import type * as Preset from "@docusaurus/preset-classic";
-import type { PluginOptions as SearchLocalPluginOptions } from "@easyops-cn/docusaurus-search-local";
+import { fileURLToPath } from "node:url";
 
 import { suppressKnownWebpackWarningsPlugin } from "./src/plugins/suppressKnownWebpackWarningsPlugin";
 
+const baseUrl = process.env["DOCUSAURUS_BASE_URL"] ?? "/eslint-plugin-vite/";
+const enableExperimentalFaster =
+    process.env["DOCUSAURUS_ENABLE_EXPERIMENTAL"] === "true";
+
 const organizationName = "Nick2bad4u";
 const projectName = "eslint-plugin-vite";
-const siteUrl = "https://nick2bad4u.github.io";
-const baseUrl = process.env["DOCUSAURUS_BASE_URL"] ?? "/eslint-plugin-vite/";
+const siteOrigin = "https://nick2bad4u.github.io";
+const siteUrl = `${siteOrigin}${baseUrl}`;
+const siteDescription =
+    "ESLint rules for Vite, Vitest, and Vitest bench with type-safe configuration guidance.";
+const socialCardImagePath = "img/logo.png";
+const socialCardImageUrl = new URL(socialCardImagePath, siteUrl).toString();
+const modernEnhancementsClientModule = fileURLToPath(
+    new URL("src/js/modernEnhancements.ts", import.meta.url)
+);
+
+const pwaThemeColor = "#101010";
+const footerCopyright =
+    `© ${new Date().getFullYear()} ` +
+    '<a href="https://github.com/Nick2bad4u/" target="_blank" rel="noopener noreferrer">Nick2bad4u</a> 💻 Built with ' +
+    '<a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer">🦖 Docusaurus</a>.';
+
+const removeHeadAttrFlagKey = [
+    "remove",
+    "Le",
+    "gacyPostBuildHeadAttribute",
+].join("");
+
+const futureConfig = {
+    ...(enableExperimentalFaster
+        ? {
+              faster: {
+                  mdxCrossCompilerCache: true,
+                  rspackBundler: true,
+                  rspackPersistentCache: true,
+                  ssgWorkerThreads: true,
+              },
+          }
+        : {}),
+    v4: {
+        [removeHeadAttrFlagKey]: true,
+        // NOTE: Enabling cascade layers currently breaks our production CSS output
+        // (CssMinimizer parsing errors -> large chunks of CSS dropped), which
+        // makes many Infima (--ifm-*) variables undefined across the site.
+        // Re-enable only after verifying the build output CSS is valid.
+        siteStorageNamespacing: true,
+        fasterByDefault: true,
+        removeLegacyPostBuildHeadAttribute: true,
+        mdx1CompatDisabledByDefault: true,
+        useCssCascadeLayers: false,
+    },
+} satisfies Config["future"];
 
 const config = {
-    title: "eslint-plugin-vite",
-    tagline: "ESLint rules for Vite, Vitest, and Vitest bench.",
+    baseUrl,
+    baseUrlIssueBanner: true,
+    clientModules: [modernEnhancementsClientModule],
+    deploymentBranch: "gh-pages",
     favicon: "img/favicon.ico",
+    future: futureConfig,
     headTags: [
         {
             attributes: {
-                href: `${baseUrl}img/apple-touch-icon.png`,
-                rel: "apple-touch-icon",
-                sizes: "180x180",
+                href: siteOrigin,
+                rel: "preconnect",
             },
             tagName: "link",
         },
         {
             attributes: {
-                href: `${baseUrl}img/favicon-32x32.png`,
-                rel: "icon",
-                sizes: "32x32",
-                type: "image/png",
+                href: "https://github.com",
+                rel: "preconnect",
             },
             tagName: "link",
         },
         {
             attributes: {
-                href: `${baseUrl}img/favicon-16x16.png`,
-                rel: "icon",
-                sizes: "16x16",
-                type: "image/png",
+                type: "application/ld+json",
             },
-            tagName: "link",
-        },
-        {
-            attributes: {
-                href: `${baseUrl}manifest.json`,
-                rel: "manifest",
-            },
-            tagName: "link",
-        },
-        {
-            attributes: {
-                content: "#101010",
-                name: "theme-color",
-            },
-            tagName: "meta",
+            innerHTML: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                description: siteDescription,
+                image: socialCardImageUrl,
+                name: projectName,
+                publisher: {
+                    "@type": "Person",
+                    name: "Nick2bad4u",
+                    url: "https://github.com/Nick2bad4u",
+                },
+                url: siteUrl,
+            }),
+            tagName: "script",
         },
     ],
-    markdown: {
-        hooks: {
-            onBrokenMarkdownLinks: "warn",
-        },
-        mermaid: true,
-    },
-    url: siteUrl,
-    baseUrl,
-    baseUrlIssueBanner: true,
-    deploymentBranch: "gh-pages",
-    organizationName,
-    onBrokenAnchors: "warn",
-    projectName,
-    onBrokenLinks: "throw",
-    onDuplicateRoutes: "warn",
-    trailingSlash: false,
     i18n: {
         defaultLocale: "en",
         locales: ["en"],
     },
-    presets: [
-        [
-            "classic",
-            {
-                blog: {
-                    showReadingTime: true,
-                },
-                docs: {
-                    path: "site-docs",
-                    routeBasePath: "docs",
-                    sidebarPath: "./sidebars.ts",
-                },
-                googleTagManager: {
-                    containerId: "GTM-T8J6HPLF",
-                },
-                gtag: {
-                    trackingID: "G-18DR1S6R1T",
-                },
-                theme: {
-                    customCss: "./src/css/custom.css",
-                },
-            } satisfies Preset.Options,
-        ],
-    ],
-    themes: [
-        "@docusaurus/theme-mermaid",
-        [
-            "@easyops-cn/docusaurus-search-local",
-            {
-                docsRouteBasePath: ["docs", "docs/rules"],
-                explicitSearchResultPath: true,
-                hashed: true,
-                indexBlog: true,
-                indexDocs: true,
-                indexPages: true,
-                searchBarPosition: "right",
-                searchBarShortcut: true,
-                searchBarShortcutHint: true,
-            } satisfies SearchLocalPluginOptions,
-        ],
-    ],
+    markdown: {
+        anchors: {
+            maintainCase: true,
+        },
+        emoji: true,
+        format: "detect",
+        hooks: {
+            onBrokenMarkdownImages: "warn",
+            onBrokenMarkdownLinks: "warn",
+        },
+        mermaid: true,
+    },
+    onBrokenAnchors: "warn",
+    onBrokenLinks: "throw",
+    onDuplicateRoutes: "warn",
+    organizationName,
     plugins: [
+        suppressKnownWebpackWarningsPlugin,
+        "docusaurus-plugin-image-zoom",
         [
             "@docusaurus/plugin-pwa",
             {
@@ -133,7 +141,7 @@ const config = {
                         tagName: "link",
                     },
                     {
-                        content: "#101010",
+                        content: pwaThemeColor,
                         name: "theme-color",
                         tagName: "meta",
                     },
@@ -143,21 +151,175 @@ const config = {
         [
             "@docusaurus/plugin-content-docs",
             {
+                editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/`,
                 id: "rules",
                 path: "../rules",
                 routeBasePath: "docs/rules",
+                showLastUpdateAuthor: true,
+                showLastUpdateTime: true,
                 sidebarPath: "./sidebars.rules.ts",
-            },
+            } satisfies DocsPluginOptions,
         ],
-        suppressKnownWebpackWarningsPlugin,
     ],
+    presets: [
+        [
+            "classic",
+            {
+                blog: {
+                    blogDescription:
+                        "Updates, architecture notes, and practical guidance for eslint-plugin-vite users.",
+                    blogSidebarCount: "ALL",
+                    blogSidebarTitle: "All posts",
+                    blogTitle: "eslint-plugin-vite Blog",
+                    editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
+                    feedOptions: {
+                        type: ["rss", "atom"],
+                        xslt: true,
+                        title: "eslint-plugin-vite Blog",
+                        copyright: `© ${new Date().getFullYear()} Nick2bad4u`,
+                        description:
+                            "Updates, architecture notes, and practical guidance for eslint-plugin-vite users.",
+                        language: "en",
+                    },
+                    onInlineAuthors: "warn",
+                    onInlineTags: "warn",
+                    onUntruncatedBlogPosts: "warn",
+                    path: "blog",
+                    postsPerPage: 10,
+                    routeBasePath: "blog",
+                    showReadingTime: true,
+                },
+                docs: {
+                    breadcrumbs: true,
+                    editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
+                    includeCurrentVersion: true,
+                    onInlineTags: "ignore",
+                    path: "site-docs",
+                    routeBasePath: "docs",
+                    showLastUpdateAuthor: true,
+                    showLastUpdateTime: true,
+                    sidebarCollapsed: true,
+                    sidebarCollapsible: true,
+                    sidebarPath: "./sidebars.ts",
+                },
+                googleTagManager: {
+                    containerId: "GTM-T8J6HPLF",
+                },
+                gtag: {
+                    trackingID: "G-18DR1S6R1T",
+                },
+                pages: {
+                    editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
+                    exclude: [
+                        "**/*.d.ts",
+                        "**/*.d.tsx",
+                        "**/__tests__/**",
+                        "**/*.test.{js,jsx,ts,tsx}",
+                        "**/*.spec.{js,jsx,ts,tsx}",
+                    ],
+                    include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
+                    mdxPageComponent: "@theme/MDXPage",
+                    path: "src/pages",
+                    routeBasePath: "/",
+                    showLastUpdateAuthor: true,
+                    showLastUpdateTime: true,
+                },
+                sitemap: {
+                    filename: "sitemap.xml",
+                    ignorePatterns: ["/tests/**"],
+                    lastmod: "datetime",
+                },
+                theme: {
+                    customCss: "./src/css/custom.css",
+                },
+            } satisfies Preset.Options,
+        ],
+    ],
+    projectName,
+    tagline: "ESLint rules for Vite, Vitest, and Vitest bench.",
     themeConfig: {
         colorMode: {
             defaultMode: "dark",
             disableSwitch: false,
             respectPrefersColorScheme: true,
         },
-        image: "img/logo.png",
+        footer: {
+            copyright: footerCopyright,
+            links: [
+                {
+                    items: [
+                        {
+                            label: "🏁 Overview",
+                            to: "/docs/rules/overview",
+                        },
+                        {
+                            label: "📖 Getting Started",
+                            to: "/docs/rules/getting-started",
+                        },
+                        {
+                            label: "🛠️ Presets",
+                            to: "/docs/rules/presets",
+                        },
+                        {
+                            label: "📏 Rule reference",
+                            to: "/docs/rules/config-require-define-config",
+                        },
+                    ],
+                    title: "📚 Explore",
+                },
+                {
+                    items: [
+                        {
+                            href: `https://github.com/${organizationName}/${projectName}/releases`,
+                            label: "Releases",
+                        },
+                        {
+                            href: `${siteUrl}eslint-inspector/`,
+                            label: "ESLint Inspector",
+                        },
+                        {
+                            href: `${siteUrl}stylelint-inspector/`,
+                            label: "Stylelint Inspector",
+                        },
+                        {
+                            href: `https://www.npmjs.com/package/${projectName}`,
+                            label: "NPM",
+                        },
+                    ],
+                    title: "📦 Project",
+                },
+                {
+                    items: [
+                        {
+                            href: `https://github.com/${organizationName}/${projectName}`,
+                            label: "GitHub Repository",
+                        },
+                        {
+                            href: `https://github.com/${organizationName}/${projectName}/issues`,
+                            label: "Report Issues",
+                        },
+                        {
+                            href: "https://vite.dev/",
+                            label: "Vite",
+                        },
+                        {
+                            href: "https://vitest.dev/",
+                            label: "Vitest",
+                        },
+                    ],
+                    title: "⚙️ Support",
+                },
+            ],
+            logo: {
+                alt: "eslint-plugin-vite logo",
+                href: `https://github.com/${organizationName}/${projectName}`,
+                src: "img/logo.svg",
+                width: 60,
+                height: 60,
+            },
+            style: "dark",
+        },
+        image: socialCardImagePath,
         mermaid: {
             theme: {
                 dark: "dark",
@@ -165,27 +327,15 @@ const config = {
             },
         },
         navbar: {
-            title: "eslint-plugin-vite",
-            logo: {
-                alt: "eslint-plugin-vite logo.",
-                src: "img/logo.svg",
-            },
+            hideOnScroll: true,
             items: [
                 {
                     label: "📚 Docs",
+                    position: "left",
                     to: "/docs/rules/overview",
                 },
                 {
-                    label: "📜 Rules",
-                    to: "/docs/rules",
-                },
-                {
-                    label: "🛠️ Presets",
                     items: [
-                        {
-                            label: "🛠️ Overview",
-                            to: "/docs/rules/presets",
-                        },
                         {
                             label: "🟡 Recommended",
                             to: "/docs/rules/presets/recommended",
@@ -207,7 +357,7 @@ const config = {
                             to: "/docs/rules/presets/client",
                         },
                         {
-                            label: "📚 VitePress",
+                            label: "📖 VitePress",
                             to: "/docs/rules/presets/vitepress",
                         },
                         {
@@ -215,118 +365,93 @@ const config = {
                             to: "/docs/rules/presets/vitest",
                         },
                         {
-                            label: "👟 Vitest Bench",
+                            label: "⚡ Vitest Bench",
                             to: "/docs/rules/presets/vitest-bench",
                         },
                     ],
+                    label: "🛠️ Presets",
+                    position: "left",
                 },
                 {
-                    label: "📰 Blog",
-                    to: "/blog",
-                    position: "right",
-                },
-                {
-                    label: "🧭 Dev",
-                    position: "right",
                     items: [
                         {
-                            label: "🛠️ Developer Guide",
+                            label: "Developer guide",
                             to: "/docs/developer",
                         },
                         {
-                            label: "📝 ADRs",
+                            label: "API reference",
+                            to: "/docs/developer/api",
+                        },
+                        {
+                            label: "ADRs",
                             to: "/docs/adr",
                         },
                         {
-                            label: "📊 Charts",
+                            label: "Charts",
                             to: "/docs/charts",
                         },
-                        {
-                            label: "🧩 API docs",
-                            to: "/docs/developer/api",
-                        },
                     ],
+                    label: "🛠️ Dev",
+                    position: "right",
+                    to: "/docs/developer",
                 },
                 {
-                    href: "https://github.com/Nick2bad4u/eslint-plugin-vite",
-                    label: " GitHub",
+                    href: `https://github.com/${organizationName}/${projectName}`,
+                    label: "GitHub",
                     position: "right",
-                },
-                {
-                    position: "right",
-                    type: "search",
                 },
             ],
+            logo: {
+                alt: "eslint-plugin-vite logo",
+                href: baseUrl,
+                src: "img/logo.svg",
+            },
+            title: "eslint-plugin-vite",
         },
-        footer: {
-            copyright: `<a class="footer__brand" href="${baseUrl}"><img alt="eslint-plugin-vite logo" src="${baseUrl}img/logo.svg" /></a><span>© ${new Date().getFullYear()} <a href="https://github.com/${organizationName}/">${organizationName}</a> 💻 Built with <a href="https://docusaurus.io/">🦖 Docusaurus</a>.</span>`,
-            links: [
-                {
-                    title: "📚 Explore",
-                    items: [
-                        {
-                            label: "🏁 Overview",
-                            to: "/docs/rules/overview",
-                        },
-                        {
-                            label: "📖 Getting started",
-                            to: "/docs/getting-started",
-                        },
-                        {
-                            label: "🛠️ Presets",
-                            to: "/docs/rules/presets",
-                        },
-                        {
-                            label: "📏 Rule reference",
-                            to: "/docs/rules",
-                        },
-                    ],
-                },
-                {
-                    title: "📁 Project",
-                    items: [
-                        {
-                            label: " Releases",
-                            href: "https://github.com/Nick2bad4u/eslint-plugin-vite/releases",
-                        },
-                        {
-                            label: " ESLint Inspector",
-                            href: `${siteUrl}${baseUrl}eslint-inspector/`,
-                        },
-                        {
-                            label: " Stylelint Inspector",
-                            href: `${siteUrl}${baseUrl}stylelint-inspector/`,
-                        },
-                        {
-                            label: "⚡ Vite",
-                            href: "https://vite.dev/",
-                        },
-                    ],
-                },
-                {
-                    title: "⚙️ Support",
-                    items: [
-                        {
-                            label: " GitHub Repository",
-                            href: "https://github.com/Nick2bad4u/eslint-plugin-vite",
-                        },
-                        {
-                            label: " Report Issues",
-                            href: "https://github.com/Nick2bad4u/eslint-plugin-vite/issues",
-                        },
-                        {
-                            label: "🛡️ Security Policy",
-                            href: "https://github.com/Nick2bad4u/eslint-plugin-vite/security/policy",
-                        },
-                        {
-                            label: " NPM",
-                            href: "https://www.npmjs.com/package/@typpi/eslint-plugin-vite",
-                        },
-                    ],
-                },
+        prism: {
+            additionalLanguages: [
+                "bash",
+                "json",
+                "yaml",
+                "typescript",
             ],
+            darkTheme: prismThemes.dracula,
+            defaultLanguage: "typescript",
+            theme: prismThemes.github,
+        },
+        tableOfContents: {
+            maxHeadingLevel: 4,
+            minHeadingLevel: 2,
+        },
+        zoom: {
+            background: {
+                dark: "rgb(50, 50, 50)",
+                light: "rgb(255, 255, 255)",
+            },
+            config: {},
+            selector: ".markdown > img",
         },
     } satisfies Preset.ThemeConfig,
+    themes: [
+        "@docusaurus/theme-mermaid",
+        [
+            "@easyops-cn/docusaurus-search-local",
+            {
+                docsRouteBasePath: ["docs", "docs/rules"],
+                explicitSearchResultPath: true,
+                hashed: true,
+                indexBlog: true,
+                indexDocs: true,
+                indexPages: true,
+                searchBarPosition: "right",
+                searchBarShortcut: true,
+                searchBarShortcutHint: true,
+            },
+        ],
+    ],
+    title: "eslint-plugin-vite",
+    trailingSlash: true,
+    url: siteOrigin,
 } satisfies Config;
 
 export default config;
