@@ -41,11 +41,14 @@ const runEnhancements = (): void => {
  * Schedule enhancement pass after route transitions.
  */
 const scheduleEnhancements = (): void => {
-    window.setTimeout(runEnhancements, ROUTE_REFRESH_DELAY_MS);
+    globalThis.setTimeout(runEnhancements, ROUTE_REFRESH_DELAY_MS);
 };
 
-if (typeof window !== "undefined" && typeof document !== "undefined") {
+if (
+    typeof globalThis.window !== "undefined" &&
+    typeof globalThis.document !== "undefined"
+) {
     runEnhancements();
-    window.addEventListener("popstate", scheduleEnhancements);
-    window.addEventListener("hashchange", scheduleEnhancements);
+    globalThis.window.addEventListener("popstate", scheduleEnhancements);
+    globalThis.window.addEventListener("hashchange", scheduleEnhancements);
 }

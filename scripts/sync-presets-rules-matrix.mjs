@@ -78,7 +78,7 @@ const PRESET_RULES_END_LEGACY_MDX = "{/* end generated preset rules */}";
  * @param {string} value
  */
 const escapeRegexLiteral = (value) =>
-    value.replaceAll(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+    value.replaceAll(/[.*+?^${}()|[\]\\]/gu, String.raw`\$&`);
 
 /**
  * @typedef {Readonly<{
