@@ -15,7 +15,6 @@ const config = [
             vite: vite,
         },
         rules: {
-            // @ts-expect-error -- plugin.mjs is typed as generic ESLint.Plugin.
             ...vite.configs.all.rules,
         },
     },
