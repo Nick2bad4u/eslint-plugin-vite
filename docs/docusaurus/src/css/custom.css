@@ -304,20 +304,20 @@
     gap: 0.4rem;
 }
 
-.footer__brand {
+.footer .footer__brand {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-inline-end: 0.6rem;
     vertical-align: middle;
-
-    img {
-        block-size: 1.7rem;
-        inline-size: auto;
-    }
 }
 
-.footer__copyright {
+.footer .footer__brand > :first-child {
+    block-size: 1.7rem;
+    inline-size: auto;
+}
+
+.footer .footer__copyright {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -326,7 +326,7 @@
     text-align: center;
 }
 
-.footer__title {
+.footer .footer__title {
     font-weight: 800;
     letter-spacing: 0.01em;
 }
