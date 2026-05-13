@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined, isFinite } from "ts-extras";
 
 import {
@@ -8,30 +9,34 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "bailRetryConflict";
 
-type PairState = {
+interface PairState {
     readonly bailNode?: Readonly<TSESTree.Node>;
     readonly hasBail: boolean;
     readonly hasRetry: boolean;
     readonly retryNode?: Readonly<TSESTree.Node>;
-};
+}
 
-const bailPathSuffix = ["test", "bail"] as const;
+const bailPathSuffix = constTuple("test", "bail");
 
-const retryPathSuffix = ["test", "retry"] as const;
+const retryPathSuffix = constTuple("test", "retry");
 
 const getStaticNumericValue = (
     node: Readonly<TSESTree.Property["value"]>
 ): number | undefined => {
-    if (node.type === "Literal" && typeof node.value === "number") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "number"
+    ) {
         return node.value;
     }
 
     if (
-        node.type === "Literal" &&
+        node.type === AST_NODE_TYPES.Literal &&
         typeof node.value === "string" &&
         node.value.trim().length > 0
     ) {
@@ -40,7 +45,7 @@ const getStaticNumericValue = (
         return isFinite(parsed) ? parsed : undefined;
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         if (!isDefined(staticValue) || staticValue.trim().length === 0) {
@@ -56,7 +61,10 @@ const getStaticNumericValue = (
 };
 
 const isEnabledBail = (node: Readonly<TSESTree.Property["value"]>): boolean => {
-    if (node.type === "Literal" && typeof node.value === "boolean") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "boolean"
+    ) {
         return node.value;
     }
 
@@ -106,7 +114,7 @@ const noVitestBailAndRetryConflictRule: ReturnType<typeof createTypedRule> =
                     }
                 },
                 Property(node) {
-                    if (node.parent.type !== "ObjectExpression") {
+                    if (node.parent.type !== AST_NODE_TYPES.ObjectExpression) {
                         return;
                     }
 

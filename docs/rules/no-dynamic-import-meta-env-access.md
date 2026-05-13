@@ -2,7 +2,7 @@
 
 Disallow dynamic `import.meta.env[key]` access that Vite cannot replace statically.
 
-> **Rule catalog ID:** R003
+> **Rule catalog ID:** R006
 
 ## Targeted pattern scope
 

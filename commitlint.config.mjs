@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types -- This runtime config file is plain ESM JavaScript, so TS boundary annotations are not expressible here. */
+
 /**
  * Commitlint configuration for eslint-plugin-vite.
  *
@@ -7,7 +9,7 @@
  * - `🛠️ [fix](lint) Prevent parser crash on empty scope`
  * - `:sparkles: [feat] Add typed rule metadata`
  *
- * Structure: `<gitmoji> [type](scope?)?[:]? <subject>`
+ * Structure: `&lt;gitmoji> [type](scope?)?[:]? &lt;subject>`
  *
  * @type {import("@commitlint/types").UserConfig}
  *
@@ -18,40 +20,25 @@
  */
 
 /**
- * @param {string} commit
- *
- * @returns {boolean}
+ * @type {(commit: string) => boolean}
  */
-function isDependencyBumpCommit(commit) {
-    return /^build\(deps.*\): bump/v.test(commit);
-}
+const isDependencyBumpCommit = (commit) =>
+    /^build\(deps.*\): bump/v.test(commit);
 
 /**
- * @param {string} commit
- *
- * @returns {boolean}
+ * @type {(commit: string) => boolean}
  */
-function isMergeCommit(commit) {
-    return commit.includes("Merge");
-}
+const isMergeCommit = (commit) => commit.includes("Merge");
 
 /**
- * @param {string} commit
- *
- * @returns {boolean}
+ * @type {(commit: string) => boolean}
  */
-function isReleaseCommit(commit) {
-    return commit.startsWith("chore(release)");
-}
+const isReleaseCommit = (commit) => commit.startsWith("chore(release)");
 
 /**
- * @param {string} commit
- *
- * @returns {boolean}
+ * @type {(commit: string) => boolean}
  */
-function isRevertCommit(commit) {
-    return commit.includes("Revert");
-}
+const isRevertCommit = (commit) => commit.includes("Revert");
 
 const hybridCommitTypes = [
     "build",
@@ -69,6 +56,12 @@ const hybridCommitTypes = [
 
 const hybridCommitTypesSet = new Set(hybridCommitTypes);
 const gitmojiUnicodePattern = /\p{Extended_Pictographic}/v;
+
+/**
+ * @typedef {object} ParsedCommit
+ *
+ * @property {null | string} [header] Parsed commit header text.
+ */
 
 /**
  * @param {string} header
@@ -101,18 +94,22 @@ function isGitmojiShortcodeToken(token) {
         return false;
     }
 
-    return [...body].every((character) => {
+    for (const character of body) {
         const isLowercaseLetter = character >= "a" && character <= "z";
         const isNumber = character >= "0" && character <= "9";
 
-        return (
-            isLowercaseLetter ||
-            isNumber ||
-            character === "_" ||
-            character === "+" ||
-            character === "-"
-        );
-    });
+        if (
+            !isLowercaseLetter &&
+            !isNumber &&
+            character !== "_" &&
+            character !== "+" &&
+            character !== "-"
+        ) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -134,7 +131,7 @@ function isValidScope(scope) {
         return false;
     }
 
-    const [firstCharacter = ""] = scope;
+    const firstCharacter = scope.charAt(0);
     const isFirstCharacterValid =
         (firstCharacter >= "a" && firstCharacter <= "z") ||
         (firstCharacter >= "0" && firstCharacter <= "9");
@@ -143,17 +140,21 @@ function isValidScope(scope) {
         return false;
     }
 
-    return [...scope].every((character) => {
+    for (const character of scope) {
         const isLowercaseLetter = character >= "a" && character <= "z";
         const isNumber = character >= "0" && character <= "9";
 
-        return (
-            isLowercaseLetter ||
-            isNumber ||
-            character === "-" ||
-            character === "/"
-        );
-    });
+        if (
+            !isLowercaseLetter &&
+            !isNumber &&
+            character !== "-" &&
+            character !== "/"
+        ) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -301,7 +302,7 @@ const commitlintConfig = /** @type {CommitlintConfig} */ ({
         {
             rules: {
                 /**
-                 * @param {{ header?: string | null }} parsed
+                 * @param {ParsedCommit} parsed
                  *
                  * @returns {[boolean, string]}
                  */
@@ -479,3 +480,5 @@ const commitlintConfig = /** @type {CommitlintConfig} */ ({
 });
 
 export default commitlintConfig;
+
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types -- Re-enable after the file-scoped JavaScript runtime-config exception. */

@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isPresent } from "ts-extras";
 
 import { getStaticPropertyName } from "../_internal/ast.js";
@@ -16,7 +17,7 @@ const hasAncestorPropertyName = (
 
     while (isPresent(current)) {
         if (
-            current.type === "Property" &&
+            current.type === AST_NODE_TYPES.Property &&
             getStaticPropertyName(current) === propertyName
         ) {
             return true;
@@ -60,7 +61,7 @@ const noMixedDefineWorkspaceAndTestProjectsRule: ReturnType<
         return {
             CallExpression(node) {
                 if (
-                    node.callee.type !== "Identifier" ||
+                    node.callee.type !== AST_NODE_TYPES.Identifier ||
                     node.callee.name !== "defineWorkspace"
                 ) {
                     return;

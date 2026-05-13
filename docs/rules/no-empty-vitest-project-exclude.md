@@ -2,7 +2,7 @@
 
 Disallow empty project-level `test.exclude` arrays in workspace/project entries.
 
-> **Rule catalog ID:** R033
+> **Rule catalog ID:** R019
 
 ## Targeted pattern scope
 

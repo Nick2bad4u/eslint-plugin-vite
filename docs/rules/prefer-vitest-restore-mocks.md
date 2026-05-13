@@ -2,7 +2,7 @@
 
 Prefer `test.restoreMocks: true` in shared Vitest config.
 
-> **Rule catalog ID:** R054
+> **Rule catalog ID:** R057
 
 ## Targeted pattern scope
 

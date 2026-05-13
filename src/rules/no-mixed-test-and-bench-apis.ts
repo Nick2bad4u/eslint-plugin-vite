@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined, setHas } from "ts-extras";
 
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -15,13 +16,13 @@ const getImportedNamesBySource = (
     const names = new Map<string, string>();
 
     for (const specifier of node.specifiers) {
-        if (specifier.type !== "ImportSpecifier") {
+        if (specifier.type !== AST_NODE_TYPES.ImportSpecifier) {
             continue;
         }
 
         names.set(
             specifier.local.name,
-            specifier.imported.type === "Identifier"
+            specifier.imported.type === AST_NODE_TYPES.Identifier
                 ? specifier.imported.name
                 : specifier.imported.value
         );
@@ -41,7 +42,7 @@ const noMixedTestAndBenchApisRule: ReturnType<typeof createTypedRule> =
 
             return {
                 CallExpression(node) {
-                    if (node.callee.type !== "Identifier") {
+                    if (node.callee.type !== AST_NODE_TYPES.Identifier) {
                         return;
                     }
 

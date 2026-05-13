@@ -1,19 +1,25 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "timeoutTripletMismatch";
 
-const testTimeoutPathSuffix = ["test", "testTimeout"] as const;
-const hookTimeoutPathSuffix = ["test", "hookTimeout"] as const;
-const teardownTimeoutPathSuffix = ["test", "teardownTimeout"] as const;
+const testTimeoutPathSuffix = constTuple("test", "testTimeout");
+const hookTimeoutPathSuffix = constTuple("test", "hookTimeout");
+const teardownTimeoutPathSuffix = constTuple("test", "teardownTimeout");
 
 const getStaticNumber = (
     node: Readonly<TSESTree.Property["value"]>
 ): null | number => {
-    if (node.type === "Literal" && typeof node.value === "number") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "number"
+    ) {
         return node.value;
     }
 

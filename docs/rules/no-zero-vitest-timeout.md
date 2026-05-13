@@ -2,7 +2,7 @@
 
 Disallow zero-valued Vitest timeout options that disable timeout safety guards.
 
-> **Rule catalog ID:** R017
+> **Rule catalog ID:** R055
 
 ## Targeted pattern scope
 

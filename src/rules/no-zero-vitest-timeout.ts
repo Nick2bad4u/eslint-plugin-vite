@@ -1,27 +1,29 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayAt, arrayIncludes, isDefined } from "ts-extras";
 
 import { getPropertyPath } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "zeroTimeout";
 type TimeoutOptionName = "hookTimeout" | "teardownTimeout" | "testTimeout";
 
-const timeoutOptionNames = [
+const timeoutOptionNames = constTuple(
     "hookTimeout",
     "teardownTimeout",
-    "testTimeout",
-] as const;
+    "testTimeout"
+);
 
 const isTimeoutOptionName = (value: string): value is TimeoutOptionName =>
-    arrayIncludes(timeoutOptionNames, value as TimeoutOptionName);
+    arrayIncludes(timeoutOptionNames, value);
 
 const isNumberLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     expected: number
-): boolean => node.type === "Literal" && node.value === expected;
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
 
 const getZeroTimeoutOptionName = (
     node: Readonly<TSESTree.Property>

@@ -2,7 +2,7 @@
 
 Disallow empty `test.include` arrays in Vitest configuration.
 
-> **Rule catalog ID:** R025
+> **Rule catalog ID:** R018
 
 ## Targeted pattern scope
 

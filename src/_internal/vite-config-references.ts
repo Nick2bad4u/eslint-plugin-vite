@@ -1,17 +1,30 @@
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
 import { objectHasOwn } from "ts-extras";
 
+import { constTuple } from "./const-tuple.js";
+
+/** Canonical flat-config preset key type exposed through `plugin.configs`. */
+export type ViteConfigName =
+    | "all"
+    | "client"
+    | "configs"
+    | "recommended"
+    | "strict"
+    | "vitepress"
+    | "vitest"
+    | "vitest-bench";
+
 /** Canonical ordered preset keys exposed via `plugin.configs`. */
-export const viteConfigNames = [
+export const viteConfigNames: readonly ViteConfigName[] = constTuple(
+    "all",
+    "client",
+    "configs",
     "recommended",
     "strict",
-    "all",
-    "configs",
-    "client",
     "vitepress",
     "vitest",
-    "vitest-bench",
-] as const;
+    "vitest-bench"
+);
 
 /** Metadata contract shared across preset wiring, docs, and README rendering. */
 export type ViteConfigMetadata = Readonly<{
@@ -21,9 +34,6 @@ export type ViteConfigMetadata = Readonly<{
     readmeOrder: number;
     requiresTypeChecking: boolean;
 }>;
-
-/** Canonical flat-config preset key type exposed through `plugin.configs`. */
-export type ViteConfigName = (typeof viteConfigNames)[number];
 
 /** Canonical metadata for every exported preset key. */
 export const viteConfigMetadataByName: Readonly<

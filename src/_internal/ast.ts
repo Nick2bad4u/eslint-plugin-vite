@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayFirst, isDefined } from "ts-extras";
 
 /** Convert a static string-ish AST node into its runtime string value. */
@@ -13,11 +14,14 @@ export const getStaticStringValue = (
         return undefined;
     }
 
-    if (node.type === "Literal") {
+    if (node.type === AST_NODE_TYPES.Literal) {
         return typeof node.value === "string" ? node.value : undefined;
     }
 
-    if (node.type === "TemplateLiteral" && node.expressions.length === 0) {
+    if (
+        node.type === AST_NODE_TYPES.TemplateLiteral &&
+        node.expressions.length === 0
+    ) {
         return arrayFirst(node.quasis)?.value.cooked ?? undefined;
     }
 
@@ -28,15 +32,15 @@ export const getStaticStringValue = (
 export const getStaticPropertyName = (
     node: Readonly<TSESTree.MemberExpression> | Readonly<TSESTree.Property>
 ): string | undefined => {
-    if (node.type === "Property") {
-        if (!node.computed && node.key.type === "Identifier") {
+    if (node.type === AST_NODE_TYPES.Property) {
+        if (!node.computed && node.key.type === AST_NODE_TYPES.Identifier) {
             return node.key.name;
         }
 
         return getStaticStringValue(node.key);
     }
 
-    if (!node.computed && node.property.type === "Identifier") {
+    if (!node.computed && node.property.type === AST_NODE_TYPES.Identifier) {
         return node.property.name;
     }
 
@@ -49,7 +53,7 @@ export const findPropertyByName = (
     propertyName: string
 ): TSESTree.Property | undefined => {
     for (const property of objectExpression.properties) {
-        if (property.type !== "Property") {
+        if (property.type !== AST_NODE_TYPES.Property) {
             continue;
         }
 
@@ -66,9 +70,9 @@ export const getPropertyPath = (
     node: Readonly<TSESTree.Property>
 ): readonly string[] => {
     const propertyPath: string[] = [];
-    let currentNode: Readonly<TSESTree.Node> = node;
+    let currentNode: Readonly<TSESTree.Property> = node;
 
-    while (currentNode.type === "Property") {
+    while (true) {
         const propertyName = getStaticPropertyName(currentNode);
 
         if (!isDefined(propertyName)) {
@@ -77,15 +81,15 @@ export const getPropertyPath = (
 
         propertyPath.unshift(propertyName);
 
-        const parentObject: TSESTree.Node | undefined = currentNode.parent;
+        const parentObject: TSESTree.Node = currentNode.parent;
 
-        if (parentObject?.type !== "ObjectExpression") {
+        if (parentObject.type !== AST_NODE_TYPES.ObjectExpression) {
             break;
         }
 
-        const parentNode: TSESTree.Node | undefined = parentObject.parent;
+        const parentNode: TSESTree.Node = parentObject.parent;
 
-        if (parentNode?.type !== "Property") {
+        if (parentNode.type !== AST_NODE_TYPES.Property) {
             break;
         }
 
@@ -128,7 +132,7 @@ export const propertyPathEndsWith = (
 export const isImportMeta = (
     node: Readonly<TSESTree.Node>
 ): node is TSESTree.MetaProperty =>
-    node.type === "MetaProperty" &&
+    node.type === AST_NODE_TYPES.MetaProperty &&
     node.meta.name === "import" &&
     node.property.name === "meta";
 
@@ -136,7 +140,7 @@ export const isImportMeta = (
 export const isImportMetaEnvMemberExpression = (
     node: Readonly<TSESTree.Node>
 ): node is TSESTree.MemberExpression =>
-    node.type === "MemberExpression" &&
+    node.type === AST_NODE_TYPES.MemberExpression &&
     isImportMeta(node.object) &&
     getStaticPropertyName(node) === "env";
 
@@ -144,7 +148,7 @@ export const isImportMetaEnvMemberExpression = (
 export const isImportMetaGlobMemberExpression = (
     node: Readonly<TSESTree.Node>
 ): node is TSESTree.MemberExpression =>
-    node.type === "MemberExpression" &&
+    node.type === AST_NODE_TYPES.MemberExpression &&
     isImportMeta(node.object) &&
     getStaticPropertyName(node) === "glob";
 
@@ -152,4 +156,4 @@ export const isImportMetaGlobMemberExpression = (
 export const asObjectExpression = (
     node: null | Readonly<TSESTree.Expression>
 ): TSESTree.ObjectExpression | undefined =>
-    node?.type === "ObjectExpression" ? node : undefined;
+    node?.type === AST_NODE_TYPES.ObjectExpression ? node : undefined;

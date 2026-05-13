@@ -8,19 +8,21 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "unsafeServerOption";
 
-const isBooleanLiteral = (value: unknown, expected: boolean): boolean =>
-    typeof value === "object" &&
-    value !== null &&
-    (() => {
-        const record = value as UnknownRecord;
+const isUnknownRecord = (value: unknown): value is UnknownRecord =>
+    typeof value === "object" && value !== null;
 
-        return (
-            keyIn(record, "type") &&
-            record["type"] === "Literal" &&
-            keyIn(record, "value") &&
-            record["value"] === expected
-        );
-    })();
+const isBooleanLiteral = (value: unknown, expected: boolean): boolean => {
+    if (!isUnknownRecord(value)) {
+        return false;
+    }
+
+    return (
+        keyIn(value, "type") &&
+        value["type"] === "Literal" &&
+        keyIn(value, "value") &&
+        value["value"] === expected
+    );
+};
 
 /**
  * Disallow unsafe Vite server and preview settings that weaken default

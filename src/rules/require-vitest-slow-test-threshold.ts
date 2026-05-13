@@ -7,11 +7,12 @@ import {
     type ConfigFileKind,
     getConfigFileKind,
 } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingSlowTestThreshold";
 
-const slowTestThresholdPathSuffix = ["test", "slowTestThreshold"] as const;
+const slowTestThresholdPathSuffix = constTuple("test", "slowTestThreshold");
 
 const shouldRequireSlowThreshold = (
     configFileKind: ConfigFileKind,
@@ -54,10 +55,7 @@ const requireVitestSlowTestThresholdRule: ReturnType<typeof createTypedRule> =
 
                     if (arrayFirst(propertyPath) === "test") {
                         hasAnyTestConfig = true;
-
-                        if (firstTestPropertyNode === null) {
-                            firstTestPropertyNode = node;
-                        }
+                        firstTestPropertyNode ??= node;
                     }
 
                     if (

@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -8,35 +9,28 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingSequenceSeed";
 
-const shufflePathSuffix = [
-    "test",
-    "sequence",
-    "shuffle",
-] as const;
+const shufflePathSuffix = constTuple("test", "sequence", "shuffle");
 
-const seedPathSuffix = [
-    "test",
-    "sequence",
-    "seed",
-] as const;
+const seedPathSuffix = constTuple("test", "sequence", "seed");
 
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     expected: boolean
-): boolean => node.type === "Literal" && node.value === expected;
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
 
 const hasStaticSeedValue = (
     node: Readonly<TSESTree.Property["value"]>
 ): boolean => {
-    if (node.type === "Literal") {
+    if (node.type === AST_NODE_TYPES.Literal) {
         return node.value !== null;
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         return isDefined(staticValue);

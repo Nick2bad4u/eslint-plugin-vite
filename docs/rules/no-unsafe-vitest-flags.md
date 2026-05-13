@@ -2,7 +2,7 @@
 
 Disallow unsafe Vitest execution flags that can hide failing tests or runtime errors.
 
-> **Rule catalog ID:** R018
+> **Rule catalog ID:** R031
 
 ## Targeted pattern scope
 

@@ -2,7 +2,7 @@
 
 Disallow empty Vitest project lists.
 
-> **Rule catalog ID:** R024
+> **Rule catalog ID:** R021
 
 ## Targeted pattern scope
 

@@ -1,29 +1,33 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayAt, arrayIncludes, isDefined, isFinite } from "ts-extras";
 
 import { getPropertyPath, getStaticStringValue } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
-type BoundsState = {
+interface BoundsState {
     readonly maxWorkersNode?: Readonly<TSESTree.Node>;
     readonly maxWorkersValue?: number;
     readonly minWorkersNode?: Readonly<TSESTree.Node>;
     readonly minWorkersValue?: number;
-};
+}
 
 type MessageId = "minWorkersGreaterThanMaxWorkers";
 
 const getStaticNumericValue = (
     node: Readonly<TSESTree.Property["value"]>
 ): number | undefined => {
-    if (node.type === "Literal" && typeof node.value === "number") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "number"
+    ) {
         return node.value;
     }
 
     if (
-        node.type === "Literal" &&
+        node.type === AST_NODE_TYPES.Literal &&
         typeof node.value === "string" &&
         node.value.trim().length > 0
     ) {
@@ -32,7 +36,7 @@ const getStaticNumericValue = (
         return isFinite(parsed) ? parsed : undefined;
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         if (!isDefined(staticValue) || staticValue.trim().length === 0) {
@@ -86,7 +90,7 @@ const noVitestMinWorkersGreaterThanMaxWorkersRule: ReturnType<
                 }
             },
             Property(node) {
-                if (node.parent.type !== "ObjectExpression") {
+                if (node.parent.type !== AST_NODE_TYPES.ObjectExpression) {
                     return;
                 }
 

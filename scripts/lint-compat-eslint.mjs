@@ -34,6 +34,8 @@ const repositoryRoot = resolve(dirname(scriptPath), "..");
  * @param {readonly string[]} argumentList
  *
  * @returns {{ expectedEslintMajor: number | null }}
+ *
+ * @throws {TypeError} When unknown or invalid CLI args are provided.
  */
 const parseArguments = (argumentList) => {
     /** @type {number | null} */
@@ -63,6 +65,8 @@ const parseArguments = (argumentList) => {
  * @param {string} version
  *
  * @returns {number}
+ *
+ * @throws {TypeError} When the ESLint major version cannot be parsed.
  */
 const getMajorVersion = (version) => {
     const [rawMajorVersion] = version.split(".");

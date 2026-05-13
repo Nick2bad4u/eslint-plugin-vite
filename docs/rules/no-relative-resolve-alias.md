@@ -2,7 +2,7 @@
 
 Disallow relative string replacements inside `resolve.alias` in Vite config files.
 
-> **Rule catalog ID:** R006
+> **Rule catalog ID:** R028
 
 ## Targeted pattern scope
 

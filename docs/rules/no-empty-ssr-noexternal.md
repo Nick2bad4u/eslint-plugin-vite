@@ -2,7 +2,7 @@
 
 Disallow empty `ssr.noExternal` arrays in committed Vite config.
 
-> **Rule catalog ID:** R061
+> **Rule catalog ID:** R011
 
 ## Targeted pattern scope
 

@@ -2,7 +2,7 @@
 
 Disallow committed `test.ui: true` in Vitest config.
 
-> **Rule catalog ID:** R037
+> **Rule catalog ID:** R050
 
 ## Targeted pattern scope
 

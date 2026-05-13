@@ -1,9 +1,11 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "unsafeTypecheckOption";
@@ -12,21 +14,17 @@ type UnsafeTypecheckOption = Readonly<{
     optionPath: string;
 }>;
 
-const enabledPathSuffix = [
+const enabledPathSuffix = constTuple("test", "typecheck", "enabled");
+const ignoreSourceErrorsPathSuffix = constTuple(
     "test",
     "typecheck",
-    "enabled",
-] as const;
-const ignoreSourceErrorsPathSuffix = [
-    "test",
-    "typecheck",
-    "ignoreSourceErrors",
-] as const;
+    "ignoreSourceErrors"
+);
 
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     expected: boolean
-): boolean => node.type === "Literal" && node.value === expected;
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
 
 const getUnsafeTypecheckOption = (
     node: Readonly<TSESTree.Property>

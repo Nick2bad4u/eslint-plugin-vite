@@ -2,7 +2,7 @@
 
 Disallow `test.fileParallelism: false` in committed Vitest config.
 
-> **Rule catalog ID:** R038
+> **Rule catalog ID:** R044
 
 ## Targeted pattern scope
 

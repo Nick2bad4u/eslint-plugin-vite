@@ -2,7 +2,7 @@
 
 Disallow documented root-only Vitest options inside project configs.
 
-> **Rule catalog ID:** R015
+> **Rule catalog ID:** R032
 
 ## Targeted pattern scope
 

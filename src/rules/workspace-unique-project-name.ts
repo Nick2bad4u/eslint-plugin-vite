@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayFirst, isDefined } from "ts-extras";
 
 import { getConfigFileKind } from "../_internal/config-files.js";
@@ -62,9 +63,9 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                     const firstArgument = arrayFirst(node.arguments);
 
                     if (
-                        node.callee.type !== "Identifier" ||
+                        node.callee.type !== AST_NODE_TYPES.Identifier ||
                         node.callee.name !== "defineWorkspace" ||
-                        firstArgument?.type !== "ArrayExpression"
+                        firstArgument?.type !== AST_NODE_TYPES.ArrayExpression
                     ) {
                         return;
                     }
@@ -79,7 +80,7 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                 Property(node) {
                     if (
                         !isVitestProjectsProperty(node) ||
-                        node.value.type !== "ArrayExpression"
+                        node.value.type !== AST_NODE_TYPES.ArrayExpression
                     ) {
                         return;
                     }

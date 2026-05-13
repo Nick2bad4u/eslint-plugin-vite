@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -8,26 +9,26 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "rootReportsDirectory";
 
-const reportsDirectoryPathSuffix = [
+const reportsDirectoryPathSuffix = constTuple(
     "test",
     "coverage",
-    "reportsDirectory",
-] as const;
+    "reportsDirectory"
+);
 
 const isRootLikeCoverageDirectory = (
     node: Readonly<TSESTree.Property["value"]>
 ): boolean => {
-    let rawValue: string | undefined = undefined;
-
-    if (node.type === "Literal" && typeof node.value === "string") {
-        rawValue = node.value;
-    } else if (node.type === "TemplateLiteral") {
-        rawValue = getStaticStringValue(node);
-    }
+    const rawValue =
+        node.type === AST_NODE_TYPES.Literal && typeof node.value === "string"
+            ? node.value
+            : node.type === AST_NODE_TYPES.TemplateLiteral
+              ? getStaticStringValue(node)
+              : undefined;
 
     if (!isDefined(rawValue)) {
         return false;

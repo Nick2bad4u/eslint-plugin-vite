@@ -1,31 +1,27 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
-type CoverageState = {
+interface CoverageState {
     readonly enabledNode?: Readonly<TSESTree.Node>;
     readonly hasThresholds: boolean;
-};
+}
 
 type MessageId = "missingCoverageThresholds";
 
-const enabledPathSuffix = [
-    "test",
-    "coverage",
-    "enabled",
-] as const;
+const enabledPathSuffix = constTuple("test", "coverage", "enabled");
 
-const thresholdsPathSuffix = [
-    "test",
-    "coverage",
-    "thresholds",
-] as const;
+const thresholdsPathSuffix = constTuple("test", "coverage", "thresholds");
 
 const hasNonEmptyThresholds = (
     node: Readonly<TSESTree.Property["value"]>
-): boolean => node.type === "ObjectExpression" && node.properties.length > 0;
+): boolean =>
+    node.type === AST_NODE_TYPES.ObjectExpression && node.properties.length > 0;
 
 /**
  * Require explicit non-empty `test.coverage.thresholds` when coverage is
@@ -61,7 +57,7 @@ const requireVitestCoverageThresholdsWhenEnabledRule: ReturnType<
                 }
             },
             Property(node) {
-                if (node.parent.type !== "ObjectExpression") {
+                if (node.parent.type !== AST_NODE_TYPES.ObjectExpression) {
                     return;
                 }
 
@@ -72,7 +68,7 @@ const requireVitestCoverageThresholdsWhenEnabledRule: ReturnType<
 
                 if (
                     propertyPathEndsWith(propertyPath, enabledPathSuffix) &&
-                    node.value.type === "Literal" &&
+                    node.value.type === AST_NODE_TYPES.Literal &&
                     node.value.value === true
                 ) {
                     perCoverageObject.set(node.parent, {

@@ -2,7 +2,7 @@
 
 Require inline Vitest project definitions to declare a project name.
 
-> **Rule catalog ID:** R014
+> **Rule catalog ID:** R058
 
 ## Targeted pattern scope
 

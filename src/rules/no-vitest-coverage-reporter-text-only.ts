@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayAt, isDefined, isPresent } from "ts-extras";
 
 import {
@@ -8,24 +9,24 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "textOnlyReporter";
 
-const reporterPathSuffix = [
-    "test",
-    "coverage",
-    "reporter",
-] as const;
+const reporterPathSuffix = constTuple("test", "coverage", "reporter");
 
 const getStaticLowercaseString = (
     node: Readonly<TSESTree.Node>
 ): string | undefined => {
-    if (node.type === "Literal" && typeof node.value === "string") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "string"
+    ) {
         return node.value.trim().toLowerCase();
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         return staticValue?.trim().toLowerCase();
@@ -43,7 +44,7 @@ const isTextOnlyReporter = (
         return staticString === "text";
     }
 
-    if (node.type !== "ArrayExpression") {
+    if (node.type !== AST_NODE_TYPES.ArrayExpression) {
         return false;
     }
 
@@ -53,7 +54,10 @@ const isTextOnlyReporter = (
 
     const firstElement = arrayAt(node.elements, 0);
 
-    if (!isPresent(firstElement) || firstElement.type === "SpreadElement") {
+    if (
+        !isPresent(firstElement) ||
+        firstElement.type === AST_NODE_TYPES.SpreadElement
+    ) {
         return false;
     }
 

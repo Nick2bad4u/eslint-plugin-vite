@@ -1,21 +1,20 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "emptyCoverageReporter";
 
-const coverageReporterPathSuffix = [
-    "test",
-    "coverage",
-    "reporter",
-] as const;
+const coverageReporterPathSuffix = constTuple("test", "coverage", "reporter");
 
 const isEmptyArrayExpression = (
     node: Readonly<TSESTree.Property["value"]>
 ): node is TSESTree.ArrayExpression =>
-    node.type === "ArrayExpression" && node.elements.length === 0;
+    node.type === AST_NODE_TYPES.ArrayExpression && node.elements.length === 0;
 
 /** Disallow empty Vitest coverage reporter arrays. */
 const noEmptyVitestCoverageReporterRule: ReturnType<typeof createTypedRule> =

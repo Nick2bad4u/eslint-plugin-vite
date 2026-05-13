@@ -1,20 +1,23 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "preferRestoreMocks";
 
-const clearMocksPathSuffix = ["test", "clearMocks"] as const;
+const clearMocksPathSuffix = constTuple("test", "clearMocks");
 
-const resetMocksPathSuffix = ["test", "resetMocks"] as const;
+const resetMocksPathSuffix = constTuple("test", "resetMocks");
 
-const restoreMocksPathSuffix = ["test", "restoreMocks"] as const;
+const restoreMocksPathSuffix = constTuple("test", "restoreMocks");
 
 const isBooleanLiteralTrue = (
     node: Readonly<TSESTree.Property["value"]>
-): boolean => node.type === "Literal" && node.value === true;
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === true;
 
 /** Prefer `test.restoreMocks: true` over relying only on clear/reset mocks. */
 const preferVitestRestoreMocksRule: ReturnType<typeof createTypedRule> =

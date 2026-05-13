@@ -1,17 +1,20 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "emptyProjects";
 
-const projectsPathSuffix = ["test", "projects"] as const;
+const projectsPathSuffix = constTuple("test", "projects");
 
 const isEmptyArrayExpression = (
     node: Readonly<TSESTree.Property["value"]>
 ): node is TSESTree.ArrayExpression =>
-    node.type === "ArrayExpression" && node.elements.length === 0;
+    node.type === AST_NODE_TYPES.ArrayExpression && node.elements.length === 0;
 
 /**
  * Disallow empty Vitest project arrays in `test.projects` and
@@ -27,7 +30,7 @@ const noEmptyVitestProjectsRule: ReturnType<typeof createTypedRule> =
             return {
                 CallExpression(node) {
                     if (
-                        node.callee.type !== "Identifier" ||
+                        node.callee.type !== AST_NODE_TYPES.Identifier ||
                         node.callee.name !== "defineWorkspace"
                     ) {
                         return;
@@ -36,7 +39,8 @@ const noEmptyVitestProjectsRule: ReturnType<typeof createTypedRule> =
                     const [firstArgument] = node.arguments;
 
                     if (
-                        firstArgument?.type !== "ArrayExpression" ||
+                        firstArgument?.type !==
+                            AST_NODE_TYPES.ArrayExpression ||
                         firstArgument.elements.length > 0
                     ) {
                         return;

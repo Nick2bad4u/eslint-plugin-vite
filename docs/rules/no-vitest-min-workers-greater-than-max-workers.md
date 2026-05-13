@@ -2,7 +2,7 @@
 
 Disallow worker bounds where `test.minWorkers` is greater than `test.maxWorkers`.
 
-> **Rule catalog ID:** R042
+> **Rule catalog ID:** R047
 
 ## Targeted pattern scope
 

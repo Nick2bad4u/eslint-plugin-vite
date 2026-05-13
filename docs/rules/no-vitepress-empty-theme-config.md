@@ -2,7 +2,7 @@
 
 Disallow empty `themeConfig` objects in committed VitePress config.
 
-> **Rule catalog ID:** R064
+> **Rule catalog ID:** R034
 
 ## Targeted pattern scope
 

@@ -9,11 +9,11 @@ import {
     arrayIncludes,
     isDefined,
     isEmpty,
-    objectEntries,
-    objectFromEntries,
-    safeCastTo,
+    objectHasOwn,
+    objectKeys,
 } from "ts-extras";
 
+// eslint-disable-next-line import-x/extensions -- JSON metadata is an intentional runtime import for package versioning.
 import packageJson from "../package.json" with { type: "json" };
 import { viteRules } from "./_internal/rules-registry.js";
 import {
@@ -43,7 +43,7 @@ type FlatLanguageOptions = NonNullable<FlatConfig["languageOptions"]>;
 type FlatParserOptions = NonNullable<FlatLanguageOptions["parserOptions"]>;
 type RulesConfig = VitePresetConfig["rules"];
 type ViteConfigsContract = Record<ViteConfigName, VitePresetConfig>;
-type VitePluginContract = {
+interface VitePluginContract {
     configs: ViteConfigsContract;
     meta: {
         name: string;
@@ -52,14 +52,18 @@ type VitePluginContract = {
     };
     processors: Record<string, never>;
     rules: typeof viteRules;
-};
+}
 
 const getPackageVersion = (pkg: unknown): string => {
-    if (typeof pkg !== "object" || pkg === null) {
+    if (
+        typeof pkg !== "object" ||
+        pkg === null ||
+        !objectHasOwn(pkg, "version")
+    ) {
         return "0.0.0";
     }
 
-    const version = Reflect.get(pkg, "version");
+    const { version } = pkg;
 
     return typeof version === "string" ? version : "0.0.0";
 };
@@ -115,22 +119,34 @@ const normalizeViteConfigNames = (
     return configNames;
 };
 
+const createEmptyPresetRuleNamesByConfig = (): Record<
+    ViteConfigName,
+    ViteRuleName[]
+> => ({
+    all: [],
+    client: [],
+    configs: [],
+    recommended: [],
+    strict: [],
+    vitepress: [],
+    vitest: [],
+    "vitest-bench": [],
+});
+
+const getRuleDocsViteConfigs = (ruleName: ViteRuleName): unknown => {
+    const docs = viteRules[ruleName].meta.docs;
+
+    return objectHasOwn(docs, "viteConfigs") ? docs.viteConfigs : undefined;
+};
+
 const derivePresetRuleNamesByConfig = (): Readonly<
     Record<ViteConfigName, readonly ViteRuleName[]>
 > => {
-    const presetRuleNamesByConfig = objectFromEntries(
-        viteConfigNames.map((configName) => [
-            configName,
-            safeCastTo<ViteRuleName[]>([]),
-        ])
-    ) as Record<ViteConfigName, ViteRuleName[]>;
+    const presetRuleNamesByConfig = createEmptyPresetRuleNamesByConfig();
 
-    for (const [ruleName, ruleModule] of safeCastTo<
-        readonly [ViteRuleName, (typeof viteRules)[ViteRuleName]][]
-    >(objectEntries(viteRules))) {
-        const docs = ruleModule.meta.docs;
+    for (const ruleName of objectKeys(viteRules)) {
         const configNames = normalizeViteConfigNames(
-            (docs as { viteConfigs?: unknown }).viteConfigs
+            getRuleDocsViteConfigs(ruleName)
         );
 
         for (const configName of configNames) {
@@ -182,6 +198,7 @@ const withVitePlugin = (
 };
 
 const pluginForConfigs: ESLint.Plugin = {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- eslint-plugin-vite rule modules are compatible at runtime; this bridges readonly option typing differences between packages.
     rules: viteRules as unknown as ESLint.Plugin["rules"],
 };
 
@@ -189,26 +206,34 @@ const presetRuleNamesByConfig: Readonly<
     Record<ViteConfigName, readonly ViteRuleName[]>
 > = derivePresetRuleNamesByConfig();
 
-const createViteConfigsDefinition = (): ViteConfigsContract => {
-    const configs = {} as ViteConfigsContract;
+const createPreset = (
+    configName: ViteConfigName,
+    presetRuleNamesByConfigMap: Readonly<
+        Record<ViteConfigName, readonly ViteRuleName[]>
+    >
+): VitePresetConfig =>
+    withVitePlugin(
+        {
+            name: viteConfigMetadataByName[configName].presetName,
+            rules: errorRulesFor(presetRuleNamesByConfigMap[configName]),
+        },
+        pluginForConfigs,
+        {
+            requiresTypeChecking:
+                viteConfigMetadataByName[configName].requiresTypeChecking,
+        }
+    );
 
-    for (const configName of viteConfigNames) {
-        const configMetadata = viteConfigMetadataByName[configName];
-
-        configs[configName] = withVitePlugin(
-            {
-                name: configMetadata.presetName,
-                rules: errorRulesFor(presetRuleNamesByConfig[configName]),
-            },
-            pluginForConfigs,
-            {
-                requiresTypeChecking: configMetadata.requiresTypeChecking,
-            }
-        );
-    }
-
-    return configs;
-};
+const createViteConfigsDefinition = (): ViteConfigsContract => ({
+    all: createPreset("all", presetRuleNamesByConfig),
+    client: createPreset("client", presetRuleNamesByConfig),
+    configs: createPreset("configs", presetRuleNamesByConfig),
+    recommended: createPreset("recommended", presetRuleNamesByConfig),
+    strict: createPreset("strict", presetRuleNamesByConfig),
+    vitepress: createPreset("vitepress", presetRuleNamesByConfig),
+    vitest: createPreset("vitest", presetRuleNamesByConfig),
+    "vitest-bench": createPreset("vitest-bench", presetRuleNamesByConfig),
+});
 
 const viteConfigs: ViteConfigsContract = createViteConfigsDefinition();
 

@@ -2,7 +2,7 @@
 
 Require explicit `cleanUrls` in committed VitePress config.
 
-> **Rule catalog ID:** R067
+> **Rule catalog ID:** R059
 
 ## Targeted pattern scope
 

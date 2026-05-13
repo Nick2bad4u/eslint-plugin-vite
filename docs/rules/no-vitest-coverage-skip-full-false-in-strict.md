@@ -2,7 +2,7 @@
 
 Disallow `test.coverage.skipFull: false` in strict-profile shared Vitest config.
 
-> **Rule catalog ID:** R049
+> **Rule catalog ID:** R040
 
 ## Targeted pattern scope
 

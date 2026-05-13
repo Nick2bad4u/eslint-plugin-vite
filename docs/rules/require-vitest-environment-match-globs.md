@@ -2,7 +2,7 @@
 
 Require explicit non-empty `test.environmentMatchGlobs` when multiple static `test.environment` values are used in one config file.
 
-> **Rule catalog ID:** R058
+> **Rule catalog ID:** R065
 
 ## Targeted pattern scope
 

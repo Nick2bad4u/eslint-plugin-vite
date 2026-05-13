@@ -2,7 +2,7 @@
 
 Disallow deprecated Vite config options and deprecated config values that now have clearer replacements.
 
-> **Rule catalog ID:** R010
+> **Rule catalog ID:** R003
 
 ## Targeted pattern scope
 

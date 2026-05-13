@@ -2,7 +2,7 @@
 
 Disallow empty `head` arrays in committed VitePress config.
 
-> **Rule catalog ID:** R065
+> **Rule catalog ID:** R033
 
 ## Targeted pattern scope
 

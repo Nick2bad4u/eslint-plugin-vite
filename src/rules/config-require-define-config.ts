@@ -1,7 +1,8 @@
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
-import { isDefined, setHas } from "ts-extras";
+import { arrayIncludes, isDefined, setHas } from "ts-extras";
 
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "requireDefineConfig" | "requireDefineWorkspace";
@@ -32,7 +33,7 @@ const unwrapExpression = (
     return expression;
 };
 
-const expressionNodeTypes = new Set<TSESTree.Expression["type"]>([
+const expressionNodeTypes = constTuple(
     AST_NODE_TYPES.ArrayExpression,
     AST_NODE_TYPES.ArrowFunctionExpression,
     AST_NODE_TYPES.AssignmentExpression,
@@ -65,22 +66,25 @@ const expressionNodeTypes = new Set<TSESTree.Expression["type"]>([
     AST_NODE_TYPES.TSTypeAssertion,
     AST_NODE_TYPES.UnaryExpression,
     AST_NODE_TYPES.UpdateExpression,
-    AST_NODE_TYPES.YieldExpression,
-] as const);
+    AST_NODE_TYPES.YieldExpression
+);
+
+const isExpressionDeclaration = (
+    declaration: Readonly<TSESTree.ExportDefaultDeclaration["declaration"]>
+): declaration is TSESTree.Expression =>
+    arrayIncludes(expressionNodeTypes, declaration.type);
 
 const getExportedExpression = (
     declaration: Readonly<TSESTree.ExportDefaultDeclaration["declaration"]>
 ): null | TSESTree.Expression =>
-    setHas(expressionNodeTypes, declaration.type as TSESTree.Expression["type"])
-        ? (declaration as TSESTree.Expression)
-        : null;
+    isExpressionDeclaration(declaration) ? declaration : null;
 
 const isAcceptedExportExpression = (
     expression: Readonly<TSESTree.Expression>,
     fileKind: keyof typeof acceptedCallNamesByKind
 ): boolean =>
-    expression.type === "CallExpression" &&
-    expression.callee.type === "Identifier" &&
+    expression.type === AST_NODE_TYPES.CallExpression &&
+    expression.callee.type === AST_NODE_TYPES.Identifier &&
     setHas(acceptedCallNamesByKind[fileKind], expression.callee.name);
 
 const getTopLevelVariableInitializers = (

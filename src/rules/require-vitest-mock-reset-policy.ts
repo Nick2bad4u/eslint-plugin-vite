@@ -1,23 +1,26 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingMockResetPolicy";
 
-const clearMocksPathSuffix = ["test", "clearMocks"] as const;
+const clearMocksPathSuffix = constTuple("test", "clearMocks");
 
-const resetMocksPathSuffix = ["test", "resetMocks"] as const;
+const resetMocksPathSuffix = constTuple("test", "resetMocks");
 
-const restoreMocksPathSuffix = ["test", "restoreMocks"] as const;
+const restoreMocksPathSuffix = constTuple("test", "restoreMocks");
 
-const testPathSuffix = ["test"] as const;
+const testPathSuffix = constTuple("test");
 
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     expected: boolean
-): boolean => node.type === "Literal" && node.value === expected;
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
 
 /**
  * Require at least one Vitest mock reset policy (`clearMocks`, `resetMocks`, or
@@ -49,7 +52,7 @@ const requireVitestMockResetPolicyRule: ReturnType<typeof createTypedRule> =
 
                     if (
                         propertyPathEndsWith(propertyPath, testPathSuffix) &&
-                        node.value.type === "ObjectExpression"
+                        node.value.type === AST_NODE_TYPES.ObjectExpression
                     ) {
                         firstTestObjectNode ??= node.value;
                     }

@@ -2,7 +2,7 @@
 
 Disallow committed `test.watch: true` in Vitest config.
 
-> **Rule catalog ID:** R036
+> **Rule catalog ID:** R053
 
 ## Targeted pattern scope
 

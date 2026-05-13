@@ -2,7 +2,7 @@
 
 Disallow inconsistent Vitest timeout triplet ordering.
 
-> **Rule catalog ID:** R069
+> **Rule catalog ID:** R049
 
 ## Targeted pattern scope
 

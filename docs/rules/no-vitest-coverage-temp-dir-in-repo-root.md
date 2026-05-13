@@ -2,7 +2,7 @@
 
 Disallow root-like `test.coverage.reportsDirectory` paths (for example `.` or `./`).
 
-> **Rule catalog ID:** R052
+> **Rule catalog ID:** R041
 
 ## Targeted pattern scope
 

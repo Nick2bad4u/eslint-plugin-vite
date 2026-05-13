@@ -2,7 +2,7 @@
 
 Disallow `test.coverage.reporter` configurations that only emit `text` output.
 
-> **Rule catalog ID:** R051
+> **Rule catalog ID:** R039
 
 ## Targeted pattern scope
 

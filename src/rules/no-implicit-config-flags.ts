@@ -1,9 +1,11 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayAt, arrayFirst, arrayIncludes, isDefined } from "ts-extras";
 
 import { getStaticPropertyName } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type ConfigFlagName = "isPreview" | "isSsrBuild";
@@ -21,12 +23,7 @@ type TargetFunctionScope = Readonly<{
     node: FunctionNode;
 }>;
 
-const explicitBooleanComparisonOperators = [
-    "===",
-    "!==",
-    "==",
-    "!=",
-] as const;
+const explicitBooleanComparisonOperators = constTuple("!=", "!==", "==", "===");
 
 const isConfigFlagName = (value: string): value is ConfigFlagName =>
     value === "isPreview" || value === "isSsrBuild";
@@ -34,28 +31,25 @@ const isConfigFlagName = (value: string): value is ConfigFlagName =>
 const isExplicitBooleanComparisonOperator = (
     operator: TSESTree.BinaryExpression["operator"]
 ): operator is (typeof explicitBooleanComparisonOperators)[number] =>
-    arrayIncludes(
-        explicitBooleanComparisonOperators,
-        operator as (typeof explicitBooleanComparisonOperators)[number]
-    );
+    arrayIncludes(explicitBooleanComparisonOperators, operator);
 
 const toExpressionOrNull = (
     node: Readonly<TSESTree.Expression | TSESTree.PrivateIdentifier>
 ): null | Readonly<TSESTree.Expression> =>
-    node.type === "PrivateIdentifier" ? null : node;
+    node.type === AST_NODE_TYPES.PrivateIdentifier ? null : node;
 
 const unwrapExpression = (
     expression: Readonly<TSESTree.Expression>
 ): Readonly<TSESTree.Expression> => {
-    if (expression.type === "ChainExpression") {
+    if (expression.type === AST_NODE_TYPES.ChainExpression) {
         return unwrapExpression(expression.expression);
     }
 
     if (
-        expression.type === "TSAsExpression" ||
-        expression.type === "TSSatisfiesExpression" ||
-        expression.type === "TSTypeAssertion" ||
-        expression.type === "TSNonNullExpression"
+        expression.type === AST_NODE_TYPES.TSAsExpression ||
+        expression.type === AST_NODE_TYPES.TSSatisfiesExpression ||
+        expression.type === AST_NODE_TYPES.TSTypeAssertion ||
+        expression.type === AST_NODE_TYPES.TSNonNullExpression
     ) {
         return unwrapExpression(expression.expression);
     }
@@ -64,30 +58,33 @@ const unwrapExpression = (
 };
 
 const isBooleanLiteral = (node: Readonly<TSESTree.Node>): boolean =>
-    node.type === "Literal" && typeof node.value === "boolean";
+    node.type === AST_NODE_TYPES.Literal && typeof node.value === "boolean";
 
 const isViteConfigFactoryFunction = (node: FunctionNode): boolean => {
     const parentNode = node.parent;
 
     if (
-        parentNode.type === "CallExpression" &&
+        parentNode.type === AST_NODE_TYPES.CallExpression &&
         arrayFirst(parentNode.arguments) === node &&
-        parentNode.callee.type === "Identifier"
+        parentNode.callee.type === AST_NODE_TYPES.Identifier
     ) {
         return parentNode.callee.name === "defineConfig";
     }
 
-    return parentNode.type === "ExportDefaultDeclaration";
+    return parentNode.type === AST_NODE_TYPES.ExportDefaultDeclaration;
 };
 
 const getBindingIdentifier = (
     node: Readonly<TSESTree.Node>
 ): Readonly<TSESTree.Identifier> | undefined => {
-    if (node.type === "Identifier") {
+    if (node.type === AST_NODE_TYPES.Identifier) {
         return node;
     }
 
-    if (node.type === "AssignmentPattern" && node.left.type === "Identifier") {
+    if (
+        node.type === AST_NODE_TYPES.AssignmentPattern &&
+        node.left.type === AST_NODE_TYPES.Identifier
+    ) {
         return node.left;
     }
 
@@ -99,14 +96,14 @@ const getConfigFlagBindings = (
 ): ReadonlyMap<string, ConfigFlagName> => {
     const firstParameter = arrayFirst(node.params);
 
-    if (firstParameter?.type !== "ObjectPattern") {
+    if (firstParameter?.type !== AST_NODE_TYPES.ObjectPattern) {
         return new Map();
     }
 
     const bindings = new Map<string, ConfigFlagName>();
 
     for (const property of firstParameter.properties) {
-        if (property.type !== "Property") {
+        if (property.type !== AST_NODE_TYPES.Property) {
             continue;
         }
 
@@ -141,9 +138,9 @@ const getNearestFunctionAncestor = (
 
     while (currentNode !== undefined) {
         if (
-            currentNode.type === "FunctionDeclaration" ||
-            currentNode.type === "ArrowFunctionExpression" ||
-            currentNode.type === "FunctionExpression"
+            currentNode.type === AST_NODE_TYPES.FunctionDeclaration ||
+            currentNode.type === AST_NODE_TYPES.ArrowFunctionExpression ||
+            currentNode.type === AST_NODE_TYPES.FunctionExpression
         ) {
             return currentNode;
         }
@@ -160,7 +157,7 @@ const getFlagUsageForIdentifier = (
 ): ImplicitFlagUsage | null => {
     const unwrappedExpression = unwrapExpression(expression);
 
-    if (unwrappedExpression.type !== "Identifier") {
+    if (unwrappedExpression.type !== AST_NODE_TYPES.Identifier) {
         return null;
     }
 
@@ -232,7 +229,7 @@ function findImplicitFlagUsageInCallExpression(
     ) => ImplicitFlagUsage | null
 ): ImplicitFlagUsage | null {
     if (
-        expression.callee.type !== "Identifier" ||
+        expression.callee.type !== AST_NODE_TYPES.Identifier ||
         expression.callee.name !== "Boolean"
     ) {
         return null;
@@ -240,7 +237,10 @@ function findImplicitFlagUsageInCallExpression(
 
     const [argument] = expression.arguments;
 
-    if (argument === undefined || argument.type === "SpreadElement") {
+    if (
+        argument === undefined ||
+        argument.type === AST_NODE_TYPES.SpreadElement
+    ) {
         return null;
     }
 
@@ -294,7 +294,7 @@ function findImplicitFlagUsage(
         return identifierUsage;
     }
 
-    if (unwrappedExpression.type === "BinaryExpression") {
+    if (unwrappedExpression.type === AST_NODE_TYPES.BinaryExpression) {
         return findImplicitFlagUsageInBinaryExpression(
             unwrappedExpression,
             bindings,
@@ -302,7 +302,7 @@ function findImplicitFlagUsage(
         );
     }
 
-    if (unwrappedExpression.type === "CallExpression") {
+    if (unwrappedExpression.type === AST_NODE_TYPES.CallExpression) {
         return findImplicitFlagUsageInCallExpression(
             unwrappedExpression,
             bindings,
@@ -310,18 +310,18 @@ function findImplicitFlagUsage(
         );
     }
 
-    if (unwrappedExpression.type === "ConditionalExpression") {
+    if (unwrappedExpression.type === AST_NODE_TYPES.ConditionalExpression) {
         return findImplicitFlagUsage(unwrappedExpression.test, bindings);
     }
 
-    if (unwrappedExpression.type === "LogicalExpression") {
+    if (unwrappedExpression.type === AST_NODE_TYPES.LogicalExpression) {
         return (
             findImplicitFlagUsage(unwrappedExpression.left, bindings) ??
             findImplicitFlagUsage(unwrappedExpression.right, bindings)
         );
     }
 
-    if (unwrappedExpression.type === "SequenceExpression") {
+    if (unwrappedExpression.type === AST_NODE_TYPES.SequenceExpression) {
         return findImplicitFlagUsageInSequenceExpression(
             unwrappedExpression,
             bindings,
@@ -329,7 +329,7 @@ function findImplicitFlagUsage(
         );
     }
 
-    if (unwrappedExpression.type === "UnaryExpression") {
+    if (unwrappedExpression.type === AST_NODE_TYPES.UnaryExpression) {
         return findImplicitFlagUsageInUnaryExpression(
             unwrappedExpression,
             bindings,

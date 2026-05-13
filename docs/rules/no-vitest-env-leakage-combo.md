@@ -2,7 +2,7 @@
 
 Disallow risky Vitest state-leakage combos that mix `globals: true`, `isolate: false`, and disabled unstub flags.
 
-> **Rule catalog ID:** R057
+> **Rule catalog ID:** R043
 
 ## Targeted pattern scope
 

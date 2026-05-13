@@ -2,7 +2,7 @@
 
 Disallow `test.coverage.all: false` in shared Vitest config.
 
-> **Rule catalog ID:** R047
+> **Rule catalog ID:** R036
 
 ## Targeted pattern scope
 

@@ -2,7 +2,7 @@
 
 Disallow empty `test.name` values in Vitest config and workspace project entries.
 
-> **Rule catalog ID:** R026
+> **Rule catalog ID:** R020
 
 ## Targeted pattern scope
 

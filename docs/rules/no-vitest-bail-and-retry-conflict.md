@@ -2,7 +2,7 @@
 
 Disallow conflicting `test.bail` + `test.retry` combinations in the same Vitest test scope.
 
-> **Rule catalog ID:** R040
+> **Rule catalog ID:** R035
 
 ## Targeted pattern scope
 

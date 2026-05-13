@@ -2,7 +2,7 @@
 
 Disallow empty `optimizeDeps.exclude` arrays in committed Vite config.
 
-> **Rule catalog ID:** R060
+> **Rule catalog ID:** R008
 
 ## Targeted pattern scope
 

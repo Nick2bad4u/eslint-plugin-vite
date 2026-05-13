@@ -2,7 +2,7 @@
 
 Disallow configuring non-empty `test.coverage.thresholds` while `test.coverage.enabled` is set to `false`.
 
-> **Rule catalog ID:** R046
+> **Rule catalog ID:** R038
 
 ## Targeted pattern scope
 

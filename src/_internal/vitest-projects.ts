@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -25,8 +26,8 @@ export type VitestProjectFactoryCallName = "defineConfig" | "defineProject";
 const isVitestProjectFactoryCall = (
     node: Readonly<TSESTree.Node>
 ): node is TSESTree.CallExpression =>
-    node.type === "CallExpression" &&
-    node.callee.type === "Identifier" &&
+    node.type === AST_NODE_TYPES.CallExpression &&
+    node.callee.type === AST_NODE_TYPES.Identifier &&
     (node.callee.name === "defineConfig" ||
         node.callee.name === "defineProject");
 
@@ -42,7 +43,7 @@ export const getInlineVitestProjectEntry = (
         return undefined;
     }
 
-    if (element.type === "ObjectExpression") {
+    if (element.type === AST_NODE_TYPES.ObjectExpression) {
         return {
             containerKind,
             entryNode: element,
@@ -56,7 +57,10 @@ export const getInlineVitestProjectEntry = (
 
     const [firstArgument] = element.arguments;
 
-    if (firstArgument === undefined || firstArgument.type === "SpreadElement") {
+    if (
+        firstArgument === undefined ||
+        firstArgument.type === AST_NODE_TYPES.SpreadElement
+    ) {
         return undefined;
     }
 
@@ -98,7 +102,7 @@ export const getInlineVitestProjectEntries = (
 export const isVitestProjectsProperty = (
     node: Readonly<TSESTree.Property>
 ): boolean =>
-    node.value.type === "ArrayExpression" &&
+    node.value.type === AST_NODE_TYPES.ArrayExpression &&
     matchesPropertyPath(node, ["test", "projects"]);
 
 /** Resolve the `test` object inside a Vitest project configuration. */
@@ -107,7 +111,7 @@ export const getVitestProjectTestObject = (
 ): TSESTree.ObjectExpression | undefined => {
     const testProperty = findPropertyByName(projectObject, "test");
 
-    if (testProperty?.value.type !== "ObjectExpression") {
+    if (testProperty?.value.type !== AST_NODE_TYPES.ObjectExpression) {
         return undefined;
     }
 
@@ -139,7 +143,8 @@ export const hasVitestProjectName = (
 const getStaticStringValueFromPropertyValue = (
     value: Readonly<TSESTree.Property["value"]>
 ): string | undefined =>
-    value.type === "Literal" || value.type === "TemplateLiteral"
+    value.type === AST_NODE_TYPES.Literal ||
+    value.type === AST_NODE_TYPES.TemplateLiteral
         ? getStaticStringValue(value)
         : undefined;
 
@@ -155,7 +160,7 @@ export const getStaticVitestProjectName = (
 
     const nameValue = nameProperty.value;
 
-    if (nameValue.type === "ObjectExpression") {
+    if (nameValue.type === AST_NODE_TYPES.ObjectExpression) {
         const labelProperty = findPropertyByName(nameValue, "label");
 
         return labelProperty === undefined
@@ -172,8 +177,17 @@ export const getStaticVitestProjectName = (
  */
 export const getVitestProjectFactoryCallName = (
     projectEntry: Readonly<VitestInlineProjectEntry>
-): undefined | VitestProjectFactoryCallName =>
-    projectEntry.entryNode.type === "CallExpression" &&
-    projectEntry.entryNode.callee.type === "Identifier"
-        ? (projectEntry.entryNode.callee.name as VitestProjectFactoryCallName)
+): undefined | VitestProjectFactoryCallName => {
+    if (
+        projectEntry.entryNode.type !== AST_NODE_TYPES.CallExpression ||
+        projectEntry.entryNode.callee.type !== AST_NODE_TYPES.Identifier
+    ) {
+        return undefined;
+    }
+
+    const { name } = projectEntry.entryNode.callee;
+
+    return name === "defineConfig" || name === "defineProject"
+        ? name
         : undefined;
+};

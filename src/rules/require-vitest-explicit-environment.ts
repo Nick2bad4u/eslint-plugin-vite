@@ -7,11 +7,12 @@ import {
     type ConfigFileKind,
     getConfigFileKind,
 } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingEnvironment";
 
-const environmentPathSuffix = ["test", "environment"] as const;
+const environmentPathSuffix = constTuple("test", "environment");
 
 const shouldRequireEnvironment = (
     configFileKind: ConfigFileKind,
@@ -54,9 +55,7 @@ const requireVitestExplicitEnvironmentRule: ReturnType<typeof createTypedRule> =
 
                     if (arrayFirst(propertyPath) === "test") {
                         hasAnyTestConfig = true;
-                        if (firstTestPropertyNode === null) {
-                            firstTestPropertyNode = node;
-                        }
+                        firstTestPropertyNode ??= node;
                     }
 
                     if (

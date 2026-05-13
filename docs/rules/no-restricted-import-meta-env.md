@@ -2,7 +2,7 @@
 
 Disallow client-side `import.meta.env` keys that are not Vite built-ins and do not match an allowed public prefix.
 
-> **Rule catalog ID:** R007
+> **Rule catalog ID:** R029
 
 ## Targeted pattern scope
 

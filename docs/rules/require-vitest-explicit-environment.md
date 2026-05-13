@@ -2,7 +2,7 @@
 
 Require explicit `test.environment` in committed Vitest config.
 
-> **Rule catalog ID:** R070
+> **Rule catalog ID:** R066
 
 ## Targeted pattern scope
 

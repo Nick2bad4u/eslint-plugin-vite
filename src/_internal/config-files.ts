@@ -1,14 +1,13 @@
 /** Supported config file kinds recognized by the plugin. */
 export type ConfigFileKind = "vite" | "vitest" | "workspace";
 
-const viteConfigFilePattern = /(?:^|[/\\])vite\.config\.[cm]?[jt]sx?$/u;
+const viteConfigFilePattern = /(?:^|\/)vite\.config\.[cm]?[jt]sx?$/v;
 const vitePressConfigFilePattern =
-    /(?:^|[/\\])\.vitepress[/\\]config\.[cm]?[jt]sx?$/u;
-const vitestConfigFilePattern = /(?:^|[/\\])vitest\.config\.[cm]?[jt]sx?$/u;
-const vitestWorkspaceFilePattern =
-    /(?:^|[/\\])vitest\.workspace\.[cm]?[jt]sx?$/u;
-const testDirectoryPattern = /(?:^|[/\\])(?:test|tests)(?:[/\\]|$)/u;
-const testFilenamePattern = /\.(?:bench|spec|test)\.[cm]?[jt]sx?$/u;
+    /(?:^|\/)\.vitepress\/config\.[cm]?[jt]sx?$/v;
+const vitestConfigFilePattern = /(?:^|\/)vitest\.config\.[cm]?[jt]sx?$/v;
+const vitestWorkspaceFilePattern = /(?:^|\/)vitest\.workspace\.[cm]?[jt]sx?$/v;
+const testDirectoryPattern = /(?:^|\/)(?:test|tests)(?:\/|$)/v;
+const testFilenamePattern = /\.(?:bench|spec|test)\.[cm]?[jt]sx?$/v;
 
 /** Normalize a filename to forward-slash separators for cross-platform matching. */
 export const normalizeFilename = (filename: string): string =>

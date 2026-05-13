@@ -2,7 +2,7 @@
 
 Disallow invalid `test.maxWorkers` values (`0` or empty strings).
 
-> **Rule catalog ID:** R041
+> **Rule catalog ID:** R046
 
 ## Targeted pattern scope
 

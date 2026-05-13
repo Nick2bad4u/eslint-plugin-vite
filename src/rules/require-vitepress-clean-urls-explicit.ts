@@ -3,16 +3,17 @@ import {
     getConfigFileKind,
     normalizeFilename,
 } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingCleanUrls";
 
-const cleanUrlsPathSuffix = ["cleanUrls"] as const;
+const cleanUrlsPathSuffix = constTuple("cleanUrls");
 
 const isVitePressConfigFile = (filename: string): boolean => {
     const normalized = normalizeFilename(filename).toLowerCase();
 
-    return /(?:^|\/)\.vitepress\/config\./u.test(normalized);
+    return /(?:^|\/)\.vitepress\/config\./v.test(normalized);
 };
 
 /**

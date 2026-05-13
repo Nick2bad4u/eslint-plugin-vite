@@ -2,7 +2,7 @@
 
 Disallow Vitest `test.typecheck` options that disable or hide static typecheck failures.
 
-> **Rule catalog ID:** R016
+> **Rule catalog ID:** R005
 
 ## Targeted pattern scope
 

@@ -2,7 +2,7 @@
 
 Disallow empty `test.benchmark.exclude` arrays in Vitest config.
 
-> **Rule catalog ID:** R029
+> **Rule catalog ID:** R012
 
 ## Targeted pattern scope
 

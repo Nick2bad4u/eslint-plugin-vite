@@ -2,7 +2,7 @@
 
 Disallow implicit truthy or falsy checks for Vite config callback flags such as `isPreview` and `isSsrBuild`.
 
-> **Rule catalog ID:** R013
+> **Rule catalog ID:** R023
 
 ## Targeted pattern scope
 

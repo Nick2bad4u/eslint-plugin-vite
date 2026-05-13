@@ -2,7 +2,7 @@
 
 Require at least one of `title` or `titleTemplate` in committed VitePress config.
 
-> **Rule catalog ID:** R066
+> **Rule catalog ID:** R060
 
 ## Targeted pattern scope
 

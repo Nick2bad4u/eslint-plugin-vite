@@ -2,7 +2,7 @@
 
 Disallow `test.unstubEnvs: false` in shared Vitest config.
 
-> **Rule catalog ID:** R056
+> **Rule catalog ID:** R051
 
 ## Targeted pattern scope
 

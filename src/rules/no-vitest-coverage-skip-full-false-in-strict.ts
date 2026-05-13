@@ -1,21 +1,20 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "skipFullFalse";
 
-const skipFullPathSuffix = [
-    "test",
-    "coverage",
-    "skipFull",
-] as const;
+const skipFullPathSuffix = constTuple("test", "coverage", "skipFull");
 
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     expected: boolean
-): boolean => node.type === "Literal" && node.value === expected;
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
 
 /**
  * Disallow `test.coverage.skipFull: false` in strict-style shared Vitest

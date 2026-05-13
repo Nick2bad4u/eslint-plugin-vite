@@ -1,9 +1,11 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayIncludes } from "ts-extras";
 
 import { findPropertyByName } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 import {
     getInlineVitestProjectEntries,
@@ -18,23 +20,24 @@ type UnsupportedProjectOption = Readonly<{
     optionName: string;
 }>;
 
-const unsupportedProjectOptions: readonly UnsupportedProjectOption[] = [
-    {
-        guidance:
-            "Move coverage configuration to the root Vitest config because coverage runs for the whole process.",
-        optionName: "coverage",
-    },
-    {
-        guidance:
-            "Move reporters to the root Vitest config because reporters are only supported once per run.",
-        optionName: "reporters",
-    },
-    {
-        guidance:
-            "Move `resolveSnapshotPath` to the root Vitest config because only the root resolver is respected.",
-        optionName: "resolveSnapshotPath",
-    },
-] as const;
+const unsupportedProjectOptions: readonly UnsupportedProjectOption[] =
+    constTuple(
+        {
+            guidance:
+                "Move `resolveSnapshotPath` to the root Vitest config because only the root resolver is respected.",
+            optionName: "resolveSnapshotPath",
+        },
+        {
+            guidance:
+                "Move coverage configuration to the root Vitest config because coverage runs for the whole process.",
+            optionName: "coverage",
+        },
+        {
+            guidance:
+                "Move reporters to the root Vitest config because reporters are only supported once per run.",
+            optionName: "reporters",
+        }
+    );
 
 const reportUnsupportedProjectOptions = (
     context: Readonly<TSESLint.RuleContext<MessageId, []>>,
@@ -93,9 +96,9 @@ const noUnsupportedProjectOptionsRule: ReturnType<typeof createTypedRule> =
             return {
                 CallExpression(node) {
                     if (
-                        node.callee.type !== "Identifier" ||
+                        node.callee.type !== AST_NODE_TYPES.Identifier ||
                         !arrayIncludes(
-                            ["defineProject", "defineWorkspace"] as const,
+                            constTuple("defineProject", "defineWorkspace"),
                             node.callee.name
                         )
                     ) {
@@ -105,7 +108,10 @@ const noUnsupportedProjectOptionsRule: ReturnType<typeof createTypedRule> =
                     if (node.callee.name === "defineWorkspace") {
                         const [workspaceArgument] = node.arguments;
 
-                        if (workspaceArgument?.type !== "ArrayExpression") {
+                        if (
+                            workspaceArgument?.type !==
+                            AST_NODE_TYPES.ArrayExpression
+                        ) {
                             return;
                         }
 
@@ -123,8 +129,8 @@ const noUnsupportedProjectOptionsRule: ReturnType<typeof createTypedRule> =
 
                     if (
                         firstArgument === undefined ||
-                        firstArgument.type === "SpreadElement" ||
-                        firstArgument.type !== "ObjectExpression"
+                        firstArgument.type === AST_NODE_TYPES.SpreadElement ||
+                        firstArgument.type !== AST_NODE_TYPES.ObjectExpression
                     ) {
                         return;
                     }
@@ -134,7 +140,7 @@ const noUnsupportedProjectOptionsRule: ReturnType<typeof createTypedRule> =
                 Property(node) {
                     if (
                         !isVitestProjectsProperty(node) ||
-                        node.value.type !== "ArrayExpression"
+                        node.value.type !== AST_NODE_TYPES.ArrayExpression
                     ) {
                         return;
                     }

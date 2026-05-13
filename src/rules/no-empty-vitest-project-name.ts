@@ -1,3 +1,4 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -6,11 +7,12 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "emptyProjectName";
 
-const projectNamePathSuffix = ["test", "name"] as const;
+const projectNamePathSuffix = constTuple("test", "name");
 
 /**
  * Disallow empty Vitest `test.name` values in config and inline project
@@ -30,8 +32,8 @@ const noEmptyVitestProjectNameRule: ReturnType<typeof createTypedRule> =
                             getPropertyPath(node),
                             projectNamePathSuffix
                         ) ||
-                        (node.value.type !== "Literal" &&
-                            node.value.type !== "TemplateLiteral")
+                        (node.value.type !== AST_NODE_TYPES.Literal &&
+                            node.value.type !== AST_NODE_TYPES.TemplateLiteral)
                     ) {
                         return;
                     }

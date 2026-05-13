@@ -2,7 +2,7 @@
 
 Require `test.sequence.seed` whenever `test.sequence.shuffle` is enabled.
 
-> **Rule catalog ID:** R035
+> **Rule catalog ID:** R068
 
 ## Targeted pattern scope
 

@@ -3,17 +3,18 @@ import {
     getConfigFileKind,
     normalizeFilename,
 } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingTitleMetadata";
 
-const titlePathSuffix = ["title"] as const;
-const titleTemplatePathSuffix = ["titleTemplate"] as const;
+const titlePathSuffix = constTuple("title");
+const titleTemplatePathSuffix = constTuple("titleTemplate");
 
 const isVitePressConfigFile = (filename: string): boolean => {
     const normalized = normalizeFilename(filename).toLowerCase();
 
-    return /(?:^|\/)\.vitepress\/config\./u.test(normalized);
+    return /(?:^|\/)\.vitepress\/config\./v.test(normalized);
 };
 
 /**

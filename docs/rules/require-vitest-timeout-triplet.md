@@ -2,7 +2,7 @@
 
 Require `test.testTimeout`, `test.hookTimeout`, and `test.teardownTimeout` to be configured together.
 
-> **Rule catalog ID:** R072
+> **Rule catalog ID:** R070
 
 ## Targeted pattern scope
 

@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayFirst, setHas } from "ts-extras";
 
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
@@ -7,20 +8,17 @@ import {
     getConfigFileKind,
     normalizeFilename,
 } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "defaultCacheDirInMonorepo" | "missingCacheDirInMonorepo";
 
-const cacheDirPathSuffix = ["cacheDir"] as const;
-const testCacheDirPathSuffix = ["test", "cacheDir"] as const;
-const testCacheDirAltPathSuffix = [
-    "test",
-    "cache",
-    "dir",
-] as const;
+const cacheDirPathSuffix = constTuple("cacheDir");
+const testCacheDirPathSuffix = constTuple("test", "cacheDir");
+const testCacheDirAltPathSuffix = constTuple("test", "cache", "dir");
 
 const monorepoPathPattern =
-    /(?:^|\/)(?:apps|libs|modules|packages|services)\//u;
+    /(?:^|\/)(?:apps|libs|modules|packages|services)\//v;
 
 const defaultCacheDirValues = new Set([
     "./.vitest",
@@ -32,12 +30,15 @@ const defaultCacheDirValues = new Set([
 const getStaticString = (
     node: Readonly<TSESTree.Property["value"]>
 ): null | string => {
-    if (node.type === "Literal" && typeof node.value === "string") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "string"
+    ) {
         return node.value;
     }
 
     if (
-        node.type === "TemplateLiteral" &&
+        node.type === AST_NODE_TYPES.TemplateLiteral &&
         node.expressions.length === 0 &&
         node.quasis.length === 1
     ) {
@@ -118,9 +119,7 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
                 if (arrayFirst(propertyPath) === "test") {
                     hasAnyTestConfig = true;
 
-                    if (firstTestPropertyNode === null) {
-                        firstTestPropertyNode = node;
-                    }
+                    firstTestPropertyNode ??= node;
                 }
 
                 if (

@@ -31,6 +31,8 @@ const nvmrcFilePath = fileURLToPath(new URL("../.nvmrc", import.meta.url));
  * @param {unknown} version
  *
  * @returns {string}
+ *
+ * @throws {TypeError} When the version is not a string in `x.y.z` form.
  */
 const normalizeNodeVersion = (version) => {
     if (typeof version !== "string") {
@@ -62,6 +64,8 @@ const isRecord = (value) => typeof value === "object" && value !== null;
  * @param {number} index
  *
  * @returns {string}
+ *
+ * @throws {TypeError} When `--version` has no value or an invalid value.
  */
 const getVersionValueAt = (argumentList, index) => {
     const nextArgument = argumentList[index + 1];
@@ -74,13 +78,7 @@ const getVersionValueAt = (argumentList, index) => {
 };
 
 /**
- * Parse command-line arguments.
- *
- * Supported options:
- *
- * - `--check`: validate file existence and synchronization only
- * - `--check-current`: validate files match current runtime version exactly
- * - `--version x.y.z` or `--version=x.y.z`: explicit version override
+ * Parse command-line arguments into runtime options.
  *
  * @param {readonly string[]} argumentList
  *
@@ -89,6 +87,8 @@ const getVersionValueAt = (argumentList, index) => {
  *     checkCurrent: boolean;
  *     explicitVersion: string | null;
  * }}
+ *
+ * @throws {TypeError} When unsupported or conflicting arguments are provided.
  */
 const parseArguments = (argumentList) => {
     /** @type {boolean} */
@@ -214,6 +214,8 @@ const compareExactVersions = (leftVersion, rightVersion) => {
  * @param {string | null} minimumEngineVersion
  *
  * @returns {void}
+ *
+ * @throws {RangeError} When the preferred version is below engines.node.
  */
 const assertPreferredVersionSupported = (
     preferredVersion,

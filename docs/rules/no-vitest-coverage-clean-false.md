@@ -2,7 +2,7 @@
 
 Disallow `test.coverage.clean: false` in shared Vitest config.
 
-> **Rule catalog ID:** R048
+> **Rule catalog ID:** R037
 
 ## Targeted pattern scope
 

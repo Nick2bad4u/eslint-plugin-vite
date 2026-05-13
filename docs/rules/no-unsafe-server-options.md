@@ -2,7 +2,7 @@
 
 Disallow Vite server and preview options that weaken host, origin, or filesystem protections.
 
-> **Rule catalog ID:** R011
+> **Rule catalog ID:** R030
 
 ## Targeted pattern scope
 

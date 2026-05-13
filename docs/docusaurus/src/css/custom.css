@@ -22,30 +22,6 @@
 
 /* You can override the default Infima variables here. */
 
-@font-face {
-    font-family: "NerdFontSymbols Nerd Font Symbols";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src:
-        local("NerdFontSymbols Nerd Font Symbols"),
-        local("Symbols Nerd Font"),
-        url("https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@3.4.0/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf")
-            format("truetype");
-}
-
-@font-face {
-    font-family: "Symbols Nerd Font Mono";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src:
-        local("Symbols Nerd Font Mono"),
-        local("Symbols Nerd Font"),
-        url("https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@3.4.0/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf")
-            format("truetype");
-}
-
 :root {
     --vite-color-blue: #41d1ff;
     --vite-color-neutral: #dddddd;
@@ -256,7 +232,9 @@
     counter-increment: rule-doc;
     color: var(--sb-prefix-rule-number);
     content: counter(rule-doc);
-    font-family: var(--ifm-font-family-monospace);
+    font-family:
+        var(--ifm-font-family-monospace), SFMono-Regular, Menlo, Consolas,
+        "Liberation Mono", monospace, system-ui;
     font-size: 0.75rem;
     font-weight: 800;
     font-variant-numeric: tabular-nums;

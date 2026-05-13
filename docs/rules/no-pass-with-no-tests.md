@@ -2,7 +2,7 @@
 
 Disallow `test.passWithNoTests: true` in Vitest configuration.
 
-> **Rule catalog ID:** R022
+> **Rule catalog ID:** R027
 
 ## Targeted pattern scope
 

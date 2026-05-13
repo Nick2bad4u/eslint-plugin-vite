@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -8,39 +9,35 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
-type CoverageState = {
+interface CoverageState {
     readonly enabledNode?: Readonly<TSESTree.Node>;
     readonly hasReporter: boolean;
-};
+}
 
 type MessageId = "missingCoverageReporter";
 
-const enabledPathSuffix = [
-    "test",
-    "coverage",
-    "enabled",
-] as const;
+const enabledPathSuffix = constTuple("test", "coverage", "enabled");
 
-const reporterPathSuffix = [
-    "test",
-    "coverage",
-    "reporter",
-] as const;
+const reporterPathSuffix = constTuple("test", "coverage", "reporter");
 
 const hasNonEmptyReporter = (
     node: Readonly<TSESTree.Property["value"]>
 ): boolean => {
-    if (node.type === "ArrayExpression") {
+    if (node.type === AST_NODE_TYPES.ArrayExpression) {
         return node.elements.length > 0;
     }
 
-    if (node.type === "Literal" && typeof node.value === "string") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "string"
+    ) {
         return node.value.trim().length > 0;
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         return isDefined(staticValue) && staticValue.trim().length > 0;
@@ -77,7 +74,7 @@ const requireVitestCoverageReporterWhenEnabledRule: ReturnType<
                 }
             },
             Property(node) {
-                if (node.parent.type !== "ObjectExpression") {
+                if (node.parent.type !== AST_NODE_TYPES.ObjectExpression) {
                     return;
                 }
 
@@ -88,7 +85,7 @@ const requireVitestCoverageReporterWhenEnabledRule: ReturnType<
 
                 if (
                     propertyPathEndsWith(propertyPath, enabledPathSuffix) &&
-                    node.value.type === "Literal" &&
+                    node.value.type === AST_NODE_TYPES.Literal &&
                     node.value.value === true
                 ) {
                     perCoverageObject.set(node.parent, {

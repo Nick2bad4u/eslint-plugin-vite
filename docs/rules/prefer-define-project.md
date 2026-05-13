@@ -2,7 +2,7 @@
 
 Prefer `defineProject(...)` over `defineConfig(...)` for inline Vitest project entries.
 
-> **Rule catalog ID:** R008
+> **Rule catalog ID:** R056
 
 ## Targeted pattern scope
 

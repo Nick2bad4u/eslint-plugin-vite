@@ -2,7 +2,7 @@
 
 Require explicit `test.typecheck.tsconfig` when Vitest typecheck execution is enabled.
 
-> **Rule catalog ID:** R019
+> **Rule catalog ID:** R071
 
 ## Targeted pattern scope
 

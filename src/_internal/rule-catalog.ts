@@ -1,80 +1,161 @@
 /** Stable rule names used for docs numbering and rule catalog ids. */
-import { objectFromEntries, setHas } from "ts-extras";
+import { arrayIncludes, setHas } from "ts-extras";
 
-const orderedRuleNames = [
+import { constTuple } from "./const-tuple.js";
+
+/** Unqualified rule names supported by eslint-plugin-vite. */
+export type ViteRuleCatalogName =
+    | "config-require-define-config"
+    | "import-meta-glob-literal"
+    | "no-deprecated-config-options"
+    | "no-disabled-vitest-isolation"
+    | "no-disabled-vitest-typecheck"
+    | "no-dynamic-import-meta-env-access"
+    | "no-empty-env-prefix"
+    | "no-empty-optimize-deps-exclude"
+    | "no-empty-optimize-deps-include"
+    | "no-empty-ssr-external"
+    | "no-empty-ssr-noexternal"
+    | "no-empty-vitest-bench-exclude"
+    | "no-empty-vitest-bench-include"
+    | "no-empty-vitest-coverage-include"
+    | "no-empty-vitest-coverage-reporter"
+    | "no-empty-vitest-coverage-reports-directory"
+    | "no-empty-vitest-exclude"
+    | "no-empty-vitest-include"
+    | "no-empty-vitest-project-exclude"
+    | "no-empty-vitest-project-name"
+    | "no-empty-vitest-projects"
+    | "no-empty-worker-plugins"
+    | "no-implicit-config-flags"
+    | "no-import-meta-env-in-config"
+    | "no-mixed-defineworkspace-and-test-projects"
+    | "no-mixed-test-and-bench-apis"
+    | "no-pass-with-no-tests"
+    | "no-relative-resolve-alias"
+    | "no-restricted-import-meta-env"
+    | "no-unsafe-server-options"
+    | "no-unsafe-vitest-flags"
+    | "no-unsupported-project-options"
+    | "no-vitepress-empty-head"
+    | "no-vitepress-empty-theme-config"
+    | "no-vitest-bail-and-retry-conflict"
+    | "no-vitest-coverage-all-false"
+    | "no-vitest-coverage-clean-false"
+    | "no-vitest-coverage-enabled-false-with-thresholds"
+    | "no-vitest-coverage-reporter-text-only"
+    | "no-vitest-coverage-skip-full-false-in-strict"
+    | "no-vitest-coverage-temp-dir-in-repo-root"
+    | "no-vitest-default-cache-dir-in-monorepo"
+    | "no-vitest-env-leakage-combo"
+    | "no-vitest-file-parallelism-disabled"
+    | "no-vitest-globals"
+    | "no-vitest-max-workers-zero"
+    | "no-vitest-min-workers-greater-than-max-workers"
+    | "no-vitest-single-thread-pool-by-default"
+    | "no-vitest-timeout-triplet-mismatch"
+    | "no-vitest-ui-in-config"
+    | "no-vitest-unstub-envs-false"
+    | "no-vitest-unstub-globals-false"
+    | "no-vitest-watch-in-config"
+    | "no-zero-vitest-slow-test-threshold"
+    | "no-zero-vitest-timeout"
+    | "prefer-define-project"
+    | "prefer-vitest-restore-mocks"
+    | "require-inline-project-name"
+    | "require-vitepress-clean-urls-explicit"
+    | "require-vitepress-title-or-titletemplate"
+    | "require-vitest-coverage-provider-when-enabled"
+    | "require-vitest-coverage-reporter-when-enabled"
+    | "require-vitest-coverage-reports-directory"
+    | "require-vitest-coverage-thresholds-when-enabled"
+    | "require-vitest-environment-match-globs"
+    | "require-vitest-explicit-environment"
+    | "require-vitest-mock-reset-policy"
+    | "require-vitest-sequence-seed-when-shuffle"
+    | "require-vitest-slow-test-threshold"
+    | "require-vitest-timeout-triplet"
+    | "require-vitest-typecheck-tsconfig"
+    | "workspace-unique-project-name";
+
+const orderedRuleNames: readonly ViteRuleCatalogName[] = constTuple(
     "config-require-define-config",
     "import-meta-glob-literal",
+    "no-deprecated-config-options",
+    "no-disabled-vitest-isolation",
+    "no-disabled-vitest-typecheck",
     "no-dynamic-import-meta-env-access",
     "no-empty-env-prefix",
-    "no-mixed-test-and-bench-apis",
-    "no-relative-resolve-alias",
-    "no-restricted-import-meta-env",
-    "prefer-define-project",
-    "workspace-unique-project-name",
-    "no-deprecated-config-options",
-    "no-unsafe-server-options",
-    "no-import-meta-env-in-config",
-    "no-implicit-config-flags",
-    "require-inline-project-name",
-    "no-unsupported-project-options",
-    "no-disabled-vitest-typecheck",
-    "no-zero-vitest-timeout",
-    "no-unsafe-vitest-flags",
-    "require-vitest-typecheck-tsconfig",
-    "no-disabled-vitest-isolation",
-    "no-zero-vitest-slow-test-threshold",
-    "no-pass-with-no-tests",
-    "no-vitest-globals",
-    "no-empty-vitest-projects",
-    "no-empty-vitest-include",
-    "no-empty-vitest-project-name",
-    "no-empty-vitest-exclude",
-    "no-empty-vitest-bench-include",
+    "no-empty-optimize-deps-exclude",
+    "no-empty-optimize-deps-include",
+    "no-empty-ssr-external",
+    "no-empty-ssr-noexternal",
     "no-empty-vitest-bench-exclude",
+    "no-empty-vitest-bench-include",
     "no-empty-vitest-coverage-include",
     "no-empty-vitest-coverage-reporter",
     "no-empty-vitest-coverage-reports-directory",
+    "no-empty-vitest-exclude",
+    "no-empty-vitest-include",
     "no-empty-vitest-project-exclude",
+    "no-empty-vitest-project-name",
+    "no-empty-vitest-projects",
+    "no-empty-worker-plugins",
+    "no-implicit-config-flags",
+    "no-import-meta-env-in-config",
     "no-mixed-defineworkspace-and-test-projects",
-    "require-vitest-sequence-seed-when-shuffle",
-    "no-vitest-watch-in-config",
-    "no-vitest-ui-in-config",
-    "no-vitest-file-parallelism-disabled",
-    "no-vitest-single-thread-pool-by-default",
+    "no-mixed-test-and-bench-apis",
+    "no-pass-with-no-tests",
+    "no-relative-resolve-alias",
+    "no-restricted-import-meta-env",
+    "no-unsafe-server-options",
+    "no-unsafe-vitest-flags",
+    "no-unsupported-project-options",
+    "no-vitepress-empty-head",
+    "no-vitepress-empty-theme-config",
     "no-vitest-bail-and-retry-conflict",
-    "no-vitest-max-workers-zero",
-    "no-vitest-min-workers-greater-than-max-workers",
-    "require-vitest-coverage-provider-when-enabled",
-    "require-vitest-coverage-reporter-when-enabled",
-    "require-vitest-coverage-thresholds-when-enabled",
-    "no-vitest-coverage-enabled-false-with-thresholds",
     "no-vitest-coverage-all-false",
     "no-vitest-coverage-clean-false",
-    "no-vitest-coverage-skip-full-false-in-strict",
-    "require-vitest-coverage-reports-directory",
+    "no-vitest-coverage-enabled-false-with-thresholds",
     "no-vitest-coverage-reporter-text-only",
+    "no-vitest-coverage-skip-full-false-in-strict",
     "no-vitest-coverage-temp-dir-in-repo-root",
-    "require-vitest-mock-reset-policy",
-    "prefer-vitest-restore-mocks",
-    "no-vitest-unstub-globals-false",
-    "no-vitest-unstub-envs-false",
-    "no-vitest-env-leakage-combo",
-    "require-vitest-environment-match-globs",
-    "no-empty-optimize-deps-include",
-    "no-empty-optimize-deps-exclude",
-    "no-empty-ssr-noexternal",
-    "no-empty-ssr-external",
-    "no-empty-worker-plugins",
-    "no-vitepress-empty-theme-config",
-    "no-vitepress-empty-head",
-    "require-vitepress-title-or-titletemplate",
-    "require-vitepress-clean-urls-explicit",
     "no-vitest-default-cache-dir-in-monorepo",
+    "no-vitest-env-leakage-combo",
+    "no-vitest-file-parallelism-disabled",
+    "no-vitest-globals",
+    "no-vitest-max-workers-zero",
+    "no-vitest-min-workers-greater-than-max-workers",
+    "no-vitest-single-thread-pool-by-default",
     "no-vitest-timeout-triplet-mismatch",
+    "no-vitest-ui-in-config",
+    "no-vitest-unstub-envs-false",
+    "no-vitest-unstub-globals-false",
+    "no-vitest-watch-in-config",
+    "no-zero-vitest-slow-test-threshold",
+    "no-zero-vitest-timeout",
+    "prefer-define-project",
+    "prefer-vitest-restore-mocks",
+    "require-inline-project-name",
+    "require-vitepress-clean-urls-explicit",
+    "require-vitepress-title-or-titletemplate",
+    "require-vitest-coverage-provider-when-enabled",
+    "require-vitest-coverage-reporter-when-enabled",
+    "require-vitest-coverage-reports-directory",
+    "require-vitest-coverage-thresholds-when-enabled",
+    "require-vitest-environment-match-globs",
     "require-vitest-explicit-environment",
+    "require-vitest-mock-reset-policy",
+    "require-vitest-sequence-seed-when-shuffle",
     "require-vitest-slow-test-threshold",
     "require-vitest-timeout-triplet",
-] as const;
+    "require-vitest-typecheck-tsconfig",
+    "workspace-unique-project-name"
+);
+
+const isViteRuleCatalogName = (
+    ruleName: string
+): ruleName is ViteRuleCatalogName => arrayIncludes(orderedRuleNames, ruleName);
 
 /** Canonical rule catalog entry shape. */
 export type ViteRuleCatalogEntry = Readonly<{
@@ -85,9 +166,6 @@ export type ViteRuleCatalogEntry = Readonly<{
 
 /** Stable rule catalog identifier format. */
 export type ViteRuleCatalogId = `R${string}`;
-
-/** Unqualified rule names supported by eslint-plugin-vite. */
-export type ViteRuleCatalogName = (typeof orderedRuleNames)[number];
 
 const toRuleCatalogId = (ruleNumber: number): ViteRuleCatalogId =>
     `R${String(ruleNumber).padStart(3, "0")}`;
@@ -101,17 +179,21 @@ export const viteRuleCatalogEntries: readonly ViteRuleCatalogEntry[] =
     }));
 
 /** Fast lookup map for rule catalog metadata by rule name. */
-export const viteRuleCatalogByRuleName: Readonly<
-    Partial<Record<ViteRuleCatalogName, ViteRuleCatalogEntry>>
-> = objectFromEntries(
-    viteRuleCatalogEntries.map((entry) => [entry.ruleName, entry])
-);
+export const viteRuleCatalogByRuleName: ReadonlyMap<
+    ViteRuleCatalogName,
+    ViteRuleCatalogEntry
+> = new Map(viteRuleCatalogEntries.map((entry) => [entry.ruleName, entry]));
 
 /** Resolve stable catalog metadata for a rule name when available. */
 export const getRuleCatalogEntryForRuleNameOrNull = (
     ruleName: string
-): null | ViteRuleCatalogEntry =>
-    viteRuleCatalogByRuleName[ruleName as ViteRuleCatalogName] ?? null;
+): null | ViteRuleCatalogEntry => {
+    if (!isViteRuleCatalogName(ruleName)) {
+        return null;
+    }
+
+    return viteRuleCatalogByRuleName.get(ruleName) ?? null;
+};
 
 /** Resolve stable catalog metadata for a rule name. */
 export const getRuleCatalogEntryForRuleName = (

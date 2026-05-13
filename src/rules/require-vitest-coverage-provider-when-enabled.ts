@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -8,35 +9,31 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
-type CoverageState = {
+interface CoverageState {
     readonly enabledNode?: Readonly<TSESTree.Node>;
     readonly hasProvider: boolean;
-};
+}
 
 type MessageId = "missingCoverageProvider";
 
-const enabledPathSuffix = [
-    "test",
-    "coverage",
-    "enabled",
-] as const;
+const enabledPathSuffix = constTuple("test", "coverage", "enabled");
 
-const providerPathSuffix = [
-    "test",
-    "coverage",
-    "provider",
-] as const;
+const providerPathSuffix = constTuple("test", "coverage", "provider");
 
 const hasNonEmptyStaticString = (
     node: Readonly<TSESTree.Property["value"]>
 ): boolean => {
-    if (node.type === "Literal" && typeof node.value === "string") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "string"
+    ) {
         return node.value.trim().length > 0;
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         return isDefined(staticValue) && staticValue.trim().length > 0;
@@ -73,7 +70,7 @@ const requireVitestCoverageProviderWhenEnabledRule: ReturnType<
                 }
             },
             Property(node) {
-                if (node.parent.type !== "ObjectExpression") {
+                if (node.parent.type !== AST_NODE_TYPES.ObjectExpression) {
                     return;
                 }
 
@@ -84,7 +81,7 @@ const requireVitestCoverageProviderWhenEnabledRule: ReturnType<
 
                 if (
                     propertyPathEndsWith(propertyPath, enabledPathSuffix) &&
-                    node.value.type === "Literal" &&
+                    node.value.type === AST_NODE_TYPES.Literal &&
                     node.value.value === true
                 ) {
                     perCoverageObject.set(node.parent, {

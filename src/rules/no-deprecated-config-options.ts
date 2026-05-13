@@ -1,5 +1,8 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getStaticStringValue, matchesPropertyPath } from "../_internal/ast.js";
 import { isConfigFile } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type DeprecatedConfigPath = Readonly<{
@@ -10,12 +13,7 @@ type DeprecatedConfigPath = Readonly<{
 
 type MessageId = "deprecatedConfigOption";
 
-const deprecatedConfigPaths: readonly DeprecatedConfigPath[] = [
-    {
-        current: "esbuild",
-        guidance: "Use the top-level `oxc` option instead.",
-        path: ["esbuild"],
-    },
+const deprecatedConfigPaths: readonly DeprecatedConfigPath[] = constTuple(
     {
         current: "build.polyfillModulePreload",
         guidance: "Use `build.modulePreload.polyfill` instead.",
@@ -25,6 +23,11 @@ const deprecatedConfigPaths: readonly DeprecatedConfigPath[] = [
         current: "build.rollupOptions",
         guidance: "Use `build.rolldownOptions` instead.",
         path: ["build", "rollupOptions"],
+    },
+    {
+        current: "esbuild",
+        guidance: "Use the top-level `oxc` option instead.",
+        path: ["esbuild"],
     },
     {
         current: "optimizeDeps.disabled",
@@ -41,8 +44,8 @@ const deprecatedConfigPaths: readonly DeprecatedConfigPath[] = [
         current: "worker.rollupOptions",
         guidance: "Use `worker.rolldownOptions` instead.",
         path: ["worker", "rollupOptions"],
-    },
-] as const;
+    }
+);
 
 /**
  * Disallow deprecated Vite config options and values that now have safer
@@ -57,7 +60,7 @@ const noDeprecatedConfigOptionsRule: ReturnType<typeof createTypedRule> =
 
             return {
                 Property(node) {
-                    if (node.parent.type !== "ObjectExpression") {
+                    if (node.parent.type !== AST_NODE_TYPES.ObjectExpression) {
                         return;
                     }
 
@@ -79,8 +82,8 @@ const noDeprecatedConfigOptionsRule: ReturnType<typeof createTypedRule> =
                     }
 
                     if (
-                        node.value.type !== "Literal" &&
-                        node.value.type !== "TemplateLiteral"
+                        node.value.type !== AST_NODE_TYPES.Literal &&
+                        node.value.type !== AST_NODE_TYPES.TemplateLiteral
                     ) {
                         return;
                     }

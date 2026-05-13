@@ -2,7 +2,7 @@
 
 Disallow mixing `defineWorkspace(...)` and `test.projects` in the same config file.
 
-> **Rule catalog ID:** R034
+> **Rule catalog ID:** R025
 
 ## Targeted pattern scope
 

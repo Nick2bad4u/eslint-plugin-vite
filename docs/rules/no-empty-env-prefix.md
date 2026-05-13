@@ -2,7 +2,7 @@
 
 Disallow empty `envPrefix` values that would expose every environment variable to `import.meta.env`.
 
-> **Rule catalog ID:** R004
+> **Rule catalog ID:** R007
 
 ## Targeted pattern scope
 

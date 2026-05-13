@@ -2,7 +2,7 @@
 
 Disallow mixing Vitest `bench()` calls with `test()` or `it()` in the same file.
 
-> **Rule catalog ID:** R005
+> **Rule catalog ID:** R026
 
 ## Targeted pattern scope
 

@@ -2,7 +2,7 @@
 
 Require explicit `test.slowTestThreshold` in committed Vitest config.
 
-> **Rule catalog ID:** R071
+> **Rule catalog ID:** R069
 
 ## Targeted pattern scope
 

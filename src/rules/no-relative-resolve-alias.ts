@@ -1,5 +1,6 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -12,13 +13,16 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const isRelativeReplacementString = (
     node: Readonly<TSESTree.Property["value"]>
 ): boolean => {
-    if (node.type !== "Literal" && node.type !== "TemplateLiteral") {
+    if (
+        node.type !== AST_NODE_TYPES.Literal &&
+        node.type !== AST_NODE_TYPES.TemplateLiteral
+    ) {
         return false;
     }
 
     const value = getStaticStringValue(node);
 
-    return isDefined(value) && /^\.{1,2}(?:\/|\\|$)/u.test(value);
+    return isDefined(value) && /^\.{1,2}(?:\/|\\|$)/v.test(value);
 };
 
 const reportIfRelativeReplacement = (
@@ -35,18 +39,28 @@ const reportIfRelativeReplacement = (
     });
 };
 
-const isResolveAliasProperty = (node: Readonly<TSESTree.Property>): boolean =>
-    getStaticPropertyName(node) === "alias" &&
-    node.parent.type === "ObjectExpression" &&
-    node.parent.parent?.type === "Property" &&
-    getStaticPropertyName(node.parent.parent) === "resolve";
+const isResolveAliasProperty = (node: Readonly<TSESTree.Property>): boolean => {
+    if (
+        getStaticPropertyName(node) !== "alias" ||
+        node.parent.type !== AST_NODE_TYPES.ObjectExpression
+    ) {
+        return false;
+    }
+
+    const resolveProperty = node.parent.parent;
+
+    return (
+        resolveProperty.type === AST_NODE_TYPES.Property &&
+        getStaticPropertyName(resolveProperty) === "resolve"
+    );
+};
 
 const reportObjectAliasReplacements = (
     context: Readonly<TSESLint.RuleContext<"relativeAliasReplacement", []>>,
     aliasObject: Readonly<TSESTree.ObjectExpression>
 ): void => {
     for (const property of aliasObject.properties) {
-        if (property.type === "Property") {
+        if (property.type === AST_NODE_TYPES.Property) {
             reportIfRelativeReplacement(context, property.value);
         }
     }
@@ -57,13 +71,13 @@ const reportArrayAliasReplacements = (
     aliasArray: Readonly<TSESTree.ArrayExpression>
 ): void => {
     for (const element of aliasArray.elements) {
-        if (element?.type !== "ObjectExpression") {
+        if (element?.type !== AST_NODE_TYPES.ObjectExpression) {
             continue;
         }
 
         for (const property of element.properties) {
             if (
-                property.type !== "Property" ||
+                property.type !== AST_NODE_TYPES.Property ||
                 getStaticPropertyName(property) !== "replacement"
             ) {
                 continue;
@@ -88,13 +102,13 @@ const noRelativeResolveAliasRule: ReturnType<typeof createTypedRule> =
                         return;
                     }
 
-                    if (node.value.type === "ObjectExpression") {
+                    if (node.value.type === AST_NODE_TYPES.ObjectExpression) {
                         reportObjectAliasReplacements(context, node.value);
 
                         return;
                     }
 
-                    if (node.value.type !== "ArrayExpression") {
+                    if (node.value.type !== AST_NODE_TYPES.ArrayExpression) {
                         return;
                     }
 

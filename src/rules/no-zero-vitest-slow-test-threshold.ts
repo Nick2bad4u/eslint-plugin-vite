@@ -1,17 +1,20 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { getPropertyPath, propertyPathEndsWith } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "zeroSlowTestThreshold";
 
-const slowTestThresholdPathSuffix = ["test", "slowTestThreshold"] as const;
+const slowTestThresholdPathSuffix = constTuple("test", "slowTestThreshold");
 
 const isNumberLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     expected: number
-): boolean => node.type === "Literal" && node.value === expected;
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
 
 /** Disallow disabling Vitest slow-test reporting by setting threshold to `0`. */
 const noZeroVitestSlowTestThresholdRule: ReturnType<typeof createTypedRule> =

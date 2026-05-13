@@ -2,7 +2,7 @@
 
 Disallow `test.isolate: false` in Vitest configuration.
 
-> **Rule catalog ID:** R020
+> **Rule catalog ID:** R004
 
 ## Targeted pattern scope
 

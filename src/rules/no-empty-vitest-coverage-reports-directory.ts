@@ -1,3 +1,4 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -6,15 +7,16 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "emptyCoverageReportsDirectory";
 
-const coverageReportsDirectoryPathSuffix = [
+const coverageReportsDirectoryPathSuffix = constTuple(
     "test",
     "coverage",
-    "reportsDirectory",
-] as const;
+    "reportsDirectory"
+);
 
 /** Disallow empty Vitest coverage report directory strings. */
 const noEmptyVitestCoverageReportsDirectoryRule: ReturnType<
@@ -32,8 +34,8 @@ const noEmptyVitestCoverageReportsDirectoryRule: ReturnType<
                         getPropertyPath(node),
                         coverageReportsDirectoryPathSuffix
                     ) ||
-                    (node.value.type !== "Literal" &&
-                        node.value.type !== "TemplateLiteral")
+                    (node.value.type !== AST_NODE_TYPES.Literal &&
+                        node.value.type !== AST_NODE_TYPES.TemplateLiteral)
                 ) {
                     return;
                 }

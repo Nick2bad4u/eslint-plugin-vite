@@ -17,7 +17,7 @@ type ViteRuleCreator = ReturnType<
 >;
 
 /** Plugin-specific metadata extensions for `meta.docs`. */
-type ViteRuleDocs = {
+interface ViteRuleDocs {
     description?: string;
     frozen?: boolean;
     recommended?: boolean;
@@ -26,7 +26,7 @@ type ViteRuleDocs = {
     ruleId?: string;
     ruleNumber?: number;
     viteConfigs?: readonly ViteConfigReference[] | ViteConfigReference;
-};
+}
 
 /** Rule authoring metadata contract accepted by `RuleCreator`. */
 type ViteRuleInputDocs = Except<

@@ -2,7 +2,7 @@
 
 Disallow empty `test.coverage.reporter` arrays in Vitest config.
 
-> **Rule catalog ID:** R031
+> **Rule catalog ID:** R015
 
 ## Targeted pattern scope
 

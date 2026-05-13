@@ -1,3 +1,5 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import { isImportMetaEnvMemberExpression } from "../_internal/ast.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
@@ -11,7 +13,10 @@ const noDynamicImportMetaEnvAccessRule: ReturnType<typeof createTypedRule> =
                         return;
                     }
 
-                    if (!node.computed || node.property.type === "Literal") {
+                    if (
+                        !node.computed ||
+                        node.property.type === AST_NODE_TYPES.Literal
+                    ) {
                         return;
                     }
 

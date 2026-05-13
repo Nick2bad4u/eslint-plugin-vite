@@ -2,7 +2,7 @@
 
 Require statically readable inline Vitest project names to be unique.
 
-> **Rule catalog ID:** R009
+> **Rule catalog ID:** R072
 
 ## Targeted pattern scope
 

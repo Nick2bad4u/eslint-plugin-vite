@@ -2,7 +2,7 @@
 
 Require explicit non-empty `test.coverage.reportsDirectory` when coverage is enabled.
 
-> **Rule catalog ID:** R050
+> **Rule catalog ID:** R063
 
 ## Targeted pattern scope
 

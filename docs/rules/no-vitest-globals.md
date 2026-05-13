@@ -2,7 +2,7 @@
 
 Disallow `test.globals: true` in Vitest configuration.
 
-> **Rule catalog ID:** R023
+> **Rule catalog ID:** R045
 
 ## Targeted pattern scope
 

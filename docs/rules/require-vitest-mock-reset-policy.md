@@ -2,7 +2,7 @@
 
 Require at least one enabled Vitest mock reset policy (`clearMocks`, `resetMocks`, or `restoreMocks`).
 
-> **Rule catalog ID:** R053
+> **Rule catalog ID:** R067
 
 ## Targeted pattern scope
 

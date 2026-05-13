@@ -2,7 +2,7 @@
 
 Disallow empty `test.coverage.reportsDirectory` values in Vitest config.
 
-> **Rule catalog ID:** R032
+> **Rule catalog ID:** R016
 
 ## Targeted pattern scope
 

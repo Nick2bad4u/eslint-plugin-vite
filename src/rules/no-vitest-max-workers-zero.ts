@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayAt, arrayIncludes, isDefined, isFinite } from "ts-extras";
 
 import { getPropertyPath, getStaticStringValue } from "../_internal/ast.js";
@@ -11,12 +12,15 @@ type MessageId = "invalidMaxWorkers";
 const getStaticNumericValue = (
     node: Readonly<TSESTree.Property["value"]>
 ): number | undefined => {
-    if (node.type === "Literal" && typeof node.value === "number") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "number"
+    ) {
         return node.value;
     }
 
     if (
-        node.type === "Literal" &&
+        node.type === AST_NODE_TYPES.Literal &&
         typeof node.value === "string" &&
         node.value.trim().length > 0
     ) {
@@ -25,7 +29,7 @@ const getStaticNumericValue = (
         return isFinite(parsed) ? parsed : undefined;
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         if (!isDefined(staticValue) || staticValue.trim().length === 0) {
@@ -43,11 +47,14 @@ const getStaticNumericValue = (
 const isEmptyStaticString = (
     node: Readonly<TSESTree.Property["value"]>
 ): boolean => {
-    if (node.type === "Literal" && typeof node.value === "string") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "string"
+    ) {
         return node.value.trim().length === 0;
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const staticValue = getStaticStringValue(node);
 
         return staticValue?.trim().length === 0;

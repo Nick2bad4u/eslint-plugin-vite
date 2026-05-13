@@ -2,7 +2,7 @@
 
 Disallow single-thread pool defaults in committed Vitest config.
 
-> **Rule catalog ID:** R039
+> **Rule catalog ID:** R048
 
 ## Targeted pattern scope
 

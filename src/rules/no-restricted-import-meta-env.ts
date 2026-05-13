@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined, setHas } from "ts-extras";
 
 import {
@@ -31,7 +32,7 @@ const isBuiltInImportMetaEnvKey = (value: string): boolean =>
 const getStaticEnvKey = (
     node: Readonly<TSESTree.MemberExpression>
 ): string | undefined => {
-    if (!node.computed && node.property.type === "Identifier") {
+    if (!node.computed && node.property.type === AST_NODE_TYPES.Identifier) {
         return node.property.name;
     }
 

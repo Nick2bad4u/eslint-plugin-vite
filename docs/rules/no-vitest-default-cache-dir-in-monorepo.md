@@ -2,7 +2,7 @@
 
 Disallow default or missing Vitest cache directories in likely monorepos.
 
-> **Rule catalog ID:** R068
+> **Rule catalog ID:** R042
 
 ## Targeted pattern scope
 

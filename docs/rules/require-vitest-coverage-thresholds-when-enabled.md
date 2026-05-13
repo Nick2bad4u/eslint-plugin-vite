@@ -2,7 +2,7 @@
 
 Require explicit non-empty `test.coverage.thresholds` when coverage is enabled.
 
-> **Rule catalog ID:** R045
+> **Rule catalog ID:** R064
 
 ## Targeted pattern scope
 

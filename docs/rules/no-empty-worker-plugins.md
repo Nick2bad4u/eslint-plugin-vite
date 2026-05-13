@@ -2,7 +2,7 @@
 
 Disallow empty `worker.plugins` arrays in committed Vite config.
 
-> **Rule catalog ID:** R063
+> **Rule catalog ID:** R022
 
 ## Targeted pattern scope
 

@@ -2,7 +2,7 @@
 
 Disallow `test.unstubGlobals: false` in shared Vitest config.
 
-> **Rule catalog ID:** R055
+> **Rule catalog ID:** R052
 
 ## Targeted pattern scope
 

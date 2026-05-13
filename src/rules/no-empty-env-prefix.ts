@@ -1,3 +1,5 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
 import {
     getStaticPropertyName,
     getStaticStringValue,
@@ -20,8 +22,9 @@ const noEmptyEnvPrefixRule: ReturnType<typeof createTypedRule> =
                     }
 
                     if (
-                        (node.value.type === "Literal" ||
-                            node.value.type === "TemplateLiteral") &&
+                        (node.value.type === AST_NODE_TYPES.Literal ||
+                            node.value.type ===
+                                AST_NODE_TYPES.TemplateLiteral) &&
                         getStaticStringValue(node.value) === ""
                     ) {
                         context.report({
@@ -31,15 +34,16 @@ const noEmptyEnvPrefixRule: ReturnType<typeof createTypedRule> =
                         return;
                     }
 
-                    if (node.value.type !== "ArrayExpression") {
+                    if (node.value.type !== AST_NODE_TYPES.ArrayExpression) {
                         return;
                     }
 
                     for (const element of node.value.elements) {
                         if (
                             element !== null &&
-                            (element.type === "Literal" ||
-                                element.type === "TemplateLiteral") &&
+                            (element.type === AST_NODE_TYPES.Literal ||
+                                element.type ===
+                                    AST_NODE_TYPES.TemplateLiteral) &&
                             getStaticStringValue(element) === ""
                         ) {
                             context.report({

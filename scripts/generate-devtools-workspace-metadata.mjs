@@ -24,6 +24,8 @@ const shouldRegenerateUuid = process.argv.includes("--regenerate");
  * parse error handling.
  *
  * @returns {Record<string, unknown>} Parsed package.json object.
+ *
+ * @throws {Error} When the file is missing, unreadable, or invalid JSON.
  */
 function loadRepositoryPackageJson() {
     if (!existsSync(repositoryPackageJsonPath)) {

@@ -2,7 +2,7 @@
 
 Disallow empty root-level `test.exclude` arrays in Vitest config.
 
-> **Rule catalog ID:** R027
+> **Rule catalog ID:** R017
 
 ## Targeted pattern scope
 

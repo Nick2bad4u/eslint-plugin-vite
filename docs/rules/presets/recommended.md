@@ -27,10 +27,10 @@ export default [vite.configs.recommended];
 | [`vite/import-meta-glob-literal`](../import-meta-glob-literal.md)                   |  —  |
 | [`vite/no-dynamic-import-meta-env-access`](../no-dynamic-import-meta-env-access.md) |  —  |
 | [`vite/no-empty-env-prefix`](../no-empty-env-prefix.md)                             |  —  |
+| [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  |
 | [`vite/no-mixed-test-and-bench-apis`](../no-mixed-test-and-bench-apis.md)           |  —  |
 | [`vite/no-relative-resolve-alias`](../no-relative-resolve-alias.md)                 |  —  |
-| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)         |  —  |
-| [`vite/no-import-meta-env-in-config`](../no-import-meta-env-in-config.md)           |  —  |
-| [`vite/require-inline-project-name`](../require-inline-project-name.md)             |  —  |
 | [`vite/no-unsupported-project-options`](../no-unsupported-project-options.md)       |  —  |
+| [`vite/require-inline-project-name`](../require-inline-project-name.md)             |  —  |
+| [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)         |  —  |
 {/*end-generated-preset-rules*/}

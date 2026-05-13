@@ -2,7 +2,7 @@
 
 Disallow `import.meta.env` while Vite and Vitest config files are being evaluated.
 
-> **Rule catalog ID:** R012
+> **Rule catalog ID:** R024
 
 ## Targeted pattern scope
 

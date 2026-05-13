@@ -2,7 +2,7 @@
 
 Disallow `test.slowTestThreshold: 0` in Vitest configuration.
 
-> **Rule catalog ID:** R021
+> **Rule catalog ID:** R054
 
 ## Targeted pattern scope
 

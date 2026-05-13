@@ -2,7 +2,7 @@
 
 Require explicit `test.coverage.provider` when coverage is enabled.
 
-> **Rule catalog ID:** R043
+> **Rule catalog ID:** R061
 
 ## Targeted pattern scope
 

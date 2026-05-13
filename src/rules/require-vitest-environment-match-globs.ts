@@ -1,5 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -8,25 +9,29 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingEnvironmentMatchGlobs";
 
-const environmentPathSuffix = ["test", "environment"] as const;
+const environmentPathSuffix = constTuple("test", "environment");
 
-const environmentMatchGlobsPathSuffix = [
+const environmentMatchGlobsPathSuffix = constTuple(
     "test",
-    "environmentMatchGlobs",
-] as const;
+    "environmentMatchGlobs"
+);
 
 const getStaticString = (
     node: Readonly<TSESTree.Property["value"]>
 ): string | undefined => {
-    if (node.type === "Literal" && typeof node.value === "string") {
+    if (
+        node.type === AST_NODE_TYPES.Literal &&
+        typeof node.value === "string"
+    ) {
         return node.value.trim();
     }
 
-    if (node.type === "TemplateLiteral") {
+    if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         return getStaticStringValue(node)?.trim();
     }
 
@@ -35,7 +40,8 @@ const getStaticString = (
 
 const hasNonEmptyEnvironmentMatchGlobs = (
     node: Readonly<TSESTree.Property["value"]>
-): boolean => node.type === "ArrayExpression" && node.elements.length > 0;
+): boolean =>
+    node.type === AST_NODE_TYPES.ArrayExpression && node.elements.length > 0;
 
 /**
  * Require explicit `test.environmentMatchGlobs` when multiple static

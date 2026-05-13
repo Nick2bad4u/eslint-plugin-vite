@@ -7,6 +7,7 @@ import {
     type ConfigFileKind,
     getConfigFileKind,
 } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "missingTimeoutTriplet";
@@ -17,15 +18,15 @@ type RuleOptions = [
     }>,
 ];
 
-const testTimeoutPathSuffix = ["test", "testTimeout"] as const;
-const hookTimeoutPathSuffix = ["test", "hookTimeout"] as const;
-const teardownTimeoutPathSuffix = ["test", "teardownTimeout"] as const;
+const testTimeoutPathSuffix = constTuple("test", "testTimeout");
+const hookTimeoutPathSuffix = constTuple("test", "hookTimeout");
+const teardownTimeoutPathSuffix = constTuple("test", "teardownTimeout");
 
-const defaultOptions = [
+const defaultOptions: RuleOptions = [
     {
         mode: "whenAnyConfigured",
     },
-] as const satisfies RuleOptions;
+];
 
 const shouldRequireTimeoutTriplet = (
     configFileKind: ConfigFileKind,
@@ -90,10 +91,7 @@ const requireVitestTimeoutTripletRule: ReturnType<typeof createTypedRule> =
 
                     if (arrayFirst(propertyPath) === "test") {
                         hasAnyTestConfig = true;
-
-                        if (firstTestPropertyNode === null) {
-                            firstTestPropertyNode = node;
-                        }
+                        firstTestPropertyNode ??= node;
                     }
 
                     if (

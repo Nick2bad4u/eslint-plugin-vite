@@ -1,5 +1,6 @@
 import type { UnknownRecord } from "type-fest";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined, keyIn } from "ts-extras";
 
 import {
@@ -9,25 +10,28 @@ import {
     propertyPathEndsWith,
 } from "../_internal/ast.js";
 import { getConfigFileKind } from "../_internal/config-files.js";
+import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "invalidTypecheckTsconfig" | "missingTypecheckTsconfig";
 
-const typecheckPathSuffix = ["test", "typecheck"] as const;
+const typecheckPathSuffix = constTuple("test", "typecheck");
 
-const isBooleanLiteral = (value: unknown, expected: boolean): boolean =>
-    typeof value === "object" &&
-    value !== null &&
-    (() => {
-        const record = value as UnknownRecord;
+const isUnknownRecord = (value: unknown): value is UnknownRecord =>
+    typeof value === "object" && value !== null;
 
-        return (
-            keyIn(record, "type") &&
-            record["type"] === "Literal" &&
-            keyIn(record, "value") &&
-            record["value"] === expected
-        );
-    })();
+const isBooleanLiteral = (value: unknown, expected: boolean): boolean => {
+    if (!isUnknownRecord(value)) {
+        return false;
+    }
+
+    return (
+        keyIn(value, "type") &&
+        value["type"] === "Literal" &&
+        keyIn(value, "value") &&
+        value["value"] === expected
+    );
+};
 
 const isTypecheckEnabled = (
     typecheckObject: Parameters<typeof findPropertyByName>[0]
@@ -61,7 +65,7 @@ const requireVitestTypecheckTsconfigRule: ReturnType<typeof createTypedRule> =
                             getPropertyPath(node),
                             typecheckPathSuffix
                         ) ||
-                        node.value.type !== "ObjectExpression"
+                        node.value.type !== AST_NODE_TYPES.ObjectExpression
                     ) {
                         return;
                     }
@@ -85,8 +89,10 @@ const requireVitestTypecheckTsconfigRule: ReturnType<typeof createTypedRule> =
                     }
 
                     const staticTsconfigValue = getStaticStringValue(
-                        tsconfigProperty.value.type === "Literal" ||
-                            tsconfigProperty.value.type === "TemplateLiteral"
+                        tsconfigProperty.value.type ===
+                            AST_NODE_TYPES.Literal ||
+                            tsconfigProperty.value.type ===
+                                AST_NODE_TYPES.TemplateLiteral
                             ? tsconfigProperty.value
                             : null
                     );
