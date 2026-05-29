@@ -82,7 +82,7 @@
         "build:types:cjs": "node scripts/build-plugin-cjs-types.mjs",
         "changelog:generate": "git-cliff --config cliff.toml --output CHANGELOG.md",
         "changelog:preview": "git-cliff --config cliff.toml --unreleased",
-        "changelog:release-notes": "git-cliff --config cliff.toml --latest --strip all",
+        "changelog:release-notes": "git-cliff --config cliff.toml --current --strip all",
         "clean:cache": "node -e \"for (const targetPath of [\"dist\",\"coverage\",\"cache\",\".cache\",\".vite\",\".turbo\"]) require('node:fs').rmSync(targetPath,{recursive:true,force:true});\"",
         "clean:cache:coverage": "node -e \"for (const targetPath of [\"coverage\",\".coverage\"]) require('node:fs').rmSync(targetPath,{recursive:true,force:true});\"",
         "clean:cache:dist": "node -e \"for (const targetPath of [\"dist\",\"release\"]) require('node:fs').rmSync(targetPath,{recursive:true,force:true});\"",
