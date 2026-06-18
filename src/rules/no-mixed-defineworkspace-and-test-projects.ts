@@ -43,14 +43,14 @@ const noMixedDefineWorkspaceAndTestProjectsRule: ReturnType<
 
         let hasDefineWorkspace = false;
         let hasTestProjects = false;
-        let reported = false;
+        let isReported = false;
 
         const reportMixedUsage = (node: Readonly<TSESTree.Node>): void => {
-            if (reported) {
+            if (isReported) {
                 return;
             }
 
-            reported = true;
+            isReported = true;
 
             context.report({
                 messageId: "mixedWorkspaceAndProjects",

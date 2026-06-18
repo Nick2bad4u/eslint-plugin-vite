@@ -20,17 +20,19 @@ const unwrapExpression = (
         return unwrapExpression(expression.expression);
     }
 
-    if (
-        expression.type === AST_NODE_TYPES.TSAsExpression ||
-        expression.type === AST_NODE_TYPES.TSInstantiationExpression ||
-        expression.type === AST_NODE_TYPES.TSNonNullExpression ||
-        expression.type === AST_NODE_TYPES.TSSatisfiesExpression ||
-        expression.type === AST_NODE_TYPES.TSTypeAssertion
-    ) {
-        return unwrapExpression(expression.expression);
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check -- This switch unwraps only expression wrapper nodes and returns all other expressions unchanged.
+    switch (expression.type) {
+        case AST_NODE_TYPES.TSAsExpression:
+        case AST_NODE_TYPES.TSInstantiationExpression:
+        case AST_NODE_TYPES.TSNonNullExpression:
+        case AST_NODE_TYPES.TSSatisfiesExpression:
+        case AST_NODE_TYPES.TSTypeAssertion: {
+            return unwrapExpression(expression.expression);
+        }
+        default: {
+            return expression;
+        }
     }
-
-    return expression;
 };
 
 const expressionNodeTypes = constTuple(
@@ -87,6 +89,19 @@ const isAcceptedExportExpression = (
     expression.callee.type === AST_NODE_TYPES.Identifier &&
     setHas(acceptedCallNamesByKind[fileKind], expression.callee.name);
 
+const getVariableDeclaratorInitializer = (
+    declarator: Readonly<TSESTree.VariableDeclarator>
+): null | readonly [string, Readonly<TSESTree.Expression>] => {
+    if (
+        declarator.id.type !== AST_NODE_TYPES.Identifier ||
+        declarator.init === null
+    ) {
+        return null;
+    }
+
+    return [declarator.id.name, unwrapExpression(declarator.init)];
+};
+
 const getTopLevelVariableInitializers = (
     programBody: readonly Readonly<TSESTree.ProgramStatement>[]
 ): ReadonlyMap<string, Readonly<TSESTree.Expression>> => {
@@ -98,17 +113,11 @@ const getTopLevelVariableInitializers = (
         }
 
         for (const declarator of statement.declarations) {
-            if (
-                declarator.id.type !== AST_NODE_TYPES.Identifier ||
-                declarator.init === null
-            ) {
-                continue;
-            }
+            const initializer = getVariableDeclaratorInitializer(declarator);
 
-            initializers.set(
-                declarator.id.name,
-                unwrapExpression(declarator.init)
-            );
+            if (initializer !== null) {
+                initializers.set(...initializer);
+            }
         }
     }
 

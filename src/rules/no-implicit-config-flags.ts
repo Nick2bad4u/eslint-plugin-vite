@@ -1,4 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/utils";
+import type { ArrayValues } from "type-fest";
 
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayAt, arrayFirst, arrayIncludes, isDefined } from "ts-extras";
@@ -9,6 +10,9 @@ import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type ConfigFlagName = "isPreview" | "isSsrBuild";
+type FunctionBoundaryNode =
+    | FunctionNode
+    | Readonly<TSESTree.FunctionDeclaration>;
 type FunctionNode =
     | Readonly<TSESTree.ArrowFunctionExpression>
     | Readonly<TSESTree.FunctionExpression>;
@@ -24,19 +28,34 @@ type TargetFunctionScope = Readonly<{
 }>;
 
 const explicitBooleanComparisonOperators = constTuple("!=", "!==", "==", "===");
-
 const isConfigFlagName = (value: string): value is ConfigFlagName =>
     value === "isPreview" || value === "isSsrBuild";
 
 const isExplicitBooleanComparisonOperator = (
     operator: TSESTree.BinaryExpression["operator"]
-): operator is (typeof explicitBooleanComparisonOperators)[number] =>
+): operator is ArrayValues<typeof explicitBooleanComparisonOperators> =>
     arrayIncludes(explicitBooleanComparisonOperators, operator);
 
 const toExpressionOrNull = (
     node: Readonly<TSESTree.Expression | TSESTree.PrivateIdentifier>
 ): null | Readonly<TSESTree.Expression> =>
     node.type === AST_NODE_TYPES.PrivateIdentifier ? null : node;
+
+const isFunctionBoundaryNode = (
+    node: Readonly<TSESTree.Node>
+): node is FunctionBoundaryNode => {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check -- This guard intentionally recognizes only function boundary node kinds.
+    switch (node.type) {
+        case AST_NODE_TYPES.ArrowFunctionExpression:
+        case AST_NODE_TYPES.FunctionDeclaration:
+        case AST_NODE_TYPES.FunctionExpression: {
+            return true;
+        }
+        default: {
+            return false;
+        }
+    }
+};
 
 const unwrapExpression = (
     expression: Readonly<TSESTree.Expression>
@@ -45,16 +64,18 @@ const unwrapExpression = (
         return unwrapExpression(expression.expression);
     }
 
-    if (
-        expression.type === AST_NODE_TYPES.TSAsExpression ||
-        expression.type === AST_NODE_TYPES.TSSatisfiesExpression ||
-        expression.type === AST_NODE_TYPES.TSTypeAssertion ||
-        expression.type === AST_NODE_TYPES.TSNonNullExpression
-    ) {
-        return unwrapExpression(expression.expression);
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check -- This switch unwraps only expression wrapper nodes and returns all other expressions unchanged.
+    switch (expression.type) {
+        case AST_NODE_TYPES.TSAsExpression:
+        case AST_NODE_TYPES.TSNonNullExpression:
+        case AST_NODE_TYPES.TSSatisfiesExpression:
+        case AST_NODE_TYPES.TSTypeAssertion: {
+            return unwrapExpression(expression.expression);
+        }
+        default: {
+            return expression;
+        }
     }
-
-    return expression;
 };
 
 const isBooleanLiteral = (node: Readonly<TSESTree.Node>): boolean =>
@@ -127,21 +148,11 @@ const getConfigFlagBindings = (
 
 const getNearestFunctionAncestor = (
     node: Readonly<TSESTree.Node>
-):
-    | Readonly<
-          | TSESTree.ArrowFunctionExpression
-          | TSESTree.FunctionDeclaration
-          | TSESTree.FunctionExpression
-      >
-    | undefined => {
+): FunctionBoundaryNode | undefined => {
     let currentNode = node.parent;
 
     while (currentNode !== undefined) {
-        if (
-            currentNode.type === AST_NODE_TYPES.FunctionDeclaration ||
-            currentNode.type === AST_NODE_TYPES.ArrowFunctionExpression ||
-            currentNode.type === AST_NODE_TYPES.FunctionExpression
-        ) {
+        if (isFunctionBoundaryNode(currentNode)) {
             return currentNode;
         }
 
@@ -311,6 +322,7 @@ function findImplicitFlagUsage(
     }
 
     if (unwrappedExpression.type === AST_NODE_TYPES.ConditionalExpression) {
+        // eslint-disable-next-line unicorn/no-useless-recursion -- AST expressions are recursive by shape, and this branch intentionally descends into the conditional test.
         return findImplicitFlagUsage(unwrappedExpression.test, bindings);
     }
 

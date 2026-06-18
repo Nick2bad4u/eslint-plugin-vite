@@ -1,7 +1,7 @@
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
-import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
+import Layout from "@theme/Layout";
 
 import styles from "../components/HomePage.module.css";
 
@@ -90,13 +90,13 @@ const heroMetrics = [
     },
     {
         description:
-            "Start with recommended, then grow into strict, client, configs, and Vitest-focused bundles.",
-        title: " 8 Presets",
+            "Report-first guidance with safe fixes and suggestions where the transformation stays reviewable.",
+        title: "󰁨 DX-first Autofix & Suggestions",
     },
     {
         description:
-            "Report-first guidance with safe fixes and suggestions where the transformation stays reviewable.",
-        title: "󰁨 DX-first Autofix & Suggestions",
+            "Start with recommended, then grow into strict, client, configs, and Vitest-focused bundles.",
+        title: " 8 Presets",
     },
 ] as const;
 
@@ -130,8 +130,8 @@ export default function Home() {
 
     return (
         <Layout
-            title="eslint-plugin-vite"
             description="ESLint rules for Vite, Vitest, and Vitest bench."
+            title="eslint-plugin-vite"
         >
             <main className={styles.heroBanner}>
                 <div className={`container ${styles.heroContent}`}>
@@ -166,14 +166,14 @@ export default function Home() {
                             <ul className={styles.heroLiveBadges}>
                                 {liveBadges.map((badge) => (
                                     <li
-                                        key={badge.alt}
                                         className={styles.liveBadgeListItem}
+                                        key={badge.alt}
                                     >
                                         <Link
                                             className={styles.liveBadgeAnchor}
-                                            to={badge.href}
                                             rel="noreferrer"
                                             target="_blank"
+                                            to={badge.href}
                                         >
                                             <img
                                                 alt={badge.alt}
@@ -189,8 +189,8 @@ export default function Home() {
                             <div className={styles.heroBadgeRow}>
                                 {heroBadges.map((badge) => (
                                     <article
-                                        key={badge.title}
                                         className={styles.heroBadge}
+                                        key={badge.title}
                                     >
                                         <p className={styles.heroBadgeLabel}>
                                             <span
@@ -223,8 +223,8 @@ export default function Home() {
                     <div className={styles.heroStats}>
                         {heroMetrics.map((metric) => (
                             <article
-                                key={metric.title}
                                 className={styles.heroStatCard}
+                                key={metric.title}
                             >
                                 <Heading
                                     as="h2"
@@ -246,8 +246,8 @@ export default function Home() {
                         <div className={styles.cardGrid}>
                             {cards.map((card) => (
                                 <article
-                                    key={card.title}
                                     className={styles.card}
+                                    key={card.title}
                                 >
                                     <div className={styles.cardHeader}>
                                         <p className={styles.cardIcon}>

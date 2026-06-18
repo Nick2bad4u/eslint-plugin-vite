@@ -45,12 +45,12 @@ describe("plugin configs", () => {
         const allRuleIds = new Set(getRuleIds("all"));
 
         for (const ruleId of recommendedRuleIds) {
-            expect(strictRuleIds.has(ruleId)).toBeTruthy();
-            expect(allRuleIds.has(ruleId)).toBeTruthy();
+            expect(strictRuleIds.has(ruleId)).toBe(true);
+            expect(allRuleIds.has(ruleId)).toBe(true);
         }
 
         for (const ruleId of strictRuleIds) {
-            expect(allRuleIds.has(ruleId)).toBeTruthy();
+            expect(allRuleIds.has(ruleId)).toBe(true);
         }
     });
 });

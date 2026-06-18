@@ -6,8 +6,7 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 /** Disallow dynamic `import.meta.env[key]` access in client-side code. */
 const noDynamicImportMetaEnvAccessRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "dynamicAccess">({
-        create(context) {
-            return {
+        create: (context) => ({
                 MemberExpression(node) {
                     if (!isImportMetaEnvMemberExpression(node.object)) {
                         return;
@@ -25,8 +24,7 @@ const noDynamicImportMetaEnvAccessRule: ReturnType<typeof createTypedRule> =
                         node: node.property,
                     });
                 },
-            };
-        },
+            }),
         meta: {
             deprecated: false,
             docs: {

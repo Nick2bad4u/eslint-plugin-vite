@@ -13,8 +13,8 @@ const coverageCleanPathSuffix = constTuple("test", "coverage", "clean");
 
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
-    expected: boolean
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
+    isExpectedValue: boolean
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
 
 /** Disallow `test.coverage.clean: false` in committed Vitest config. */
 const noVitestCoverageCleanFalseRule: ReturnType<typeof createTypedRule> =

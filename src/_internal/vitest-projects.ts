@@ -1,4 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/utils";
+import type { ArrayElement } from "type-fest";
 
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
@@ -36,7 +37,7 @@ const isVitestProjectFactoryCall = (
  * possible.
  */
 export const getInlineVitestProjectEntry = (
-    element: Readonly<TSESTree.ArrayExpression["elements"][number]>,
+    element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>,
     containerKind: VitestInlineProjectContainerKind
 ): undefined | VitestInlineProjectEntry => {
     if (element === null) {

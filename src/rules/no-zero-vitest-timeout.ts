@@ -22,8 +22,8 @@ const isTimeoutOptionName = (value: string): value is TimeoutOptionName =>
 
 const isNumberLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
-    expected: number
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
+    expectedValue: number
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expectedValue;
 
 const getZeroTimeoutOptionName = (
     node: Readonly<TSESTree.Property>

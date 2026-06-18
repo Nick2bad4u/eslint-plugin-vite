@@ -36,14 +36,18 @@ describe("rule docs integrity", () => {
                 | RuleDocsWithCatalog
                 | undefined;
 
-            expect(existsSync(docsPath)).toBeTruthy();
+            expect(existsSync(docsPath)).toBe(true);
 
             const contents = readFileSync(docsPath, "utf8");
 
             expect(contents).toContain(`# ${ruleName}`);
             expect(docs?.ruleId).toBeDefined();
+            if (docs?.ruleId === undefined) {
+                throw new Error(`Missing rule catalog ID for ${ruleName}`);
+            }
+
             expect(contents).toContain(
-                `> **Rule catalog ID:** ${docs?.ruleId}`
+                `> **Rule catalog ID:** ${docs.ruleId}`
             );
 
             for (const heading of requiredHeadings) {

@@ -66,6 +66,20 @@ const reportObjectAliasReplacements = (
     }
 };
 
+const reportAliasEntryReplacement = (
+    context: Readonly<TSESLint.RuleContext<"relativeAliasReplacement", []>>,
+    aliasEntry: Readonly<TSESTree.ObjectExpression>
+): void => {
+    for (const property of aliasEntry.properties) {
+        if (
+            property.type === AST_NODE_TYPES.Property &&
+            getStaticPropertyName(property) === "replacement"
+        ) {
+            reportIfRelativeReplacement(context, property.value);
+        }
+    }
+};
+
 const reportArrayAliasReplacements = (
     context: Readonly<TSESLint.RuleContext<"relativeAliasReplacement", []>>,
     aliasArray: Readonly<TSESTree.ArrayExpression>
@@ -75,16 +89,7 @@ const reportArrayAliasReplacements = (
             continue;
         }
 
-        for (const property of element.properties) {
-            if (
-                property.type !== AST_NODE_TYPES.Property ||
-                getStaticPropertyName(property) !== "replacement"
-            ) {
-                continue;
-            }
-
-            reportIfRelativeReplacement(context, property.value);
-        }
+        reportAliasEntryReplacement(context, element);
     }
 };
 

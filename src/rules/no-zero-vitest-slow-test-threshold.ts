@@ -13,8 +13,8 @@ const slowTestThresholdPathSuffix = constTuple("test", "slowTestThreshold");
 
 const isNumberLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
-    expected: number
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
+    expectedValue: number
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expectedValue;
 
 /** Disallow disabling Vitest slow-test reporting by setting threshold to `0`. */
 const noZeroVitestSlowTestThresholdRule: ReturnType<typeof createTypedRule> =

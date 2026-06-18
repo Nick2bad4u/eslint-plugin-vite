@@ -75,6 +75,9 @@
     ],
     "extends": "./tsconfig.json",
     "include": [
+        "knip.config.ts",
+        "plugin.d.cts",
+        "vitest.stryker.config.ts",
         "**/*",
         "**/.*"
     ]

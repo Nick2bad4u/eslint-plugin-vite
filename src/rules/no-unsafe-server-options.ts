@@ -11,7 +11,7 @@ type MessageId = "unsafeServerOption";
 const isUnknownRecord = (value: unknown): value is UnknownRecord =>
     typeof value === "object" && value !== null;
 
-const isBooleanLiteral = (value: unknown, expected: boolean): boolean => {
+const isBooleanLiteral = (value: unknown, isExpectedValue: boolean): boolean => {
     if (!isUnknownRecord(value)) {
         return false;
     }
@@ -20,7 +20,7 @@ const isBooleanLiteral = (value: unknown, expected: boolean): boolean => {
         keyIn(value, "type") &&
         value["type"] === "Literal" &&
         keyIn(value, "value") &&
-        value["value"] === expected
+        value["value"] === isExpectedValue
     );
 };
 

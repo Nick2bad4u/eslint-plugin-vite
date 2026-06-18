@@ -19,8 +19,8 @@ const testPathSuffix = constTuple("test");
 
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
-    expected: boolean
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === expected;
+    isExpectedValue: boolean
+): boolean => node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
 
 /**
  * Require at least one Vitest mock reset policy (`clearMocks`, `resetMocks`, or

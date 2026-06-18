@@ -1,16 +1,16 @@
+import type { Plugin, PluginModule } from "@docusaurus/types";
+
 import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { dirname, resolve } from "node:path";
-
-import type { LoadContext, Plugin, PluginModule } from "@docusaurus/types";
+import * as path from "node:path";
 
 const require = createRequire(import.meta.url);
 
-type PackageJson = {
+interface PackageJson {
     readonly exports?: unknown;
     readonly main?: unknown;
     readonly module?: unknown;
-};
+}
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
     typeof value === "object" && value !== null;
@@ -25,16 +25,16 @@ const getStringProperty = (
 };
 
 const findPackageRoot = (entryPath: string): string | undefined => {
-    let currentDirectory = dirname(entryPath);
+    let currentDirectory = path.dirname(entryPath);
 
     while (true) {
-        const packageJsonPath = resolve(currentDirectory, "package.json");
+        const packageJsonPath = path.resolve(currentDirectory, "package.json");
 
         if (existsSync(packageJsonPath)) {
             return currentDirectory;
         }
 
-        const parentDirectory = dirname(currentDirectory);
+        const parentDirectory = path.dirname(currentDirectory);
 
         if (parentDirectory === currentDirectory) {
             return undefined;
@@ -53,7 +53,7 @@ const resolvePackageRoot = (packageName: string): string | undefined => {
 };
 
 const readPackageJson = (packageRoot: string): PackageJson | undefined => {
-    const packageJsonPath = resolve(packageRoot, "package.json");
+    const packageJsonPath = path.resolve(packageRoot, "package.json");
     const packageJsonText = readFileSync(packageJsonPath, "utf8");
     const packageJsonValue: unknown = JSON.parse(packageJsonText);
 
@@ -64,7 +64,7 @@ const resolvePackageRelativeEntry = (
     packageRoot: string,
     entryPath: string
 ): string | undefined => {
-    const resolvedEntryPath = resolve(packageRoot, entryPath);
+    const resolvedEntryPath = path.resolve(packageRoot, entryPath);
 
     return existsSync(resolvedEntryPath) ? resolvedEntryPath : undefined;
 };
@@ -129,10 +129,9 @@ const vscodeLanguageServerTypesEsmEntry = resolvePreferredEntry(
  * Docusaurus plugin that aliases known ESM package entries and suppresses the
  * corresponding webpack UMD warning noise.
  */
-export const suppressKnownWebpackWarningsPlugin: PluginModule = (
-    _context: LoadContext,
-    _options: unknown
-): Plugin | null => {
+export const suppressKnownWebpackWarningsPlugin: PluginModule = ():
+    | null
+    | Plugin => {
     const alias: Record<string, string> = {};
 
     if (vscodeCssLanguageServiceEsmEntry !== undefined) {
@@ -151,24 +150,20 @@ export const suppressKnownWebpackWarningsPlugin: PluginModule = (
     }
 
     return {
-        configureWebpack() {
-            return {
-                ...(vscodeLanguageServerTypesEsmEntry === undefined
-                    ? {}
-                    : {
+        configureWebpack: () => ({
+                ...(vscodeLanguageServerTypesEsmEntry !== undefined && {
                           ignoreWarnings: [
                               {
                                   message:
                                       /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/u,
-                                  module: /vscode-languageserver-types[\\/]lib[\\/]umd[\\/]main\.js/u,
+                                  module: /vscode-languageserver-types[/\\]lib[/\\]umd[/\\]main\.js/u,
                               },
                           ],
                       }),
                 resolve: {
                     alias,
                 },
-            };
-        },
+            }),
         name: "suppress-known-webpack-warnings",
     };
 };

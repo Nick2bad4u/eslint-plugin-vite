@@ -1,9 +1,9 @@
-import { themes as prismThemes } from "prism-react-renderer";
-
-import type { Config } from "@docusaurus/types";
 import type { Options as DocsPluginOptions } from "@docusaurus/plugin-content-docs";
 import type * as Preset from "@docusaurus/preset-classic";
+import type { Config } from "@docusaurus/types";
+
 import { fileURLToPath } from "node:url";
+import { themes as prismThemes } from "prism-react-renderer";
 
 import { suppressKnownWebpackWarningsPlugin } from "./src/plugins/suppressKnownWebpackWarningsPlugin";
 
@@ -18,7 +18,7 @@ const siteUrl = `${siteOrigin}${baseUrl}`;
 const siteDescription =
     "ESLint rules for Vite, Vitest, and Vitest bench with type-safe configuration guidance.";
 const socialCardImagePath = "img/logo.png";
-const socialCardImageUrl = new URL(socialCardImagePath, siteUrl).toString();
+const socialCardImageUrl = new URL(socialCardImagePath, siteUrl).href;
 const modernEnhancementsClientModule = fileURLToPath(
     new URL("src/js/modernEnhancements.ts", import.meta.url)
 );
@@ -36,26 +36,24 @@ const removeHeadAttrFlagKey = [
 ].join("");
 
 const futureConfig = {
-    ...(enableExperimentalFaster
-        ? {
+    ...(enableExperimentalFaster && {
               faster: {
                   mdxCrossCompilerCache: true,
                   rspackBundler: true,
                   rspackPersistentCache: true,
                   ssgWorkerThreads: true,
               },
-          }
-        : {}),
+          }),
     v4: {
+        fasterByDefault: true,
+        mdx1CompatDisabledByDefault: true,
         [removeHeadAttrFlagKey]: true,
+        removeLegacyPostBuildHeadAttribute: true,
         // NOTE: Enabling cascade layers currently breaks our production CSS output
         // (CssMinimizer parsing errors -> large chunks of CSS dropped), which
         // makes many Infima (--ifm-*) variables undefined across the site.
         // Re-enable only after verifying the build output CSS is valid.
         siteStorageNamespacing: true,
-        fasterByDefault: true,
-        removeLegacyPostBuildHeadAttribute: true,
-        mdx1CompatDisabledByDefault: true,
         useCssCascadeLayers: false,
     },
 } satisfies Config["future"];
@@ -173,13 +171,13 @@ const config = {
                     blogTitle: "eslint-plugin-vite Blog",
                     editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
                     feedOptions: {
-                        type: ["rss", "atom"],
-                        xslt: true,
-                        title: "eslint-plugin-vite Blog",
                         copyright: `© ${new Date().getFullYear()} Nick2bad4u`,
                         description:
                             "Updates, architecture notes, and practical guidance for eslint-plugin-vite users.",
                         language: "en",
+                        title: "eslint-plugin-vite Blog",
+                        type: ["rss", "atom"],
+                        xslt: true,
                     },
                     onInlineAuthors: "warn",
                     onInlineTags: "warn",
@@ -312,10 +310,10 @@ const config = {
             ],
             logo: {
                 alt: "eslint-plugin-vite logo",
+                height: 60,
                 href: `https://github.com/${organizationName}/${projectName}`,
                 src: "img/logo.svg",
                 width: 60,
-                height: 60,
             },
             style: "dark",
         },

@@ -1,4 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/utils";
+import type { ArrayElement } from "type-fest";
 
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { arrayFirst, isDefined } from "ts-extras";
@@ -10,7 +11,7 @@ import {
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const isStaticPatternNode = (
-    node: Readonly<TSESTree.CallExpression["arguments"][number]>
+    node: Readonly<ArrayElement<TSESTree.CallExpression["arguments"]>>
 ): boolean => {
     if (
         node.type === AST_NODE_TYPES.Literal ||
@@ -23,7 +24,7 @@ const isStaticPatternNode = (
 };
 
 const isStaticGlobPatternArgument = (
-    node: Readonly<TSESTree.CallExpression["arguments"][number]> | undefined
+    node: Readonly<ArrayElement<TSESTree.CallExpression["arguments"]>> | undefined
 ): boolean => {
     if (node === undefined) {
         return false;

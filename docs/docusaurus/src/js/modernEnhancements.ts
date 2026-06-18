@@ -26,7 +26,7 @@ const hardenExternalLinks = (): void => {
         relValues.add("noopener");
         relValues.add("noreferrer");
 
-        link.setAttribute("rel", Array.from(relValues).join(" "));
+        link.setAttribute("rel", [...relValues].join(" "));
     }
 };
 
@@ -45,10 +45,10 @@ const scheduleEnhancements = (): void => {
 };
 
 if (
-    typeof globalThis.window !== "undefined" &&
-    typeof globalThis.document !== "undefined"
+    typeof globalThis.addEventListener === "function" &&
+    globalThis.document !== undefined
 ) {
     runEnhancements();
-    globalThis.window.addEventListener("popstate", scheduleEnhancements);
-    globalThis.window.addEventListener("hashchange", scheduleEnhancements);
+    globalThis.addEventListener("popstate", scheduleEnhancements);
+    globalThis.addEventListener("hashchange", scheduleEnhancements);
 }

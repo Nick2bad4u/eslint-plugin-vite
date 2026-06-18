@@ -68,11 +68,11 @@ const noVitestDefaultCacheDirInMonorepoRule: ReturnType<
             return {};
         }
 
-        const likelyMonorepo =
+        const isLikelyMonorepo =
             configFileKind === "workspace" ||
             isLikelyMonorepoConfig(context.filename);
 
-        if (!likelyMonorepo) {
+        if (!isLikelyMonorepo) {
             return {};
         }
 
