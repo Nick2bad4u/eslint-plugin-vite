@@ -37,15 +37,12 @@ const removeHeadAttrFlagKey = [
 
 const futureConfig = {
     ...(enableExperimentalFaster && {
-              faster: {
-                  mdxCrossCompilerCache: true,
-                  rspackBundler: true,
-                  rspackPersistentCache: true,
-                  ssgWorkerThreads: true,
-              },
-          }),
+        faster: {
+            mdxCrossCompilerCache: true,
+            ssgWorkerThreads: true,
+        },
+    }),
     v4: {
-        fasterByDefault: true,
         mdx1CompatDisabledByDefault: true,
         [removeHeadAttrFlagKey]: true,
         removeLegacyPostBuildHeadAttribute: true,

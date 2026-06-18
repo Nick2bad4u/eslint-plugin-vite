@@ -30,9 +30,7 @@
         }
     ],
     "sideEffects": false,
-    "type": "module",
     "main": "docusaurus.config.ts",
-    "types": "docusaurus.config.ts",
     "files": [
         "site-docs"
     ],
