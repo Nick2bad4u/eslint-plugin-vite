@@ -25,11 +25,11 @@ This rule enforces that reproducibility guardrail.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        sequence: {
-            shuffle: true,
-        },
-    },
+ test: {
+  sequence: {
+   shuffle: true,
+  },
+ },
 });
 ```
 
@@ -39,12 +39,12 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        sequence: {
-            shuffle: true,
-            seed: 42,
-        },
-    },
+ test: {
+  sequence: {
+   shuffle: true,
+   seed: 42,
+  },
+ },
 });
 ```
 

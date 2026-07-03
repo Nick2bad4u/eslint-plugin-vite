@@ -48,7 +48,7 @@ export default [vite.configs.recommended, vite.configs.vitest];
 ```ts
 import vite from "@typpi/eslint-plugin-vite";
 
-export default [vite.configs.recommended, vite.configs.vitest-bench];
+export default [vite.configs.recommended, vite.configs.vitest - bench];
 ```
 
 ### Stricter rollout after the baseline is clean

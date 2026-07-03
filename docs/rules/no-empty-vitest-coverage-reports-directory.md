@@ -26,11 +26,11 @@ An empty value is a fragile misconfiguration and often indicates unfinished setu
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reportsDirectory: "",
-        },
-    },
+ test: {
+  coverage: {
+   reportsDirectory: "",
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reportsDirectory: "./coverage",
-        },
-    },
+ test: {
+  coverage: {
+   reportsDirectory: "./coverage",
+  },
+ },
 });
 ```
 

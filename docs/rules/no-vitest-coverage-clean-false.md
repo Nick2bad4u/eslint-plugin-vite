@@ -26,11 +26,11 @@ In CI or shared repo workflows, stale output can mislead diagnostics and artifac
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            clean: false,
-        },
-    },
+ test: {
+  coverage: {
+   clean: false,
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            clean: true,
-        },
-    },
+ test: {
+  coverage: {
+   clean: true,
+  },
+ },
 });
 ```
 

@@ -28,10 +28,10 @@ Invalid bounds can produce confusing runtime behavior and hard-to-debug parallel
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        minWorkers: 4,
-        maxWorkers: 2,
-    },
+ test: {
+  minWorkers: 4,
+  maxWorkers: 2,
+ },
 });
 ```
 
@@ -41,10 +41,10 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        minWorkers: 2,
-        maxWorkers: 4,
-    },
+ test: {
+  minWorkers: 2,
+  maxWorkers: 4,
+ },
 });
 ```
 

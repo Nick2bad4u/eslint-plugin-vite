@@ -26,11 +26,11 @@ This rule catches that high-impact config mistake early.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        benchmark: {
-            include: [],
-        },
-    },
+ test: {
+  benchmark: {
+   include: [],
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        benchmark: {
-            include: ["bench/**/*.bench.ts"],
-        },
-    },
+ test: {
+  benchmark: {
+   include: ["bench/**/*.bench.ts"],
+  },
+ },
 });
 ```
 

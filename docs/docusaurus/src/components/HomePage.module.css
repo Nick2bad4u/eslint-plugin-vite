@@ -96,14 +96,14 @@
     margin: 0 0 0.75rem;
     background: rgb(15 23 42 / 28%);
     color: rgb(224 231 255);
-    font-size: 0.79rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
 }
 
 .heroTitle {
-    font-size: clamp(2.1rem, 4.2vi, 3.25rem);
+    font-size: clamp(2rem, 4.2vi, 3rem);
     margin-block-end: 0.75rem;
     text-wrap: balance;
 }
@@ -111,7 +111,7 @@
 .heroSubtitle {
     margin: 0;
     color: rgb(239 246 255);
-    font-size: 1.08rem;
+    font-size: 1.125rem;
     line-height: 1.5;
     max-inline-size: 39rem;
     text-wrap: pretty;
@@ -174,7 +174,7 @@
     align-items: center;
     margin: 0;
     color: #f8fafc;
-    font-size: 0.82rem;
+    font-size: 0.875rem;
     font-weight: 700;
     gap: 0.42rem;
     letter-spacing: 0.01em;
@@ -187,14 +187,14 @@
     border-radius: 0.45rem;
     background: rgb(255 255 255 / 16%);
     block-size: 1.4rem;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     inline-size: 1.4rem;
 }
 
 .heroBadgeDescription {
     margin: 0.36rem 0 0;
     color: rgb(224 242 254);
-    font-size: 0.77rem;
+    font-size: 0.75rem;
     line-height: 1.5;
 }
 
@@ -386,7 +386,7 @@
 
 .heroStatHeading {
     margin: 0;
-    font-size: 1.04rem;
+    font-size: 1rem;
     font-weight: 800;
     letter-spacing: 0.01em;
     line-height: 1.25;
@@ -397,14 +397,14 @@
     align-items: flex-start;
     margin: 0;
     color: rgb(224 242 254);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     gap: 0.32rem;
     line-height: 1.5;
 
     &::before {
         color: rgb(191 219 254 / 95%);
         content: "\2022";
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         font-weight: 800;
         line-height: 1.375;
     }
@@ -466,7 +466,7 @@
 
 .sectionTitle {
     margin: 0;
-    font-size: clamp(1.55rem, 2.6vi, 2rem);
+    font-size: clamp(1.5rem, 2.6vi, 2rem);
     text-wrap: balance;
 }
 
@@ -590,7 +590,7 @@
     font-family:
         "NerdFontSymbols Nerd Font Symbols", "Symbols Nerd Font Mono",
         "Segoe UI Emoji", sans-serif;
-    font-size: 1.12rem;
+    font-size: 1.125rem;
     font-variant-ligatures: none;
     inline-size: 1.9rem;
     line-height: 1;

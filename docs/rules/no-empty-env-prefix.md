@@ -28,7 +28,7 @@ An empty prefix removes that boundary.
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    envPrefix: "",
+ envPrefix: "",
 });
 ```
 
@@ -38,7 +38,7 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    envPrefix: "VITE_",
+ envPrefix: "VITE_",
 });
 ```
 
@@ -46,7 +46,7 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    envPrefix: ["VITE_", "PUBLIC_"],
+ envPrefix: ["VITE_", "PUBLIC_"],
 });
 ```
 

@@ -26,11 +26,11 @@ Making it explicit in shared config avoids hidden defaults and cross-environment
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: true,
-        },
-    },
+ test: {
+  coverage: {
+   enabled: true,
+  },
+ },
 });
 ```
 
@@ -40,12 +40,12 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: true,
-            provider: "v8",
-        },
-    },
+ test: {
+  coverage: {
+   enabled: true,
+   provider: "v8",
+  },
+ },
 });
 ```
 

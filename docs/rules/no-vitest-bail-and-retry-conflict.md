@@ -29,10 +29,10 @@ Combining both often creates noisy, hard-to-interpret failure behavior.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        bail: 1,
-        retry: 2,
-    },
+ test: {
+  bail: 1,
+  retry: 2,
+ },
 });
 ```
 
@@ -42,10 +42,10 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        bail: 0,
-        retry: 2,
-    },
+ test: {
+  bail: 0,
+  retry: 2,
+ },
 });
 ```
 

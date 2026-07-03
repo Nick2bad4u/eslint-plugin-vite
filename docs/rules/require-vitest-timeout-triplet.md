@@ -24,9 +24,9 @@ Partial timeout config often creates inconsistent behavior between test bodies, 
 
 ```ts
 export default {
-    test: {
-        testTimeout: 10_000,
-    },
+ test: {
+  testTimeout: 10_000,
+ },
 };
 ```
 
@@ -34,11 +34,11 @@ export default {
 
 ```ts
 export default {
-    test: {
-        testTimeout: 10_000,
-        hookTimeout: 10_000,
-        teardownTimeout: 10_000,
-    },
+ test: {
+  testTimeout: 10_000,
+  hookTimeout: 10_000,
+  teardownTimeout: 10_000,
+ },
 };
 ```
 

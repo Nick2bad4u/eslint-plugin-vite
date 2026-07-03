@@ -21,7 +21,8 @@ const seedPathSuffix = constTuple("test", "sequence", "seed");
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     isExpectedValue: boolean
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
+): boolean =>
+    node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
 
 const hasStaticSeedValue = (
     node: Readonly<TSESTree.Property["value"]>

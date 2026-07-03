@@ -26,9 +26,9 @@ Disabling env unstubbing can create order-dependent behavior.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        unstubEnvs: false,
-    },
+ test: {
+  unstubEnvs: false,
+ },
 });
 ```
 
@@ -38,9 +38,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        unstubEnvs: true,
-    },
+ test: {
+  unstubEnvs: true,
+ },
 });
 ```
 

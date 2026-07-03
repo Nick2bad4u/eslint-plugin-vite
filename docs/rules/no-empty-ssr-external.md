@@ -24,9 +24,9 @@ Removing no-op settings keeps SSR config easier to audit.
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    ssr: {
-        external: [],
-    },
+ ssr: {
+  external: [],
+ },
 });
 ```
 
@@ -36,9 +36,9 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    ssr: {
-        external: ["react"],
-    },
+ ssr: {
+  external: ["react"],
+ },
 });
 ```
 

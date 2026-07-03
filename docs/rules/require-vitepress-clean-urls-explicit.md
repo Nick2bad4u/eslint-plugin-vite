@@ -24,7 +24,7 @@ Implicit defaults can lead to surprises when hosting docs on different platforms
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    title: "Project Docs",
+ title: "Project Docs",
 });
 ```
 
@@ -34,8 +34,8 @@ export default defineConfig({
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    title: "Project Docs",
-    cleanUrls: true,
+ title: "Project Docs",
+ cleanUrls: true,
 });
 ```
 

@@ -28,9 +28,9 @@ This plugin targets robust Vite/Vitest configuration guardrails, so flagging com
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        isolate: false,
-    },
+ test: {
+  isolate: false,
+ },
 });
 ```
 
@@ -40,9 +40,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        isolate: true,
-    },
+ test: {
+  isolate: true,
+ },
 });
 ```
 

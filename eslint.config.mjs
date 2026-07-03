@@ -7,7 +7,11 @@ const config = [
     ...nickTwoBadFourU.configs.withoutVite,
 
     {
-        ignores: ["knip.config.ts", "plugin.d.cts", "vitest.stryker.config.ts"],
+        ignores: [
+            "knip.config.ts",
+            "plugin.d.cts",
+            "vitest.stryker.config.ts",
+        ],
         name: "Generated and Tooling TypeScript",
     },
 
@@ -21,6 +25,17 @@ const config = [
                     includeExports: true,
                 },
             ],
+        },
+    },
+
+    {
+        files: ["package.json", "docs/docusaurus/package.json"],
+        name: "Deterministic package metadata lint",
+        rules: {
+            // This rule performs npm registry lookups during lint. Keep release
+            // verification deterministic; dependency freshness is handled by
+            // the explicit update flow.
+            "node-dependencies/no-deprecated": "off",
         },
     },
 
@@ -114,6 +129,18 @@ const config = [
     },
 
     {
+        files: [
+            "docs/docusaurus/blog/**/*.md",
+            "docs/docusaurus/site-docs/**/*.md",
+            "docs/rules/**/*.md",
+        ],
+        name: "Docusaurus Markdown frontmatter titles",
+        rules: {
+            "markdown/no-multiple-h1": "off",
+        },
+    },
+
+    {
         files: ["docs/docusaurus/**/*.{ts,tsx}"],
         name: "Docusaurus Application",
         rules: {
@@ -129,6 +156,56 @@ const config = [
             "unicorn/no-unnecessary-global-this": "off",
             "unicorn/no-unreadable-new-expression": "off",
             "unicorn/prefer-temporal": "off",
+        },
+    },
+    {
+        files: ["docs/docusaurus/src/js/modernEnhancements.ts"],
+        name: "Docusaurus browser enhancement script",
+        rules: {
+            // This file is loaded as a browser enhancement script by Docusaurus.
+            "@typescript-eslint/no-unnecessary-condition": "off",
+            "import-x/unambiguous": "off",
+        },
+    },
+    {
+        files: [
+            "docs/docusaurus/src/plugins/suppressKnownWebpackWarningsPlugin.ts",
+        ],
+        name: "Docusaurus webpack warning suppression",
+        rules: {
+            // This Docusaurus plugin resolves package entrypoints from installed
+            // package metadata during the local docs build.
+            "@typescript-eslint/prefer-readonly-parameter-types": "off",
+            "security/detect-non-literal-fs-filename": "off",
+        },
+    },
+    {
+        files: ["docs/docusaurus/static/manifest.json"],
+        name: "Docusaurus web app manifest",
+        rules: {
+            // This is a web app manifest, not a browser extension manifest.
+            "json-schema-validator-2/no-invalid": "off",
+        },
+    },
+    {
+        files: ["docs/docusaurus/sidebars.rules.ts"],
+        name: "Docusaurus dynamic sidebar generation",
+        rules: {
+            // The sidebar validates rule ids against this package's source
+            // catalog, but the docs workspace resolver cannot resolve the
+            // package self-reference until the package is built/installed.
+            "@typescript-eslint/no-unsafe-call": "off",
+            "import-x/no-relative-packages": "off",
+            "import-x/no-unresolved": "off",
+        },
+    },
+    {
+        files: ["docs/docusaurus/typedoc.config.json"],
+        name: "TypeDoc config schema availability",
+        rules: {
+            // Json-schema-validator-2 fetches the remote TypeDoc schema during
+            // lint. TypeDoc validates this config during docs verification.
+            "json-schema-validator-2/no-invalid": "off",
         },
     },
     // Add repository-specific config entries below as needed.

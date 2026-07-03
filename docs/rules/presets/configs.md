@@ -24,7 +24,8 @@ export default [vite.configs.configs];
 
 ## Rules in this preset
 
-{/*begin-generated-preset-rules*/}
+{/_begin-generated-preset-rules_/}
+
 | Rule                                                                                                              | Fix |
 | :---------------------------------------------------------------------------------------------------------------- | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)                                         |  —  |
@@ -82,4 +83,4 @@ export default [vite.configs.configs];
 | [`vite/require-vitest-mock-reset-policy`](../require-vitest-mock-reset-policy.md)                                 |  —  |
 | [`vite/require-vitest-sequence-seed-when-shuffle`](../require-vitest-sequence-seed-when-shuffle.md)               |  —  |
 | [`vite/require-vitest-typecheck-tsconfig`](../require-vitest-typecheck-tsconfig.md)                               |  —  |
-{/*end-generated-preset-rules*/}
+| {/_end-generated-preset-rules_/}                                                                                  |

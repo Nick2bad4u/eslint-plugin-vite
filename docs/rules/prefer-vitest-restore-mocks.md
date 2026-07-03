@@ -28,9 +28,9 @@ In shared config, this tends to reduce subtle cross-test behavior leaks.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        clearMocks: true,
-    },
+ test: {
+  clearMocks: true,
+ },
 });
 ```
 
@@ -40,10 +40,10 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        clearMocks: true,
-        restoreMocks: true,
-    },
+ test: {
+  clearMocks: true,
+  restoreMocks: true,
+ },
 });
 ```
 

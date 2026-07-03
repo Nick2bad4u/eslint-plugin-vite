@@ -26,11 +26,11 @@ Relying on implicit defaults can cause drift across environments.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: true,
-        },
-    },
+ test: {
+  coverage: {
+   enabled: true,
+  },
+ },
 });
 ```
 
@@ -40,12 +40,12 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: true,
-            reportsDirectory: "coverage",
-        },
-    },
+ test: {
+  coverage: {
+   enabled: true,
+   reportsDirectory: "coverage",
+  },
+ },
 });
 ```
 

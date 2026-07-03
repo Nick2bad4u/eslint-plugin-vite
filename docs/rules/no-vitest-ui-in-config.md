@@ -25,9 +25,9 @@ Committing it as a default can cause inconsistent behavior across environments a
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        ui: true,
-    },
+ test: {
+  ui: true,
+ },
 });
 ```
 
@@ -37,9 +37,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        ui: false,
-    },
+ test: {
+  ui: false,
+ },
 });
 ```
 

@@ -26,11 +26,11 @@ For shared CI-facing config, this often weakens coverage signal unintentionally.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            all: false,
-        },
-    },
+ test: {
+  coverage: {
+   all: false,
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            all: true,
-        },
-    },
+ test: {
+  coverage: {
+   all: true,
+  },
+ },
 });
 ```
 

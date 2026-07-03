@@ -34,16 +34,16 @@ When Vite introduces a replacement such as `rolldownOptions` or `oxc`, that newe
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    build: {
-        rollupOptions: {
-            input: "index.html",
-        },
-        minify: "esbuild",
-        polyfillModulePreload: false,
-    },
-    optimizeDeps: {
-        disabled: true,
-    },
+ build: {
+  rollupOptions: {
+   input: "index.html",
+  },
+  minify: "esbuild",
+  polyfillModulePreload: false,
+ },
+ optimizeDeps: {
+  disabled: true,
+ },
 });
 ```
 
@@ -53,31 +53,31 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    build: {
-        modulePreload: {
-            polyfill: false,
-        },
-        minify: "oxc",
-        rolldownOptions: {
-            input: "index.html",
-        },
-    },
-    optimizeDeps: {
-        include: ["legacy-cjs-dep"],
-        noDiscovery: true,
-    },
-    oxc: {
-        jsx: {
-            runtime: "classic",
-        },
-    },
-    worker: {
-        rolldownOptions: {
-            output: {
-                sourcemap: true,
-            },
-        },
-    },
+ build: {
+  modulePreload: {
+   polyfill: false,
+  },
+  minify: "oxc",
+  rolldownOptions: {
+   input: "index.html",
+  },
+ },
+ optimizeDeps: {
+  include: ["legacy-cjs-dep"],
+  noDiscovery: true,
+ },
+ oxc: {
+  jsx: {
+   runtime: "classic",
+  },
+ },
+ worker: {
+  rolldownOptions: {
+   output: {
+    sourcemap: true,
+   },
+  },
+ },
 });
 ```
 

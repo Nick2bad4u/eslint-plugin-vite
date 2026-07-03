@@ -46,8 +46,8 @@ const pages = import.meta.glob("./pages/**/*.md");
 
 ```ts
 const modules = import.meta.glob([
-    "./content/blog/*.md",
-    "./content/docs/*.md",
+ "./content/blog/*.md",
+ "./content/docs/*.md",
 ]);
 ```
 

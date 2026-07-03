@@ -32,17 +32,17 @@ Wildcard hosts, fully open CORS, and a disabled filesystem sandbox make it easie
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    preview: {
-        allowedHosts: true,
-        cors: true,
-    },
-    server: {
-        allowedHosts: true,
-        cors: true,
-        fs: {
-            strict: false,
-        },
-    },
+ preview: {
+  allowedHosts: true,
+  cors: true,
+ },
+ server: {
+  allowedHosts: true,
+  cors: true,
+  fs: {
+   strict: false,
+  },
+ },
 });
 ```
 
@@ -52,22 +52,22 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    preview: {
-        allowedHosts: ["preview.internal.example.com"],
-        cors: {
-            origin: ["https://preview.internal.example.com"],
-        },
-    },
-    server: {
-        allowedHosts: ["app.internal.example.com"],
-        cors: {
-            origin: /^https?:\/\/(localhost|127\.0\.0\.1)(?::\d+)?$/,
-        },
-        fs: {
-            allow: [".."],
-            strict: true,
-        },
-    },
+ preview: {
+  allowedHosts: ["preview.internal.example.com"],
+  cors: {
+   origin: ["https://preview.internal.example.com"],
+  },
+ },
+ server: {
+  allowedHosts: ["app.internal.example.com"],
+  cors: {
+   origin: /^https?:\/\/(localhost|127\.0\.0\.1)(?::\d+)?$/,
+  },
+  fs: {
+   allow: [".."],
+   strict: true,
+  },
+ },
 });
 ```
 

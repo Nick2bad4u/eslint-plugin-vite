@@ -26,9 +26,9 @@ Disabling global unstubbing can increase flakiness and order dependence.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        unstubGlobals: false,
-    },
+ test: {
+  unstubGlobals: false,
+ },
 });
 ```
 
@@ -38,9 +38,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        unstubGlobals: true,
-    },
+ test: {
+  unstubGlobals: true,
+ },
 });
 ```
 

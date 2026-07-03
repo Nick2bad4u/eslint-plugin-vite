@@ -11,8 +11,7 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 type ConfigFlagName = "isPreview" | "isSsrBuild";
 type FunctionBoundaryNode =
-    | FunctionNode
-    | Readonly<TSESTree.FunctionDeclaration>;
+    FunctionNode | Readonly<TSESTree.FunctionDeclaration>;
 type FunctionNode =
     | Readonly<TSESTree.ArrowFunctionExpression>
     | Readonly<TSESTree.FunctionExpression>;

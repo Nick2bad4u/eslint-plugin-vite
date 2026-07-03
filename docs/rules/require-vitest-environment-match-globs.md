@@ -27,12 +27,12 @@ Implicit routing can become ambiguous in larger projects.
 import { defineConfig, defineProject } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        projects: [
-            defineProject({ test: { environment: "node" } }),
-            defineProject({ test: { environment: "jsdom" } }),
-        ],
-    },
+ test: {
+  projects: [
+   defineProject({ test: { environment: "node" } }),
+   defineProject({ test: { environment: "jsdom" } }),
+  ],
+ },
 });
 ```
 
@@ -42,13 +42,13 @@ export default defineConfig({
 import { defineConfig, defineProject } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        projects: [
-            defineProject({ test: { environment: "node" } }),
-            defineProject({ test: { environment: "jsdom" } }),
-        ],
-        environmentMatchGlobs: [["**/*.dom.test.ts", "jsdom"]],
-    },
+ test: {
+  projects: [
+   defineProject({ test: { environment: "node" } }),
+   defineProject({ test: { environment: "jsdom" } }),
+  ],
+  environmentMatchGlobs: [["**/*.dom.test.ts", "jsdom"]],
+ },
 });
 ```
 

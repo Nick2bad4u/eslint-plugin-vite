@@ -28,9 +28,9 @@ This plugin focuses on predictable config defaults and explicitness in Vite/Vite
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        globals: true,
-    },
+ test: {
+  globals: true,
+ },
 });
 ```
 
@@ -40,9 +40,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        globals: false,
-    },
+ test: {
+  globals: false,
+ },
 });
 ```
 

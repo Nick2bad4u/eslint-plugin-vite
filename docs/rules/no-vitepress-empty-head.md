@@ -24,7 +24,7 @@ Keeping `head` either populated or omitted improves config clarity.
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    head: [],
+ head: [],
 });
 ```
 
@@ -34,7 +34,7 @@ export default defineConfig({
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    head: [["meta", { name: "description", content: "Docs" }]],
+ head: [["meta", { name: "description", content: "Docs" }]],
 });
 ```
 

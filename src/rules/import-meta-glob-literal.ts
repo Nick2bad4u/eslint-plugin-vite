@@ -24,7 +24,8 @@ const isStaticPatternNode = (
 };
 
 const isStaticGlobPatternArgument = (
-    node: Readonly<ArrayElement<TSESTree.CallExpression["arguments"]>> | undefined
+    node:
+        Readonly<ArrayElement<TSESTree.CallExpression["arguments"]>> | undefined
 ): boolean => {
     if (node === undefined) {
         return false;

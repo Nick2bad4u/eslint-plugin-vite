@@ -20,7 +20,7 @@ An explicit slow-test threshold keeps performance expectations stable and avoids
 
 ```ts
 export default {
-    test: {},
+ test: {},
 };
 ```
 
@@ -28,9 +28,9 @@ export default {
 
 ```ts
 export default {
-    test: {
-        slowTestThreshold: 250,
-    },
+ test: {
+  slowTestThreshold: 250,
+ },
 };
 ```
 

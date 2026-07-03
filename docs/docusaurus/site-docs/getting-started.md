@@ -2,9 +2,9 @@
 title: 🏁 Getting started
 description: Install and configure eslint-plugin-vite with modern flat config.
 keywords:
-    - getting started
-    - installation
-    - quick start
+ - getting started
+ - installation
+ - quick start
 sidebar_position: 2
 ---
 

@@ -25,12 +25,12 @@ Keeping these entries explicit and non-empty improves project topology clarity.
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "unit",
-            exclude: [],
-        },
-    },
+ {
+  test: {
+   name: "unit",
+   exclude: [],
+  },
+ },
 ]);
 ```
 
@@ -40,12 +40,12 @@ export default defineWorkspace([
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "unit",
-            exclude: ["dist/**"],
-        },
-    },
+ {
+  test: {
+   name: "unit",
+   exclude: ["dist/**"],
+  },
+ },
 ]);
 ```
 

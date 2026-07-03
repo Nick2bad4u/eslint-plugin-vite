@@ -22,9 +22,9 @@ Shared default cache locations in monorepos can cause cross-package cache collis
 
 ```ts
 export default {
-    test: {
-        cacheDir: "node_modules/.vitest",
-    },
+ test: {
+  cacheDir: "node_modules/.vitest",
+ },
 };
 ```
 
@@ -32,9 +32,9 @@ export default {
 
 ```ts
 export default {
-    test: {
-        cacheDir: ".cache/vitest/app",
-    },
+ test: {
+  cacheDir: ".cache/vitest/app",
+ },
 };
 ```
 

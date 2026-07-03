@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import Heading from "@theme/Heading";
@@ -125,7 +127,7 @@ const cards = [
 ] as const satisfies readonly Card[];
 
 /** Home page component for the docs site's landing route. */
-export default function Home() {
+export default function Home(): ReactElement {
     const logoUrl = useBaseUrl("/img/logo.svg");
 
     return (

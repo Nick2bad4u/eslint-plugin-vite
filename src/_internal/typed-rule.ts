@@ -76,7 +76,9 @@ export const createTypedRule: ViteRuleCreator = (ruleDefinition) => {
         ...createdRule,
         meta: {
             ...createdRule.meta,
-            ...(isDefined(metaDefaultOptions) && { defaultOptions: metaDefaultOptions }),
+            ...(isDefined(metaDefaultOptions) && {
+                defaultOptions: metaDefaultOptions,
+            }),
             docs: docsWithCatalog,
         },
         name: ruleDefinition.name,

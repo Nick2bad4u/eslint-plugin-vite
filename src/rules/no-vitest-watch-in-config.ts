@@ -14,7 +14,8 @@ const watchPathSuffix = constTuple("test", "watch");
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     isExpectedValue: boolean
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
+): boolean =>
+    node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
 
 /** Disallow committed `test.watch: true` in shared config files. */
 const noVitestWatchInConfigRule: ReturnType<typeof createTypedRule> =

@@ -26,11 +26,11 @@ Empty names make project reporting ambiguous and often indicate an unfinished co
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "",
-        },
-    },
+ {
+  test: {
+   name: "",
+  },
+ },
 ]);
 ```
 
@@ -40,11 +40,11 @@ export default defineWorkspace([
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "unit",
-        },
-    },
+ {
+  test: {
+   name: "unit",
+  },
+ },
 ]);
 ```
 

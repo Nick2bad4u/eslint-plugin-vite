@@ -14,7 +14,8 @@ const passWithNoTestsPathSuffix = constTuple("test", "passWithNoTests");
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     isExpectedValue: boolean
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
+): boolean =>
+    node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
 
 /**
  * Disallow `test.passWithNoTests: true` in Vitest config to avoid masking

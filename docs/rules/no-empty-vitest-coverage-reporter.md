@@ -26,11 +26,11 @@ This rule catches a high-impact but easy-to-miss coverage misconfiguration.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reporter: [],
-        },
-    },
+ test: {
+  coverage: {
+   reporter: [],
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reporter: ["text", "html"],
-        },
-    },
+ test: {
+  coverage: {
+   reporter: ["text", "html"],
+  },
+ },
 });
 ```
 

@@ -25,16 +25,16 @@ Duplicate project names make workspace output harder to understand and make it e
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "unit",
-        },
-    },
-    {
-        test: {
-            name: "unit",
-        },
-    },
+ {
+  test: {
+   name: "unit",
+  },
+ },
+ {
+  test: {
+   name: "unit",
+  },
+ },
 ]);
 ```
 
@@ -44,16 +44,16 @@ export default defineWorkspace([
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "unit",
-        },
-    },
-    {
-        test: {
-            name: "browser",
-        },
-    },
+ {
+  test: {
+   name: "unit",
+  },
+ },
+ {
+  test: {
+   name: "browser",
+  },
+ },
 ]);
 ```
 

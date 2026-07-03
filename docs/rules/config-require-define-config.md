@@ -29,20 +29,22 @@ That matters for:
 
 ```ts
 export default {
-    resolve: {
-        alias: {
-            "@": "/src",
-        },
-    },
+ resolve: {
+  alias: {
+   "@": "/src",
+  },
+ },
 };
 ```
 
 ```ts
-export default [{
-    test: {
-        name: "unit",
-    },
-}];
+export default [
+ {
+  test: {
+   name: "unit",
+  },
+ },
+];
 ```
 
 ## ✅ Correct
@@ -51,11 +53,11 @@ export default [{
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    resolve: {
-        alias: {
-            "@": "/src",
-        },
-    },
+ resolve: {
+  alias: {
+   "@": "/src",
+  },
+ },
 });
 ```
 
@@ -63,11 +65,11 @@ export default defineConfig({
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "unit",
-        },
-    },
+ {
+  test: {
+   name: "unit",
+  },
+ },
 ]);
 ```
 

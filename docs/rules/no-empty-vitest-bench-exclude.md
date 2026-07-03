@@ -26,11 +26,11 @@ Removing ineffective settings keeps benchmark topology easier to reason about.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        benchmark: {
-            exclude: [],
-        },
-    },
+ test: {
+  benchmark: {
+   exclude: [],
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        benchmark: {
-            exclude: ["dist/**"],
-        },
-    },
+ test: {
+  benchmark: {
+   exclude: ["dist/**"],
+  },
+ },
 });
 ```
 

@@ -14,7 +14,8 @@ const fileParallelismPathSuffix = constTuple("test", "fileParallelism");
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     isExpectedValue: boolean
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
+): boolean =>
+    node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
 
 /** Disallow `test.fileParallelism: false` in committed Vitest config. */
 const noVitestFileParallelismDisabledRule: ReturnType<typeof createTypedRule> =

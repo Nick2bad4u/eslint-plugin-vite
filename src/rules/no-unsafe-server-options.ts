@@ -11,7 +11,10 @@ type MessageId = "unsafeServerOption";
 const isUnknownRecord = (value: unknown): value is UnknownRecord =>
     typeof value === "object" && value !== null;
 
-const isBooleanLiteral = (value: unknown, isExpectedValue: boolean): boolean => {
+const isBooleanLiteral = (
+    value: unknown,
+    isExpectedValue: boolean
+): boolean => {
     if (!isUnknownRecord(value)) {
         return false;
     }

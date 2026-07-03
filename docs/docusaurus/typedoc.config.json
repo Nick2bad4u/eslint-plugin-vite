@@ -1,32 +1,32 @@
 {
-  "coverageOutputPath": "static/img/coverage",
-  "entryPointStrategy": "expand",
-  "entryPoints": [
-    "../../src/plugin.ts",
-    "../../src/_internal"
-  ],
-  "extends": [
-    "typedoc-config-nick2bad4u/typedoc.json"
-  ],
-  "gitRevision": "main",
-  "githubPages": true,
-  "$schema": "https://typedoc.org/schema.json",
-  "includeHierarchySummary": true,
-  "favicon": "./static/img/logo.svg",
-  "prettierConfigFile": "../../.prettierrc",
-  "gitRemote": "origin",
-  "searchInComments": true,
-  "hideGenerator": false,
-  "searchGroupBoosts": {
-    "Classes": 1.5,
-    "Functions": 1.2,
-    "Interfaces": 1.3,
-    "Types": 1.1
-  },
-  "hostedBaseUrl": "https://nick2bad4u.github.io/eslint-plugin-vite/",
-  "json": "docs/typedoc.json",
-  "name": "eslint-plugin-vite Documentation",
-  "out": "site-docs/developer/api",
-  "searchInDocuments": true,
-  "tsconfig": "tsconfig.typedoc.json"
+    "$schema": "https://typedoc.org/schema.json",
+    "coverageOutputPath": "static/img/coverage",
+    "entryPointStrategy": "expand",
+    "entryPoints": [
+        "../../src/plugin.ts",
+        "../../src/_internal"
+    ],
+    "extends": [
+        "typedoc-config-nick2bad4u/typedoc.json"
+    ],
+    "favicon": "./static/img/logo.svg",
+    "gitRemote": "origin",
+    "gitRevision": "main",
+    "githubPages": true,
+    "hideGenerator": false,
+    "hostedBaseUrl": "https://nick2bad4u.github.io/eslint-plugin-vite/",
+    "includeHierarchySummary": true,
+    "json": "docs/typedoc.json",
+    "name": "eslint-plugin-vite Documentation",
+    "out": "site-docs/developer/api",
+    "prettierConfigFile": "../../.prettierrc",
+    "searchGroupBoosts": {
+        "Classes": 1.5,
+        "Functions": 1.2,
+        "Interfaces": 1.3,
+        "Types": 1.1
+    },
+    "searchInComments": true,
+    "searchInDocuments": true,
+    "tsconfig": "tsconfig.typedoc.json"
 }

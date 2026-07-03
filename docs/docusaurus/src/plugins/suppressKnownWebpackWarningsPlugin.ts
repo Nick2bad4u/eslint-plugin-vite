@@ -129,41 +129,41 @@ const vscodeLanguageServerTypesEsmEntry = resolvePreferredEntry(
  * Docusaurus plugin that aliases known ESM package entries and suppresses the
  * corresponding webpack UMD warning noise.
  */
-export const suppressKnownWebpackWarningsPlugin: PluginModule = ():
-    | null
-    | Plugin => {
-    const alias: Record<string, string> = {};
+export const suppressKnownWebpackWarningsPlugin: PluginModule =
+    (): null | Plugin => {
+        const alias: Record<string, string> = {};
 
-    if (vscodeCssLanguageServiceEsmEntry !== undefined) {
-        alias["vscode-css-languageservice$"] = vscodeCssLanguageServiceEsmEntry;
-    }
+        if (vscodeCssLanguageServiceEsmEntry !== undefined) {
+            alias["vscode-css-languageservice$"] =
+                vscodeCssLanguageServiceEsmEntry;
+        }
 
-    if (vscodeLanguageServerTypesEsmEntry !== undefined) {
-        alias["vscode-languageserver-types$"] =
-            vscodeLanguageServerTypesEsmEntry;
-        alias["vscode-languageserver-types/lib/umd/main.js$"] =
-            vscodeLanguageServerTypesEsmEntry;
-    }
+        if (vscodeLanguageServerTypesEsmEntry !== undefined) {
+            alias["vscode-languageserver-types$"] =
+                vscodeLanguageServerTypesEsmEntry;
+            alias["vscode-languageserver-types/lib/umd/main.js$"] =
+                vscodeLanguageServerTypesEsmEntry;
+        }
 
-    if (Object.keys(alias).length === 0) {
-        return null;
-    }
+        if (Object.keys(alias).length === 0) {
+            return null;
+        }
 
-    return {
-        configureWebpack: () => ({
+        return {
+            configureWebpack: () => ({
                 ...(vscodeLanguageServerTypesEsmEntry !== undefined && {
-                          ignoreWarnings: [
-                              {
-                                  message:
-                                      /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/u,
-                                  module: /vscode-languageserver-types[/\\]lib[/\\]umd[/\\]main\.js/u,
-                              },
-                          ],
-                      }),
+                    ignoreWarnings: [
+                        {
+                            message:
+                                /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/u,
+                            module: /vscode-languageserver-types[/\\]lib[/\\]umd[/\\]main\.js/u,
+                        },
+                    ],
+                }),
                 resolve: {
                     alias,
                 },
             }),
-        name: "suppress-known-webpack-warnings",
+            name: "suppress-known-webpack-warnings",
+        };
     };
-};

@@ -20,7 +20,7 @@ Explicit environment declarations reduce ambiguity and prevent accidental behavi
 
 ```ts
 export default {
-    test: {},
+ test: {},
 };
 ```
 
@@ -28,9 +28,9 @@ export default {
 
 ```ts
 export default {
-    test: {
-        environment: "node",
-    },
+ test: {
+  environment: "node",
+ },
 };
 ```
 

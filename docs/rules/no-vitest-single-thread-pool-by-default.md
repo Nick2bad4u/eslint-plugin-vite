@@ -32,13 +32,13 @@ In shared configuration, these values are often temporary debugging settings tha
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        poolOptions: {
-            threads: {
-                maxThreads: 1,
-            },
-        },
-    },
+ test: {
+  poolOptions: {
+   threads: {
+    maxThreads: 1,
+   },
+  },
+ },
 });
 ```
 
@@ -48,13 +48,13 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        poolOptions: {
-            threads: {
-                maxThreads: 2,
-            },
-        },
-    },
+ test: {
+  poolOptions: {
+   threads: {
+    maxThreads: 2,
+   },
+  },
+ },
 });
 ```
 

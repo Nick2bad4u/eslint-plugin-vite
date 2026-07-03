@@ -35,16 +35,16 @@ A stable explicit name improves:
 import { defineConfig } from "vite";
 
 export default defineConfig({
+ test: {
+  projects: [
+   {
     test: {
-        projects: [
-            {
-                test: {
-                    environment: "happy-dom",
-                    include: ["tests/**/*.browser.test.ts"],
-                },
-            },
-        ],
+     environment: "happy-dom",
+     include: ["tests/**/*.browser.test.ts"],
     },
+   },
+  ],
+ },
 });
 ```
 
@@ -54,20 +54,20 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
+ test: {
+  projects: [
+   {
     test: {
-        projects: [
-            {
-                test: {
-                    environment: "happy-dom",
-                    include: ["tests/**/*.browser.test.ts"],
-                    name: {
-                        label: "browser",
-                        color: "green",
-                    },
-                },
-            },
-        ],
+     environment: "happy-dom",
+     include: ["tests/**/*.browser.test.ts"],
+     name: {
+      label: "browser",
+      color: "green",
+     },
     },
+   },
+  ],
+ },
 });
 ```
 

@@ -35,11 +35,11 @@ In shared config, this often increases flakiness and order dependence.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        globals: true,
-        isolate: false,
-        unstubGlobals: false,
-    },
+ test: {
+  globals: true,
+  isolate: false,
+  unstubGlobals: false,
+ },
 });
 ```
 
@@ -49,11 +49,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        globals: true,
-        isolate: true,
-        unstubGlobals: false,
-    },
+ test: {
+  globals: true,
+  isolate: true,
+  unstubGlobals: false,
+ },
 });
 ```
 

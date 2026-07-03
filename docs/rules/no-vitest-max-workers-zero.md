@@ -29,9 +29,9 @@ This is a high-signal static config mistake that is cheap to catch early.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        maxWorkers: 0,
-    },
+ test: {
+  maxWorkers: 0,
+ },
 });
 ```
 
@@ -41,9 +41,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        maxWorkers: 2,
-    },
+ test: {
+  maxWorkers: 2,
+ },
 });
 ```
 

@@ -28,9 +28,9 @@ This plugin focuses on safe Vite/Vitest configuration defaults, so preventing th
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        passWithNoTests: true,
-    },
+ test: {
+  passWithNoTests: true,
+ },
 });
 ```
 
@@ -40,9 +40,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        passWithNoTests: false,
-    },
+ test: {
+  passWithNoTests: false,
+ },
 });
 ```
 

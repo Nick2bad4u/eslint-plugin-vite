@@ -36,11 +36,11 @@ export default defineWorkspace([]);
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: {
-            name: "unit",
-        },
-    },
+ {
+  test: {
+   name: "unit",
+  },
+ },
 ]);
 ```
 

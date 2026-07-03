@@ -9,7 +9,7 @@ This preset helps keep benchmark suites separate from correctness tests.
 ```ts
 import vite from "@typpi/eslint-plugin-vite";
 
-export default [vite.configs.vitest-bench];
+export default [vite.configs.vitest - bench];
 ```
 
 ## When to use it
@@ -20,7 +20,8 @@ export default [vite.configs.vitest-bench];
 
 ## Rules in this preset
 
-{/*begin-generated-preset-rules*/}
+{/_begin-generated-preset-rules_/}
+
 | Rule                                                                                            | Fix |
 | :---------------------------------------------------------------------------------------------- | :-: |
 | [`vite/no-empty-vitest-bench-exclude`](../no-empty-vitest-bench-exclude.md)                     |  —  |
@@ -31,4 +32,4 @@ export default [vite.configs.vitest-bench];
 | [`vite/require-vitest-explicit-environment`](../require-vitest-explicit-environment.md)         |  —  |
 | [`vite/require-vitest-slow-test-threshold`](../require-vitest-slow-test-threshold.md)           |  —  |
 | [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                   |  —  |
-{/*end-generated-preset-rules*/}
+| {/_end-generated-preset-rules_/}                                                                |

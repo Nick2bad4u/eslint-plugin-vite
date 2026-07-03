@@ -28,11 +28,11 @@ Mixing them in the same file makes ownership, review, and execution intent harde
 import { bench, test } from "vitest";
 
 test("adds numbers", () => {
-    expect(1 + 1).toBe(2);
+ expect(1 + 1).toBe(2);
 });
 
 bench("adds numbers", () => {
-    1 + 1;
+ 1 + 1;
 });
 ```
 
@@ -42,7 +42,7 @@ bench("adds numbers", () => {
 import { test } from "vitest";
 
 test("adds numbers", () => {
-    expect(1 + 1).toBe(2);
+ expect(1 + 1).toBe(2);
 });
 ```
 
@@ -50,7 +50,7 @@ test("adds numbers", () => {
 import { bench } from "vitest";
 
 bench("adds numbers", () => {
-    1 + 1;
+ 1 + 1;
 });
 ```
 

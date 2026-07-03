@@ -25,7 +25,7 @@ Requiring one of these fields helps avoid accidental anonymous site headers.
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    description: "Project docs",
+ description: "Project docs",
 });
 ```
 
@@ -35,7 +35,7 @@ export default defineConfig({
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    title: "Project Docs",
+ title: "Project Docs",
 });
 ```
 

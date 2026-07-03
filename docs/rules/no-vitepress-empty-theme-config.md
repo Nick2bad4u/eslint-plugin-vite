@@ -24,7 +24,7 @@ Removing it keeps intent clear and avoids misleading placeholders.
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    themeConfig: {},
+ themeConfig: {},
 });
 ```
 
@@ -34,9 +34,9 @@ export default defineConfig({
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-    themeConfig: {
-        nav: [],
-    },
+ themeConfig: {
+  nav: [],
+ },
 });
 ```
 

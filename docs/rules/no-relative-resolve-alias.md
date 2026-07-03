@@ -25,11 +25,11 @@ Relative replacement strings look convenient, but they are fragile and often mis
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    resolve: {
-        alias: {
-            "@": "./src",
-        },
-    },
+ resolve: {
+  alias: {
+   "@": "./src",
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ import path from "node:path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    resolve: {
-        alias: {
-            "@": path.resolve(import.meta.dirname, "src"),
-        },
-    },
+ resolve: {
+  alias: {
+   "@": path.resolve(import.meta.dirname, "src"),
+  },
+ },
 });
 ```
 

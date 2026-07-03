@@ -7,24 +7,24 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const noDynamicImportMetaEnvAccessRule: ReturnType<typeof createTypedRule> =
     createTypedRule<[], "dynamicAccess">({
         create: (context) => ({
-                MemberExpression(node) {
-                    if (!isImportMetaEnvMemberExpression(node.object)) {
-                        return;
-                    }
+            MemberExpression(node) {
+                if (!isImportMetaEnvMemberExpression(node.object)) {
+                    return;
+                }
 
-                    if (
-                        !node.computed ||
-                        node.property.type === AST_NODE_TYPES.Literal
-                    ) {
-                        return;
-                    }
+                if (
+                    !node.computed ||
+                    node.property.type === AST_NODE_TYPES.Literal
+                ) {
+                    return;
+                }
 
-                    context.report({
-                        messageId: "dynamicAccess",
-                        node: node.property,
-                    });
-                },
-            }),
+                context.report({
+                    messageId: "dynamicAccess",
+                    node: node.property,
+                });
+            },
+        }),
         meta: {
             deprecated: false,
             docs: {

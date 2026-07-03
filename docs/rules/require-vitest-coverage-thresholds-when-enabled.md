@@ -26,12 +26,12 @@ Explicit thresholds make CI quality expectations clear and enforceable.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: true,
-            thresholds: {},
-        },
-    },
+ test: {
+  coverage: {
+   enabled: true,
+   thresholds: {},
+  },
+ },
 });
 ```
 
@@ -41,17 +41,17 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: true,
-            thresholds: {
-                lines: 80,
-                functions: 80,
-                branches: 75,
-                statements: 80,
-            },
-        },
-    },
+ test: {
+  coverage: {
+   enabled: true,
+   thresholds: {
+    lines: 80,
+    functions: 80,
+    branches: 75,
+    statements: 80,
+   },
+  },
+ },
 });
 ```
 

@@ -20,7 +20,8 @@ export default [vite.configs.all];
 
 ## Rules in this preset
 
-{/*begin-generated-preset-rules*/}
+{/_begin-generated-preset-rules_/}
+
 | Rule                                                                                                              | Fix |
 | :---------------------------------------------------------------------------------------------------------------- | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)                                         |  —  |
@@ -95,4 +96,4 @@ export default [vite.configs.all];
 | [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  |
 | [`vite/require-vitest-typecheck-tsconfig`](../require-vitest-typecheck-tsconfig.md)                               |  —  |
 | [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)                                       |  —  |
-{/*end-generated-preset-rules*/}
+| {/_end-generated-preset-rules_/}                                                                                  |

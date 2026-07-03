@@ -31,11 +31,11 @@ This is a Vitest config-authoring best-practice check that generic ESLint plugin
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        typecheck: {
-            enabled: true,
-        },
-    },
+ test: {
+  typecheck: {
+   enabled: true,
+  },
+ },
 });
 ```
 
@@ -45,12 +45,12 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        typecheck: {
-            enabled: true,
-            tsconfig: "./tsconfig.vitest-typecheck.json",
-        },
-    },
+ test: {
+  typecheck: {
+   enabled: true,
+   tsconfig: "./tsconfig.vitest-typecheck.json",
+  },
+ },
 });
 ```
 

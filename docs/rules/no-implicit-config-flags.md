@@ -36,25 +36,25 @@ An explicit comparison communicates intent better and prevents `undefined` from 
 import { defineConfig } from "vite";
 
 export default defineConfig(({ isPreview, isSsrBuild }) => {
-    if (isPreview) {
-        return {
-            preview: {
-                open: true,
-            },
-        };
-    }
+ if (isPreview) {
+  return {
+   preview: {
+    open: true,
+   },
+  };
+ }
 
-    return !isSsrBuild
-        ? {
-              build: {
-                  sourcemap: true,
-              },
-          }
-        : {
-              build: {
-                  ssr: "src/entry-server.ts",
-              },
-          };
+ return !isSsrBuild
+  ? {
+     build: {
+      sourcemap: true,
+     },
+    }
+  : {
+     build: {
+      ssr: "src/entry-server.ts",
+     },
+    };
 });
 ```
 
@@ -64,25 +64,25 @@ export default defineConfig(({ isPreview, isSsrBuild }) => {
 import { defineConfig } from "vite";
 
 export default defineConfig(({ isPreview, isSsrBuild }) => {
-    if (isPreview === true) {
-        return {
-            preview: {
-                open: true,
-            },
-        };
-    }
+ if (isPreview === true) {
+  return {
+   preview: {
+    open: true,
+   },
+  };
+ }
 
-    return isSsrBuild === false
-        ? {
-              build: {
-                  sourcemap: true,
-              },
-          }
-        : {
-              build: {
-                  ssr: "src/entry-server.ts",
-              },
-          };
+ return isSsrBuild === false
+  ? {
+     build: {
+      sourcemap: true,
+     },
+    }
+  : {
+     build: {
+      ssr: "src/entry-server.ts",
+     },
+    };
 });
 ```
 

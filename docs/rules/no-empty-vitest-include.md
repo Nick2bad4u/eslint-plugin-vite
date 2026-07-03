@@ -26,9 +26,9 @@ Because this setting controls discovery directly, reporting an empty static arra
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        include: [],
-    },
+ test: {
+  include: [],
+ },
 });
 ```
 
@@ -38,9 +38,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        include: ["test/**/*.test.ts"],
-    },
+ test: {
+  include: ["test/**/*.test.ts"],
+ },
 });
 ```
 

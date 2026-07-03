@@ -33,8 +33,7 @@ describe("rule docs integrity", () => {
                 `${ruleName}.md`
             );
             const docs = ruleModule.meta.docs as
-                | RuleDocsWithCatalog
-                | undefined;
+                RuleDocsWithCatalog | undefined;
 
             expect(existsSync(docsPath)).toBe(true);
 
@@ -42,13 +41,12 @@ describe("rule docs integrity", () => {
 
             expect(contents).toContain(`# ${ruleName}`);
             expect(docs?.ruleId).toBeDefined();
+
             if (docs?.ruleId === undefined) {
                 throw new Error(`Missing rule catalog ID for ${ruleName}`);
             }
 
-            expect(contents).toContain(
-                `> **Rule catalog ID:** ${docs.ruleId}`
-            );
+            expect(contents).toContain(`> **Rule catalog ID:** ${docs.ruleId}`);
 
             for (const heading of requiredHeadings) {
                 expect(contents).toContain(heading);

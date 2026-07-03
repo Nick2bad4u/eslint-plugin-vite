@@ -31,11 +31,11 @@ A dedicated coverage subdirectory keeps artifacts isolated and predictable.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reportsDirectory: "./",
-        },
-    },
+ test: {
+  coverage: {
+   reportsDirectory: "./",
+  },
+ },
 });
 ```
 
@@ -45,11 +45,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reportsDirectory: "coverage",
-        },
-    },
+ test: {
+  coverage: {
+   reportsDirectory: "coverage",
+  },
+ },
 });
 ```
 

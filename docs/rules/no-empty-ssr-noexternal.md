@@ -24,9 +24,9 @@ Removing no-op config improves signal and keeps intent clear.
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    ssr: {
-        noExternal: [],
-    },
+ ssr: {
+  noExternal: [],
+ },
 });
 ```
 
@@ -36,9 +36,9 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    ssr: {
-        noExternal: ["some-dep"],
-    },
+ ssr: {
+  noExternal: ["some-dep"],
+ },
 });
 ```
 

@@ -32,9 +32,9 @@ A shared policy reduces nondeterminism and cross-suite interference.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        globals: true,
-    },
+ test: {
+  globals: true,
+ },
 });
 ```
 
@@ -44,9 +44,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        restoreMocks: true,
-    },
+ test: {
+  restoreMocks: true,
+ },
 });
 ```
 

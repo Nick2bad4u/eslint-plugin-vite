@@ -33,12 +33,12 @@ This plugin targets configuration correctness for Vite/Vitest projects, so enfor
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        typecheck: {
-            enabled: false,
-            ignoreSourceErrors: true,
-        },
-    },
+ test: {
+  typecheck: {
+   enabled: false,
+   ignoreSourceErrors: true,
+  },
+ },
 });
 ```
 
@@ -48,13 +48,13 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        typecheck: {
-            enabled: true,
-            ignoreSourceErrors: false,
-            tsconfig: "./tsconfig.vitest-typecheck.json",
-        },
-    },
+ test: {
+  typecheck: {
+   enabled: true,
+   ignoreSourceErrors: false,
+   tsconfig: "./tsconfig.vitest-typecheck.json",
+  },
+ },
 });
 ```
 

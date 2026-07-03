@@ -22,11 +22,11 @@ If teardown has less time than hooks, shutdown and cleanup can fail under load a
 
 ```ts
 export default {
-    test: {
-        testTimeout: 20_000,
-        hookTimeout: 10_000,
-        teardownTimeout: 5_000,
-    },
+ test: {
+  testTimeout: 20_000,
+  hookTimeout: 10_000,
+  teardownTimeout: 5_000,
+ },
 };
 ```
 
@@ -34,11 +34,11 @@ export default {
 
 ```ts
 export default {
-    test: {
-        testTimeout: 20_000,
-        hookTimeout: 10_000,
-        teardownTimeout: 10_000,
-    },
+ test: {
+  testTimeout: 20_000,
+  hookTimeout: 10_000,
+  teardownTimeout: 10_000,
+ },
 };
 ```
 

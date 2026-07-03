@@ -24,9 +24,9 @@ Keeping optimize-deps settings explicit improves readability and intent.
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    optimizeDeps: {
-        include: [],
-    },
+ optimizeDeps: {
+  include: [],
+ },
 });
 ```
 
@@ -36,9 +36,9 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    optimizeDeps: {
-        include: ["react"],
-    },
+ optimizeDeps: {
+  include: ["react"],
+ },
 });
 ```
 

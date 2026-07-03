@@ -26,11 +26,11 @@ This rule helps keep coverage output focused on actionable gaps.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            skipFull: false,
-        },
-    },
+ test: {
+  coverage: {
+   skipFull: false,
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            skipFull: true,
-        },
-    },
+ test: {
+  coverage: {
+   skipFull: true,
+  },
+ },
 });
 ```
 

@@ -25,9 +25,9 @@ Committing it into shared config can create CI/developer-environment drift and s
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        watch: true,
-    },
+ test: {
+  watch: true,
+ },
 });
 ```
 
@@ -37,9 +37,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        watch: false,
-    },
+ test: {
+  watch: false,
+ },
 });
 ```
 

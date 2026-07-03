@@ -2,9 +2,9 @@
 title: 🛠️ Presets
 description: Preset reference and selection guide for eslint-plugin-vite.
 keywords:
-    - presets
-    - preset reference
-    - preset selection strategy
+ - presets
+ - preset reference
+ - preset selection strategy
 ---
 
 # Presets
@@ -26,7 +26,8 @@ Related guides:
 
 ## Rule matrix
 
-{/*begin-generated-preset-matrix*/}
+{/_begin-generated-preset-matrix_/}
+
 - `Preset key` legend:
   - [🟡](./recommended.md) — [`vite.configs.recommended`](./recommended.md)
   - [🔴](./strict.md) — [`vite.configs.strict`](./strict.md)
@@ -111,4 +112,4 @@ Related guides:
 | [`vite/require-vitest-timeout-triplet`](../require-vitest-timeout-triplet.md)                                     |  —  | [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md) [👟](./vitest-bench.md)                                        |
 | [`vite/require-vitest-typecheck-tsconfig`](../require-vitest-typecheck-tsconfig.md)                               |  —  | [🔴](./strict.md) [🟣](./all.md) [⚙️](./configs.md) [🧪](./vitest.md)                                             |
 | [`vite/workspace-unique-project-name`](../workspace-unique-project-name.md)                                       |  —  | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./vitest.md)                                         |
-{/*end-generated-preset-matrix*/}
+| {/_end-generated-preset-matrix_/}                                                                                 |

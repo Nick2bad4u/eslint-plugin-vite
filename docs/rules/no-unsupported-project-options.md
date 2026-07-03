@@ -34,12 +34,12 @@ TypeScript users often catch this through `defineProject(...)` types, but JavaSc
 import { defineProject } from "vitest/config";
 
 export default defineProject({
-    test: {
-        coverage: {
-            provider: "v8",
-        },
-        name: "unit",
-    },
+ test: {
+  coverage: {
+   provider: "v8",
+  },
+  name: "unit",
+ },
 });
 ```
 
@@ -49,19 +49,19 @@ export default defineProject({
 import { defineConfig, defineProject } from "vitest/config";
 
 export default defineConfig({
+ test: {
+  coverage: {
+   provider: "v8",
+  },
+  projects: [
+   defineProject({
     test: {
-        coverage: {
-            provider: "v8",
-        },
-        projects: [
-            defineProject({
-                test: {
-                    environment: "node",
-                    name: "unit",
-                },
-            }),
-        ],
+     environment: "node",
+     name: "unit",
     },
+   }),
+  ],
+ },
 });
 ```
 

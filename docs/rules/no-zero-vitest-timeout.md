@@ -34,10 +34,10 @@ This repository focuses on safe Vite/Vitest configuration patterns, so catching 
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        testTimeout: 0,
-        hookTimeout: 0,
-    },
+ test: {
+  testTimeout: 0,
+  hookTimeout: 0,
+ },
 });
 ```
 
@@ -47,12 +47,12 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        testTimeout: 5_000,
-        hookTimeout: 10_000,
-        teardownTimeout: 10_000,
-        slowTestThreshold: 300,
-    },
+ test: {
+  testTimeout: 5_000,
+  hookTimeout: 10_000,
+  teardownTimeout: 10_000,
+  slowTestThreshold: 300,
+ },
 });
 ```
 

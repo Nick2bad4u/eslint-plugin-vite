@@ -24,9 +24,9 @@ Removing no-op arrays keeps worker-specific behavior explicit.
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    worker: {
-        plugins: [],
-    },
+ worker: {
+  plugins: [],
+ },
 });
 ```
 
@@ -36,9 +36,9 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    worker: {
-        plugins: [() => ({ name: "worker-plugin" })],
-    },
+ worker: {
+  plugins: [() => ({ name: "worker-plugin" })],
+ },
 });
 ```
 

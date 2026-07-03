@@ -24,9 +24,9 @@ Removing no-op config reduces maintenance noise.
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    optimizeDeps: {
-        exclude: [],
-    },
+ optimizeDeps: {
+  exclude: [],
+ },
 });
 ```
 
@@ -36,9 +36,9 @@ export default defineConfig({
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    optimizeDeps: {
-        exclude: ["some-dep"],
-    },
+ optimizeDeps: {
+  exclude: ["some-dep"],
+ },
 });
 ```
 

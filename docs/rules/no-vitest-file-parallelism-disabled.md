@@ -25,9 +25,9 @@ In shared config, this is usually an accidental or temporary setting that should
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        fileParallelism: false,
-    },
+ test: {
+  fileParallelism: false,
+ },
 });
 ```
 
@@ -37,9 +37,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        fileParallelism: true,
-    },
+ test: {
+  fileParallelism: true,
+ },
 });
 ```
 

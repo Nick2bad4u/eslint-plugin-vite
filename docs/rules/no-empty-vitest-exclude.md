@@ -25,9 +25,9 @@ Flagging it keeps shared config intentional and avoids misleading “configured 
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        exclude: [],
-    },
+ test: {
+  exclude: [],
+ },
 });
 ```
 
@@ -37,9 +37,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        exclude: ["dist/**"],
-    },
+ test: {
+  exclude: ["dist/**"],
+ },
 });
 ```
 

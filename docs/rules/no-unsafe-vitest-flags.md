@@ -33,10 +33,10 @@ This plugin is focused on robust Vite/Vitest configuration quality, so catching 
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        allowOnly: true,
-        dangerouslyIgnoreUnhandledErrors: true,
-    },
+ test: {
+  allowOnly: true,
+  dangerouslyIgnoreUnhandledErrors: true,
+ },
 });
 ```
 
@@ -46,10 +46,10 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        allowOnly: false,
-        dangerouslyIgnoreUnhandledErrors: false,
-    },
+ test: {
+  allowOnly: false,
+  dangerouslyIgnoreUnhandledErrors: false,
+ },
 });
 ```
 

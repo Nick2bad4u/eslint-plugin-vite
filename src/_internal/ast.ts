@@ -79,7 +79,7 @@ export const getPropertyPath = (
             return [];
         }
 
-        propertyPath.unshift(propertyName);
+        propertyPath.push(propertyName);
 
         const parentObject: TSESTree.Node = currentNode.parent;
 
@@ -96,7 +96,7 @@ export const getPropertyPath = (
         currentNode = parentNode;
     }
 
-    return propertyPath;
+    return propertyPath.toReversed();
 };
 
 /** Check whether a property resolves to the provided nested path. */

@@ -28,9 +28,9 @@ This repository focuses on configuration quality, so preventing disabled slow-te
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        slowTestThreshold: 0,
-    },
+ test: {
+  slowTestThreshold: 0,
+ },
 });
 ```
 
@@ -40,9 +40,9 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        slowTestThreshold: 300,
-    },
+ test: {
+  slowTestThreshold: 300,
+ },
 });
 ```
 

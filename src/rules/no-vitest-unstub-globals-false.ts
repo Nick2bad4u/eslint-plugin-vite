@@ -14,7 +14,8 @@ const unstubGlobalsPathSuffix = constTuple("test", "unstubGlobals");
 const isBooleanLiteral = (
     node: Readonly<TSESTree.Property["value"]>,
     isExpectedValue: boolean
-): boolean => node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
+): boolean =>
+    node.type === AST_NODE_TYPES.Literal && node.value === isExpectedValue;
 
 /** Disallow `test.unstubGlobals: false` in committed Vitest config. */
 const noVitestUnstubGlobalsFalseRule: ReturnType<typeof createTypedRule> =

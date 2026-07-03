@@ -26,11 +26,11 @@ Catching this helps keep coverage settings intentional and useful.
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            include: [],
-        },
-    },
+ test: {
+  coverage: {
+   include: [],
+  },
+ },
 });
 ```
 
@@ -40,11 +40,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            include: ["src/**/*.ts"],
-        },
-    },
+ test: {
+  coverage: {
+   include: ["src/**/*.ts"],
+  },
+ },
 });
 ```
 

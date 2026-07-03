@@ -29,11 +29,11 @@ Shared config usually benefits from at least one structured reporter (`json`, `l
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reporter: ["text"],
-        },
-    },
+ test: {
+  coverage: {
+   reporter: ["text"],
+  },
+ },
 });
 ```
 
@@ -43,11 +43,11 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            reporter: ["text", "json", "html"],
-        },
-    },
+ test: {
+  coverage: {
+   reporter: ["text", "json", "html"],
+  },
+ },
 });
 ```
 

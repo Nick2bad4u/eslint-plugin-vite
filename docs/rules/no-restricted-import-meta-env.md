@@ -50,17 +50,17 @@ const mode = import.meta.env.MODE;
 import vite from "@typpi/eslint-plugin-vite";
 
 export default [
-    vite.configs.client,
+ vite.configs.client,
+ {
+  rules: {
+   "vite/no-restricted-import-meta-env": [
+    "error",
     {
-        rules: {
-            "vite/no-restricted-import-meta-env": [
-                "error",
-                {
-                    allowPrefixes: ["VITE_", "PUBLIC_"],
-                },
-            ],
-        },
+     allowPrefixes: ["VITE_", "PUBLIC_"],
     },
+   ],
+  },
+ },
 ];
 ```
 

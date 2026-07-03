@@ -26,14 +26,14 @@ Keeping contradictory settings out of shared config avoids confusion and dead co
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: false,
-            thresholds: {
-                lines: 90,
-            },
-        },
-    },
+ test: {
+  coverage: {
+   enabled: false,
+   thresholds: {
+    lines: 90,
+   },
+  },
+ },
 });
 ```
 
@@ -43,14 +43,14 @@ export default defineConfig({
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        coverage: {
-            enabled: true,
-            thresholds: {
-                lines: 90,
-            },
-        },
-    },
+ test: {
+  coverage: {
+   enabled: true,
+   thresholds: {
+    lines: 90,
+   },
+  },
+ },
 });
 ```
 

@@ -20,7 +20,8 @@ export default [vite.configs.recommended, vite.configs.vitepress];
 
 ## Rules in this preset
 
-{/*begin-generated-preset-rules*/}
+{/_begin-generated-preset-rules_/}
+
 | Rule                                                                                              | Fix |
 | :------------------------------------------------------------------------------------------------ | :-: |
 | [`vite/config-require-define-config`](../config-require-define-config.md)                         |  —  |
@@ -33,4 +34,4 @@ export default [vite.configs.recommended, vite.configs.vitepress];
 | [`vite/no-vitepress-empty-theme-config`](../no-vitepress-empty-theme-config.md)                   |  —  |
 | [`vite/require-vitepress-clean-urls-explicit`](../require-vitepress-clean-urls-explicit.md)       |  —  |
 | [`vite/require-vitepress-title-or-titletemplate`](../require-vitepress-title-or-titletemplate.md) |  —  |
-{/*end-generated-preset-rules*/}
+| {/_end-generated-preset-rules_/}                                                                  |

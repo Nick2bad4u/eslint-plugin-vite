@@ -28,9 +28,9 @@ Mixing workspace-style and `test.projects` style in one file is confusing and ca
 import { defineWorkspace } from "vitest/config";
 
 const shared = {
-    test: {
-        projects: [{ test: { name: "browser" } }],
-    },
+ test: {
+  projects: [{ test: { name: "browser" } }],
+ },
 };
 
 export default defineWorkspace([shared]);
@@ -42,9 +42,9 @@ export default defineWorkspace([shared]);
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    {
-        test: { name: "unit" },
-    },
+ {
+  test: { name: "unit" },
+ },
 ]);
 ```
 

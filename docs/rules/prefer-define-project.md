@@ -28,11 +28,11 @@ That makes workspace intent easier to read in reviews and keeps the project API 
 import { defineConfig, defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    defineConfig({
-        test: {
-            name: "browser",
-        },
-    }),
+ defineConfig({
+  test: {
+   name: "browser",
+  },
+ }),
 ]);
 ```
 
@@ -42,11 +42,11 @@ export default defineWorkspace([
 import { defineProject, defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-    defineProject({
-        test: {
-            name: "browser",
-        },
-    }),
+ defineProject({
+  test: {
+   name: "browser",
+  },
+ }),
 ]);
 ```
 
