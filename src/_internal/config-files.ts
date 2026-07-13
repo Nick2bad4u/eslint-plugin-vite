@@ -1,5 +1,8 @@
 /** Supported config file kinds recognized by the plugin. */
-export type ConfigFileKind = "vite" | "vitest" | "workspace";
+export type ConfigFileKind =
+    | "vite"
+    | "vitest"
+    | "workspace";
 
 const viteConfigFilePattern = /(?:^|\/)vite\.config\.[cm]?[jt]sx?$/v;
 const vitePressConfigFilePattern =

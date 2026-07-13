@@ -9,7 +9,10 @@ import { constTuple } from "../_internal/const-tuple.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 type MessageId = "zeroTimeout";
-type TimeoutOptionName = "hookTimeout" | "teardownTimeout" | "testTimeout";
+type TimeoutOptionName =
+    | "hookTimeout"
+    | "teardownTimeout"
+    | "testTimeout";
 
 const timeoutOptionNames = constTuple(
     "hookTimeout",

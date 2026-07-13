@@ -183,7 +183,7 @@ export const renderReadmeRulesTable = (plugin = vitePlugin) => {
                 .join(" ");
 
             return [
-                ` [\`${docs.ruleId}\`](./docs/rules/${docs.ruleId.slice("vite/".length)}.md)`,
+                `[\`${docs.ruleId}\`](./docs/rules/${docs.ruleId.slice("vite/".length)}.md)`,
                 docs.fixLabel,
                 presetIcons,
             ];
@@ -230,7 +230,7 @@ export const replaceReadmeRulesTable = (markdown) => {
 
     return markdown.replace(
         pattern,
-        `${README_RULES_START}${lineEnding}${generatedTable}${lineEnding}${README_RULES_END}`
+        `${README_RULES_START}${lineEnding}${lineEnding}${generatedTable}${lineEnding}${lineEnding}${README_RULES_END}`
     );
 };
 

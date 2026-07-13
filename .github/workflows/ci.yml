@@ -68,7 +68,8 @@ jobs:
             - name: "Upload bundle analysis to Codecov"
               if: "${{ matrix.os == 'ubuntu-latest' && !cancelled() && env.CODECOV_TOKEN != '' }}"
               continue-on-error: true
-              run: 'npx @codecov/bundle-analyzer ./dist --bundle-name=eslint-plugin-vite --upload-token="${CODECOV_TOKEN}"'
+              run: |
+                  npx @codecov/bundle-analyzer ./dist --bundle-name=eslint-plugin-vite --upload-token="${CODECOV_TOKEN}"
               env:
                   GITHUB_SHA: "${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}"
                   GITHUB_REF: "${{ github.event_name == 'pull_request' && format('refs/heads/{0}', github.head_ref) || github.ref }}"
@@ -88,10 +89,12 @@ jobs:
                   VITEST_HANGING_PROCESS_REPORTER: "true"
 
             - name: "Verify coverage artifact"
-              run: 'python -c "from pathlib import Path; assert Path(''coverage/lcov.info'').is_file(), ''coverage/lcov.info was not generated''"'
+              run: |
+                  python -c "from pathlib import Path; assert Path('coverage/lcov.info').is_file(), 'coverage/lcov.info was not generated'"
 
             - name: "Verify JUnit artifact"
-              run: 'python -c "from pathlib import Path; assert Path(''test-report.junit.xml'').is_file(), ''test-report.junit.xml was not generated''"'
+              run: |
+                  python -c "from pathlib import Path; assert Path('test-report.junit.xml').is_file(), 'test-report.junit.xml was not generated'"
 
             - name: "Upload test results to Codecov"
               if: "${{ !cancelled() }}"

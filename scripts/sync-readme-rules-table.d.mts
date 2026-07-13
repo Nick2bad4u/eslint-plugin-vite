@@ -3,7 +3,10 @@ export interface ReadmeRuleModule {
         readonly docs: {
             readonly description?: string | undefined;
             readonly ruleNumber?: number | undefined;
-            readonly viteConfigs?: readonly string[] | string | undefined;
+            readonly viteConfigs?:
+                | readonly string[]
+                | string
+                | undefined;
         };
         readonly fixable?: "code" | undefined;
         readonly hasSuggestions?: boolean | undefined;

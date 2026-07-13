@@ -208,6 +208,20 @@ const config = [
             "json-schema-validator-2/no-invalid": "off",
         },
     },
+    {
+        files: ["**/*.{yaml,yml}"],
+        name: "Dedicated Yamllint Boundary",
+        rules: {
+            "yamllint/yamllint": "off",
+        },
+    },
+    {
+        files: ["src/_internal/ast.ts", "src/rules/**/*.{ts,mts,cts,tsx}"],
+        name: "Rule Domain Naming Compatibility",
+        rules: {
+            "unicorn/consistent-boolean-name": "off",
+        },
+    },
     // Add repository-specific config entries below as needed.
 ];
 

@@ -2,7 +2,8 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
 name: "Release"
 
-run-name: "${{ github.event_name == 'workflow_dispatch' && format('Manual release ({0}) by @{1}', inputs.version || inputs.release_type, github.actor) || format('Tagged release {0} by @{1}', github.ref_name, github.actor) }}"
+run-name: >-
+    ${{ github.event_name == 'workflow_dispatch' && format('Manual release ({0}) by @{1}', inputs.version || inputs.release_type, github.actor) || format('Tagged release {0} by @{1}', github.ref_name, github.actor) }}
 
 concurrency:
     group: "${{ github.workflow }}-${{ github.repository }}"
@@ -208,11 +209,13 @@ jobs:
                   npm_release_url="https://www.npmjs.com/package/${package_name}/v/${version}"
                   github_release_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${tag}"
 
-                  echo "version=$version" >> "$GITHUB_OUTPUT"
-                  echo "tag=$tag" >> "$GITHUB_OUTPUT"
-                  echo "package_name=$package_name" >> "$GITHUB_OUTPUT"
-                  echo "npm_release_url=$npm_release_url" >> "$GITHUB_OUTPUT"
-                  echo "github_release_url=$github_release_url" >> "$GITHUB_OUTPUT"
+                  {
+                    echo "version=$version"
+                    echo "tag=$tag"
+                    echo "package_name=$package_name"
+                    echo "npm_release_url=$npm_release_url"
+                    echo "github_release_url=$github_release_url"
+                  } >> "$GITHUB_OUTPUT"
 
             - name: "Rebuild package after manual version bump"
               if: "github.event_name == 'workflow_dispatch'"
@@ -294,7 +297,11 @@ jobs:
 
                   npm pack --json --pack-destination "$assets_dir" > "$pack_metadata_path"
 
-                  tarball_filename=$(node -e "const fs = require('node:fs'); const packMetadata = JSON.parse(fs.readFileSync(process.argv[1], 'utf8')); process.stdout.write(packMetadata[0].filename);" "$pack_metadata_path")
+                  tarball_filename=$(
+                    node -e \
+                      "const fs = require('node:fs'); const packMetadata = JSON.parse(fs.readFileSync(process.argv[1], 'utf8')); process.stdout.write(packMetadata[0].filename);" \
+                      "$pack_metadata_path"
+                  )
                   tarball_path="${assets_dir}/${tarball_filename}"
                   safe_package_name=$(printf '%s' "$PACKAGE_NAME" | sed 's/^@//; s#/#-#g')
                   zip_basename="${safe_package_name}-${VERSION}"
@@ -308,10 +315,12 @@ jobs:
                     zip -rq "../release-assets/${zip_basename}.zip" "${zip_basename}"
                   )
 
-                  echo "tarball_path=$tarball_path" >> "$GITHUB_OUTPUT"
-                  echo "zip_path=${assets_dir}/${zip_basename}.zip" >> "$GITHUB_OUTPUT"
-                  echo "tarball_name=$tarball_filename" >> "$GITHUB_OUTPUT"
-                  echo "zip_name=${zip_basename}.zip" >> "$GITHUB_OUTPUT"
+                  {
+                    echo "tarball_path=$tarball_path"
+                    echo "zip_path=${assets_dir}/${zip_basename}.zip"
+                    echo "tarball_name=$tarball_filename"
+                    echo "zip_name=${zip_basename}.zip"
+                  } >> "$GITHUB_OUTPUT"
 
             - name: "Create GitHub release"
               uses: "softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b" # v3.0.1

@@ -74,8 +74,8 @@
         "react-dom": "^19.2.7",
         "react-github-btn": "^1.4.0",
         "typed-css-modules": "^0.9.1",
-        "typedoc": "^0.28.19",
-        "typedoc-config-nick2bad4u": "^2.0.0",
+        "typedoc": "^0.28.20",
+        "typedoc-config-nick2bad4u": "^2.0.3",
         "typescript": "^6.0.3"
     },
     "peerDependencies": {

@@ -1,6 +1,6 @@
 ---
 $schema: "https://www.schemastore.org/yamllint.json"
-extends: "default"
+extends: "node_modules/yamllint-config-nick2bad4u/.yamllint"
 # yaml-language-server: $schema=https://www.schemastore.org/yamllint.json
 
 locale: "en_US.UTF-8"
@@ -95,7 +95,7 @@ rules:
     # Enable important rules for data integrity
     empty-values:
         forbid-in-block-mappings: false
-        forbid-in-flow-mappings: true
+        forbid-in-flow-mappings: false
         forbid-in-block-sequences: true
 
     # Hyphen configuration

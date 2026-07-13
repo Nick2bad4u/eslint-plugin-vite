@@ -31,7 +31,9 @@ interface ViteRuleDocs {
 /** Rule authoring metadata contract accepted by `RuleCreator`. */
 type ViteRuleInputDocs = Except<
     ViteRuleDocs,
-    "ruleCatalogId" | "ruleId" | "ruleNumber"
+    | "ruleCatalogId"
+    | "ruleId"
+    | "ruleNumber"
 > & {
     ruleCatalogId?: string;
     ruleId?: string;

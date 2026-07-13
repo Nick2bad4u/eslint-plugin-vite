@@ -2,7 +2,10 @@ export interface PresetsRuleModule {
     readonly meta: {
         readonly docs: {
             readonly ruleNumber?: number | undefined;
-            readonly viteConfigs?: readonly string[] | string | undefined;
+            readonly viteConfigs?:
+                | readonly string[]
+                | string
+                | undefined;
         };
         readonly fixable?: "code" | undefined;
         readonly hasSuggestions?: boolean | undefined;

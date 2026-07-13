@@ -19,7 +19,7 @@
     "json": "docs/typedoc.json",
     "name": "eslint-plugin-vite Documentation",
     "out": "site-docs/developer/api",
-    "prettierConfigFile": "../../.prettierrc",
+    "prettierConfigFile": "../../prettier.config.mjs",
     "searchGroupBoosts": {
         "Classes": 1.5,
         "Functions": 1.2,
