@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -12,13 +11,16 @@ const isRecord = (value) =>
  * Npm 11 emits an array while npm 12 can emit an object keyed by package name.
  */
 export const getNpmPackFilename = (metadata) => {
-    const candidates = Array.isArray(metadata)
-        ? metadata
-        : isRecord(metadata)
-          ? Object.values(metadata).flatMap((value) =>
-                Array.isArray(value) ? value : [value]
-            )
-          : [];
+    let candidates = [];
+
+    if (Array.isArray(metadata)) {
+        candidates = metadata;
+    } else if (isRecord(metadata)) {
+        candidates = Object.values(metadata).flatMap((value) =>
+            Array.isArray(value) ? value : [value]
+        );
+    }
+
     const filenames = candidates
         .filter(isRecord)
         .map((candidate) => candidate["filename"])
@@ -30,7 +32,31 @@ export const getNpmPackFilename = (metadata) => {
         );
     }
 
-    return filenames[0];
+    const filename = filenames[0];
+
+    if (
+        filename === "." ||
+        filename === ".." ||
+        filename.includes("/") ||
+        filename.includes("\\")
+    ) {
+        throw new Error(
+            "Expected npm pack metadata to contain a safe filename."
+        );
+    }
+
+    return filename;
+};
+
+/** Read npm pack metadata from standard input without accepting a file path. */
+const readStandardInput = async () => {
+    const chunks = [];
+
+    for await (const chunk of process.stdin) {
+        chunks.push(chunk);
+    }
+
+    return Buffer.concat(chunks).toString("utf8");
 };
 
 const entryPath = process.argv[1];
@@ -39,13 +65,7 @@ const isMain =
     import.meta.url === pathToFileURL(resolve(entryPath)).href;
 
 if (isMain) {
-    const metadataPath = process.argv[2];
-
-    if (metadataPath === undefined) {
-        throw new Error("Usage: node scripts/get-npm-pack-filename.mjs <path>");
-    }
-
-    const metadata = JSON.parse(await readFile(metadataPath, "utf8"));
+    const metadata = JSON.parse(await readStandardInput());
 
     process.stdout.write(getNpmPackFilename(metadata));
 }

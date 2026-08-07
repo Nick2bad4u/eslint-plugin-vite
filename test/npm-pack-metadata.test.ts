@@ -53,4 +53,12 @@ describe("npm pack metadata", () => {
             ])
         ).toThrow("Expected exactly one npm pack filename, received 2.");
     });
+
+    it("rejects filenames that can escape the package directory", () => {
+        expect.hasAssertions();
+
+        expect(() =>
+            getNpmPackFilename([{ filename: "../unexpected.tgz" }])
+        ).toThrow("Expected npm pack metadata to contain a safe filename.");
+    });
 });
