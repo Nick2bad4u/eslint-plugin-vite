@@ -78,6 +78,7 @@ const EXTERNAL_PROTOCOLS = [
     "vscode:",
     "file:",
 ];
+const markdownParser = remark();
 
 /**
  * Parse inline Markdown links while naturally excluding fenced and inline code.
@@ -87,7 +88,7 @@ const EXTERNAL_PROTOCOLS = [
  * @returns {{ imageLinks: number; links: readonly string[] }} Parsed links.
  */
 const extractMarkdownLinks = (content) => {
-    const tree = remark().parse(content);
+    const tree = markdownParser.parse(content);
     /** @type {(import("mdast").Root | import("mdast").RootContent)[]} */
     const pendingNodes = [tree];
     /** @type {string[]} */
