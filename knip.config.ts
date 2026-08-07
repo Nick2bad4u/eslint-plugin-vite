@@ -14,8 +14,8 @@ const knipConfig: KnipConfig = {
     entry: [],
     ignore: [],
     ignoreBinaries: [
-        // These security/repository linters are intentionally supplied by the
-        // developer image and GitHub runners rather than npm packages.
+        // These non-Node security/repository CLIs are installed outside npm;
+        // similarly named npm packages do not provide these command names.
         "actionlint",
         "detect-secrets",
         "gitleaks",
