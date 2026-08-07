@@ -15,6 +15,7 @@ import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import pc from "picocolors";
 import { remark } from "remark";
+import remarkMdx from "remark-mdx";
 
 const argv = process.argv.slice(2);
 const isVerbose = argv.includes("--verbose") || argv.includes("-v");
@@ -79,16 +80,22 @@ const EXTERNAL_PROTOCOLS = [
     "file:",
 ];
 const markdownParser = remark();
+const mdxParser = remark().use(remarkMdx);
 
 /**
  * Parse inline Markdown links while naturally excluding fenced and inline code.
  *
  * @param {string} content - Markdown source.
+ * @param {string} markdownPath - Source path used to select MD or MDX syntax.
  *
  * @returns {{ imageLinks: number; links: readonly string[] }} Parsed links.
  */
-const extractMarkdownLinks = (content) => {
-    const tree = markdownParser.parse(content);
+const extractMarkdownLinks = (content, markdownPath) => {
+    const parser =
+        extname(markdownPath).toLowerCase() === ".mdx"
+            ? mdxParser
+            : markdownParser;
+    const tree = parser.parse(content);
     /** @type {(import("mdast").Root | import("mdast").RootContent)[]} */
     const pendingNodes = [tree];
     /** @type {string[]} */
@@ -337,7 +344,7 @@ async function checkFile(markdownPath, issues, issueSet, metrics) {
     }
 
     const content = await readFile(markdownPath, "utf8");
-    const { imageLinks, links } = extractMarkdownLinks(content);
+    const { imageLinks, links } = extractMarkdownLinks(content, markdownPath);
     metrics.imageLinksIgnored += imageLinks;
 
     if (links.length === 0) {
