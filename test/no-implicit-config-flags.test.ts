@@ -55,6 +55,22 @@ describe("no-implicit-config-flags", () => {
                     code: "import { defineConfig } from 'vitest/config'; export default defineConfig(({ mode }) => ({ test: { name: mode } }));",
                     filename: "vitest.config.ts",
                 },
+                {
+                    code: "export default ({ mode }) => ({ define: { __MODE__: JSON.stringify(mode) } });",
+                    filename: "vite.config.ts",
+                },
+                {
+                    code: "const configFlag = 'isPreview'; export default ({ [configFlag]: previewMode }) => ({ define: { __PREVIEW__: JSON.stringify(previewMode) } });",
+                    filename: "vite.config.ts",
+                },
+                {
+                    code: "export default ({ isPreview: { value } }) => ({ define: { __PREVIEW__: JSON.stringify(value) } });",
+                    filename: "vite.config.ts",
+                },
+                {
+                    code: "if (process.env.CI === 'true') { console.log('CI'); } export default ({ isPreview }) => ({ preview: { open: isPreview === true } });",
+                    filename: "vite.config.ts",
+                },
             ],
         }
     );

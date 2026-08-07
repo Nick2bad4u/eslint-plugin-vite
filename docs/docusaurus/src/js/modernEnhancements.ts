@@ -45,8 +45,8 @@ const scheduleEnhancements = (): void => {
 };
 
 if (
-    typeof globalThis.addEventListener === "function" &&
-    globalThis.document !== undefined
+    "document" in globalThis &&
+    typeof globalThis.addEventListener === "function"
 ) {
     runEnhancements();
     globalThis.addEventListener("popstate", scheduleEnhancements);

@@ -37,8 +37,8 @@ const getZeroTimeoutOptionName = (
     const parentSegment = arrayAt(propertyPath, -2);
 
     if (
-        !isDefined(optionName) ||
         parentSegment !== "test" ||
+        !isDefined(optionName) ||
         !isTimeoutOptionName(optionName)
     ) {
         return null;

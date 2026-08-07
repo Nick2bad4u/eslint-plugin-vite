@@ -247,9 +247,4 @@ export const viteRules: ViteRuleModules = {
     "workspace-unique-project-name": workspaceUniqueProjectNameRule,
 };
 
-/** Unqualified rule name supported by eslint-plugin-vite. */
-export type ViteRuleName = keyof typeof viteRules;
-
-export default viteRules;
-
 /* eslint-enable canonical/no-re-export -- Re-enable after the intentional rule-registry object literal. */

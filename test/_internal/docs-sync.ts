@@ -1,19 +1,19 @@
 import { writeFileSync } from "node:fs";
 
 const getProcessEnv = (): Record<string, string | undefined> => {
-    const processValue = Reflect.get(globalThis, "process");
+    const processValue: unknown = Reflect.get(globalThis, "process");
 
     if (
-        typeof processValue !== "object" ||
         processValue === null ||
+        typeof processValue !== "object" ||
         !("env" in processValue)
     ) {
         return {};
     }
 
-    const processEnv = Reflect.get(processValue, "env");
+    const processEnv: unknown = Reflect.get(processValue, "env");
 
-    if (typeof processEnv !== "object" || processEnv === null) {
+    if (processEnv === null || typeof processEnv !== "object") {
         return {};
     }
 

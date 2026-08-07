@@ -6,14 +6,20 @@ Thanks for contributing.
 
 ## Prerequisites
 
-- Node.js `>=22.0.0`
-- npm `>=11`
-- Git
+- A Node.js version allowed by `package.json`; the repository default is pinned
+  in `.node-version`.
+- npm `12.0.2`, matching the exact `packageManager` version in `package.json`.
+- Git.
+- The full repository-maintenance suite also expects the official `actionlint`,
+  `detect-secrets`, Gitleaks, Grype, Lychee, and yamllint CLIs to be available on
+  `PATH`. These non-Node tools are installed by the developer environment, not
+  by `npm ci`; similarly named npm packages do not provide the official
+  `actionlint` or `detect-secrets` executables.
 
 ## Local setup
 
 ```bash
-npm ci --force
+npm ci
 npm run build
 npm run typecheck
 npm test
@@ -32,7 +38,8 @@ npm test
 - `npm run build`
 - `npm run typecheck`
 - `npm test`
-- `npm run lint:all:fix:quiet`
+- `npm run lint:all`
+- `npm run release:verify`
 
 ## Project layout
 

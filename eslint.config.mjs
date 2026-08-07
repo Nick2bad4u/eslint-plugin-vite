@@ -46,7 +46,8 @@ const config = [
             "unicorn/consistent-boolean-name": [
                 "error",
                 {
-                    checkProperties: false,
+                    checkFields: "never",
+                    checkMethods: "never",
                     prefixes: {
                         allow: true,
                         allows: true,
@@ -219,7 +220,38 @@ const config = [
         files: ["src/_internal/ast.ts", "src/rules/**/*.{ts,mts,cts,tsx}"],
         name: "Rule Domain Naming Compatibility",
         rules: {
+            // ESTree visitor method keys are canonical PascalCase node names.
+            "sonarjs/function-name": [
+                "warn",
+                { format: "^[_a-zA-Z][a-zA-Z0-9]*$" },
+            ],
             "unicorn/consistent-boolean-name": "off",
+        },
+    },
+    {
+        files: ["src/rules/**/*.{ts,mts,cts,tsx}"],
+        name: "Centralized Rule Language Metadata",
+        rules: {
+            // CreateTypedRule stamps the common `js/js` language contract and
+            // plugin-entry.test.ts verifies it across the complete registry.
+            "eslint-plugin/require-meta-languages": "off",
+        },
+    },
+    {
+        files: [".github/hooks/hooks.json"],
+        name: "GitHub Copilot Hook Configuration",
+        rules: {
+            // This path uses GitHub Copilot's hook schema, not Codex hooks.
+            "codex/require-valid-hook-events": "off",
+            "codex/require-valid-hook-structure": "off",
+        },
+    },
+    {
+        name: "GitHub Managed Secret Scanning",
+        rules: {
+            // This public repository uses GitHub's complete default scan scope;
+            // committing a non-empty paths-ignore file would weaken coverage.
+            "repo-compliance/require-secret-scanning-config": "off",
         },
     },
     // Add repository-specific config entries below as needed.

@@ -29,6 +29,10 @@ describe("workspace-unique-project-name", () => {
                     code: "import { defineConfig } from 'vite'; export default defineConfig({ test: { projects: [{ test: { name: 'node' } }, { test: { name: { label: 'browser', color: 'green' } } }] } });",
                     filename: "vite.config.ts",
                 },
+                {
+                    code: "import { defineWorkspace } from 'vitest/config'; export default defineWorkspace([{ test: { environment: 'node' } }, { test: { name: process.env.PROJECT_NAME } }]);",
+                    filename: "vitest.workspace.ts",
+                },
             ],
         }
     );

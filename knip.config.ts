@@ -12,74 +12,57 @@ import type { KnipConfig } from "knip";
 const knipConfig: KnipConfig = {
     $schema: "https://unpkg.com/knip@6/schema.json",
     entry: [],
-    ignore: [
-        "docs/docusaurus/src/components/HomePage.module.css.d.ts",
-        "docs/docusaurus/src/theme/prism-include-languages.js",
-        "docs/docusaurus/typedoc.local.config.mjs",
-        "docs/docusaurus/typedoc-plugins/hashToBangLinks.mjs",
-        "docs/docusaurus/typedoc-plugins/hashToBangLinksCore.d.mts",
-        "docs/docusaurus/typedoc-plugins/hashToBangLinksCore.mjs",
-        "docs/docusaurus/typedoc-plugins/prefixDocLinks.mjs",
-        "docs/docusaurus/typedoc-plugins/prefixDocLinksCore.d.mts",
-        "docs/docusaurus/typedoc-plugins/prefixDocLinksCore.mjs",
-    ],
+    ignore: [],
     ignoreBinaries: [
-        "git-cz",
+        // These non-Node security/repository CLIs are installed outside npm;
+        // similarly named npm packages do not provide these command names.
+        "actionlint",
+        "detect-secrets",
+        "gitleaks",
         "grype",
-        "open-cli",
-        // False-positve Knip thinks knip.config.ts is a binary entry point, but it's actually just a config file.
+        "lychee",
+        // False-positive: Knip thinks knip.config.ts is a binary entry point, but it's actually just a config file.
         "knip.config.ts",
     ],
     ignoreDependencies: [
-        ".*prettier.*",
-        "@docusaurus/faster",
+        // Docusaurus derives this virtual theme name from the declared
+        // @easyops-cn/docusaurus-search-local package.
         "@easyops-cn/docusaurus-search-local",
-        "@eslint.*",
-        "@microsoft/tsdoc-config",
-        "@secretlint/secretlint-rule-anthropic",
-        "@secretlint/secretlint-rule-aws",
-        "@secretlint/secretlint-rule-database-connection-string",
-        "@secretlint/secretlint-rule-gcp",
-        "@secretlint/secretlint-rule-github",
-        "@secretlint/secretlint-rule-no-dotenv",
-        "@secretlint/secretlint-rule-no-homedir",
-        "@secretlint/secretlint-rule-npm",
-        "@secretlint/secretlint-rule-openai",
-        "@secretlint/secretlint-rule-pattern",
-        "@secretlint/secretlint-rule-preset-recommend",
-        "@secretlint/secretlint-rule-privatekey",
-        "@secretlint/secretlint-rule-secp256k1-privatekey",
-        "@stylelint.*",
+        "@easyops-cn/docusaurus-theme-docusaurus-search-local",
+        // Stryker resolves these plugin families dynamically from its config.
         "@stryker-ignorer/*",
         "@stryker-mutator/*",
-        "@types.*",
-        "eslint.*",
+        // The shared Stylelint preset owns these plugins and exposes their
+        // module names as strings in the composed runtime configuration.
+        "@double-great/stylelint-a11y",
+        "@stylistic/stylelint-plugin",
         "postcss.*",
-        "remark.*",
         "stylelint.*",
-        "ts.*",
-        "type.*",
-        "unified",
-
-        // Items flagged by knip report (ignored to suppress false-positives / repo-local tools)
-        "clsx",
-        "react-github-btn",
-        "actionlint",
-        "commitlint",
-        "gitleaks-secret-scanner",
-        "htmlhint",
-        "leasot",
-        "markdown-link-check",
-        "sloc",
-        "yamllint-js",
+        // TypeScript resolves React within the Docusaurus workspace and tslib
+        // through the compiler/toolchain; the root config is not a consumer.
         "react",
+        "tslib",
+        // These packages are consumed through executable or configuration file
+        // paths that Knip cannot infer from package scripts and config loaders.
+        "gitcliff-config-nick2bad4u",
+        "gitleaks-config-nick2bad4u",
+        "jscpd-config-nick2bad4u",
+        "lychee-config-nick2bad4u",
+        "ncu-config-nick2bad4u",
+        "@microsoft/tsdoc-config",
+        "secretlint-config-nick2bad4u",
+        "tsdoc-config-nick2bad4u",
+        "typed-css-modules",
+        "typedoc",
+        "typedoc-config-nick2bad4u",
+        "yamllint-config-nick2bad4u",
     ],
     ignoreExportsUsedInFile: {
         interface: true,
         type: true,
     },
-    includeEntryExports: true,
     project: [],
+    tags: ["-@internal"],
     rules: {
         binaries: "error",
         catalog: "error",
@@ -99,15 +82,17 @@ const knipConfig: KnipConfig = {
     },
     workspaces: {
         ".": {
-            entry: [],
-            project: [],
-        },
-        src: {
-            entry: ["src/plugin.ts"],
+            entry: [
+                "scripts/**/*.{js,mjs,cjs,ts,mts,cts}",
+                "src/plugin.ts",
+                "test/**/*.test.{js,ts,mts}",
+            ],
             project: [
+                "scripts/**/*.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
                 "!src/**/*.spec.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
                 "!src/**/*.test.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
                 "src/**/*.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
+                "test/**/*.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
             ],
         },
     },

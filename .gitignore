@@ -828,7 +828,8 @@ node_modules/
 node_modules_backup/
 
 # NPM
-.npmrc
+# Keep the repository policy in .npmrc tracked; user credentials belong in the
+# per-user npm configuration outside the repository.
 
 # OhMyPosh
 !.vscode/OhMyPosh-Atomic-Custom.json

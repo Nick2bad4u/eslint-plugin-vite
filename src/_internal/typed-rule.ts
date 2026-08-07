@@ -12,6 +12,9 @@ import { createRuleDocsUrl } from "./rule-docs-url.js";
 /** Current rule-catalog revision identifier stamped into `meta.docs`. */
 const RULE_CATALOG_ID = "R001" as const;
 
+/** ESLint language identifiers supported by every rule in this plugin. */
+const RULE_LANGUAGES = ["js/js"] as const;
+
 type ViteRuleCreator = ReturnType<
     typeof ESLintUtils.RuleCreator<ViteRuleInputDocs>
 >;
@@ -73,16 +76,18 @@ export const createTypedRule: ViteRuleCreator = (ruleDefinition) => {
     };
 
     const metaDefaultOptions = createdRule.meta.defaultOptions;
+    const metaWithLanguages = {
+        ...createdRule.meta,
+        ...(isDefined(metaDefaultOptions) && {
+            defaultOptions: metaDefaultOptions,
+        }),
+        docs: docsWithCatalog,
+        languages: RULE_LANGUAGES,
+    };
 
     return {
         ...createdRule,
-        meta: {
-            ...createdRule.meta,
-            ...(isDefined(metaDefaultOptions) && {
-                defaultOptions: metaDefaultOptions,
-            }),
-            docs: docsWithCatalog,
-        },
+        meta: metaWithLanguages,
         name: ruleDefinition.name,
     };
 };

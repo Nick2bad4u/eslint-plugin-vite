@@ -83,17 +83,14 @@ export const getPropertyPath = (
 
         const parentObject: TSESTree.Node = currentNode.parent;
 
-        if (parentObject.type !== AST_NODE_TYPES.ObjectExpression) {
+        if (
+            parentObject.type !== AST_NODE_TYPES.ObjectExpression ||
+            parentObject.parent.type !== AST_NODE_TYPES.Property
+        ) {
             break;
         }
 
-        const parentNode: TSESTree.Node = parentObject.parent;
-
-        if (parentNode.type !== AST_NODE_TYPES.Property) {
-            break;
-        }
-
-        currentNode = parentNode;
+        currentNode = parentObject.parent;
     }
 
     return propertyPath.toReversed();
@@ -129,7 +126,7 @@ export const propertyPathEndsWith = (
 };
 
 /** Check whether an AST node is the `import.meta` meta property. */
-export const isImportMeta = (
+const isImportMeta = (
     node: Readonly<TSESTree.Node>
 ): node is TSESTree.MetaProperty =>
     node.type === AST_NODE_TYPES.MetaProperty &&

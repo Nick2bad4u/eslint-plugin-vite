@@ -104,7 +104,12 @@ export const viteConfigMetadataByName: Readonly<
     },
 };
 
-/** Stable README legend/rendering order for preset icons. */
+/**
+ * Stable legend/rendering order used by the generated README and preset
+ * documentation.
+ *
+ * @internal Consumed by repository scripts through the compiled dist entry.
+ */
 export const viteConfigNamesByReadmeOrder: readonly ViteConfigName[] = [
     "recommended",
     "strict",
