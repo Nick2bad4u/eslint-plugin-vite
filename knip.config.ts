@@ -21,7 +21,7 @@ const knipConfig: KnipConfig = {
         "gitleaks",
         "grype",
         "lychee",
-        // False-positve Knip thinks knip.config.ts is a binary entry point, but it's actually just a config file.
+        // False-positive: Knip thinks knip.config.ts is a binary entry point, but it's actually just a config file.
         "knip.config.ts",
     ],
     ignoreDependencies: [
@@ -44,7 +44,6 @@ const knipConfig: KnipConfig = {
         "tslib",
         // These packages are consumed through executable or configuration file
         // paths that Knip cannot infer from package scripts and config loaders.
-        "git-cliff",
         "gitcliff-config-nick2bad4u",
         "gitleaks-config-nick2bad4u",
         "jscpd-config-nick2bad4u",

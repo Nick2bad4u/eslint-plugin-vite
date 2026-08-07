@@ -44,7 +44,10 @@ const scheduleEnhancements = (): void => {
     globalThis.setTimeout(runEnhancements, ROUTE_REFRESH_DELAY_MS);
 };
 
-if (typeof globalThis.addEventListener === "function") {
+if (
+    "document" in globalThis &&
+    typeof globalThis.addEventListener === "function"
+) {
     runEnhancements();
     globalThis.addEventListener("popstate", scheduleEnhancements);
     globalThis.addEventListener("hashchange", scheduleEnhancements);
