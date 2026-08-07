@@ -127,8 +127,7 @@ const optionalDetailAllowedParentHeadings = new Set([
 const defaultHelperDocPathPattern =
     /(^|\/)docs\/rules\/(?!overview\.md$|getting-started\.md$|presets\/)[^/]+\.md$/u;
 const defaultRuleCatalogIdLinePattern = /^> \*\*Rule catalog ID:\*\* R\d{3}$/u;
-const defaultPackageDocumentationLabelPattern =
-    /^[^\r\n]+ package documentation:$/mu;
+const packageDocumentationLabelSuffix = " package documentation:";
 const eslintPluginPackagePrefix = "eslint-plugin-";
 
 const packageMetadataCache = new Map();
@@ -293,6 +292,91 @@ const hasChildren = (value) =>
 /**
  * @param {unknown} node
  *
+ * @returns {boolean} Whether a Markdown node contains a link.
+ */
+const containsMarkdownLink = (node) => {
+    if (typeof node !== "object" || node === null) {
+        return false;
+    }
+
+    if (
+        "type" in node &&
+        (node.type === "link" || node.type === "linkReference")
+    ) {
+        return true;
+    }
+
+    return (
+        hasChildren(node) &&
+        Array.isArray(node.children) &&
+        node.children.some((child) => containsMarkdownLink(child))
+    );
+};
+
+/**
+ * @param {Root} tree
+ * @param {Heading} sectionHeading
+ * @param {Heading | undefined} nextSectionHeading
+ *
+ * @returns {boolean} Whether a root-level section contains a Markdown link.
+ */
+const sectionContainsMarkdownLink = (
+    tree,
+    sectionHeading,
+    nextSectionHeading
+) => {
+    const sectionStartIndex = tree.children.indexOf(sectionHeading);
+
+    if (sectionStartIndex === -1) {
+        return false;
+    }
+
+    const nextSectionIndex =
+        nextSectionHeading === undefined
+            ? tree.children.length
+            : tree.children.indexOf(nextSectionHeading);
+    const sectionEndIndex =
+        nextSectionIndex > sectionStartIndex
+            ? nextSectionIndex
+            : tree.children.length;
+
+    return tree.children
+        .slice(sectionStartIndex + 1, sectionEndIndex)
+        .some((node) => containsMarkdownLink(node));
+};
+
+/**
+ * @param {string} content
+ *
+ * @returns {boolean} Whether content contains the default package-doc label.
+ */
+const containsDefaultPackageDocumentationLabel = (content) =>
+    content
+        .split(/\r?\n/u)
+        .some(
+            (line) =>
+                line.length > packageDocumentationLabelSuffix.length &&
+                line.endsWith(packageDocumentationLabelSuffix)
+        );
+
+/**
+ * @param {string} content
+ * @param {RegExp | undefined} customPattern
+ *
+ * @returns {boolean} Whether content contains a package-doc label.
+ */
+const containsPackageDocumentationLabel = (content, customPattern) => {
+    if (customPattern === undefined) {
+        return containsDefaultPackageDocumentationLabel(content);
+    }
+
+    customPattern.lastIndex = 0;
+    return customPattern.test(content);
+};
+
+/**
+ * @param {unknown} node
+ *
  * @returns {string}
  */
 const getNodeText = (node) => {
@@ -397,8 +481,7 @@ export default function remarkLintRuleDocHeadings(options = {}) {
         options.requireRuleCatalogId ??
         options.ruleCatalogIdLinePattern !== undefined;
     const packageDocumentationLabelPattern =
-        options.packageDocumentationLabelPattern ??
-        defaultPackageDocumentationLabelPattern;
+        options.packageDocumentationLabelPattern;
     const ruleCatalogIdLinePattern =
         options.ruleCatalogIdLinePattern ?? defaultRuleCatalogIdLinePattern;
     /** @param {keyof typeof defaultHeadingToggles} headingKey */
@@ -701,13 +784,13 @@ export default function remarkLintRuleDocHeadings(options = {}) {
             }
 
             const nextH2Heading = h2Headings[deprecatedSectionIndex + 1];
-            const deprecatedSectionContent = getSectionContent(
-                file,
-                deprecatedSectionHeading,
-                nextH2Heading
-            );
-
-            if (!/\[[^\]]+\]\([^\)]+\)/u.test(deprecatedSectionContent)) {
+            if (
+                !sectionContainsMarkdownLink(
+                    tree,
+                    deprecatedSectionHeading,
+                    nextH2Heading
+                )
+            ) {
                 file.message(
                     "`## Deprecated` should include a link to the recommended replacement rule or package.",
                     deprecatedSectionHeading,
@@ -750,8 +833,9 @@ export default function remarkLintRuleDocHeadings(options = {}) {
                 );
 
                 if (
-                    !packageDocumentationLabelPattern.test(
-                        packageDocumentationContent
+                    !containsPackageDocumentationLabel(
+                        packageDocumentationContent,
+                        packageDocumentationLabelPattern
                     )
                 ) {
                     file.message(
