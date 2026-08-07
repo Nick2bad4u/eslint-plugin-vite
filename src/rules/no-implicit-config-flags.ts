@@ -129,17 +129,13 @@ const getConfigFlagBindings = (
 
         const flagName = getStaticPropertyName(property);
 
-        if (!isDefined(flagName) || !isConfigFlagName(flagName)) {
-            continue;
+        if (isDefined(flagName) && isConfigFlagName(flagName)) {
+            const localIdentifier = getBindingIdentifier(property.value);
+
+            if (localIdentifier !== undefined) {
+                bindings.set(localIdentifier.name, flagName);
+            }
         }
-
-        const localIdentifier = getBindingIdentifier(property.value);
-
-        if (localIdentifier === undefined) {
-            continue;
-        }
-
-        bindings.set(localIdentifier.name, flagName);
     }
 
     return bindings;
@@ -396,7 +392,7 @@ const noImplicitConfigFlagsRule: ReturnType<typeof createTypedRule> =
             ): void => {
                 const activeScope = arrayAt(targetFunctionScopes, -1);
 
-                if (!isDefined(activeScope) || testExpression === null) {
+                if (testExpression === null || !isDefined(activeScope)) {
                     return;
                 }
 

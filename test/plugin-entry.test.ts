@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+// eslint-disable-next-line import-x/extensions -- JSON metadata is the canonical version source.
+import packageJson from "../package.json" with { type: "json" };
 import vitePlugin from "../src/plugin.js";
 
 describe("plugin entry", () => {
@@ -7,7 +9,7 @@ describe("plugin entry", () => {
         expect.hasAssertions();
         expect(vitePlugin.meta.name).toBe("@typpi/eslint-plugin-vite");
         expect(vitePlugin.meta.namespace).toBe("vite");
-        expect(vitePlugin.meta.version).toMatch(/^\d+\.\d+\.\d+/v);
+        expect(vitePlugin.meta.version).toBe(packageJson.version);
     });
 
     it("exposes the expected rule ids", () => {
@@ -90,5 +92,15 @@ describe("plugin entry", () => {
             "require-vitest-typecheck-tsconfig",
             "workspace-unique-project-name",
         ]);
+    });
+
+    it("limits every rule to ESLint's JavaScript language", () => {
+        expect.hasAssertions();
+
+        for (const rule of Object.values(vitePlugin.rules)) {
+            expect(Reflect.get(rule.meta, "languages")).toStrictEqual([
+                "js/js",
+            ]);
+        }
     });
 });

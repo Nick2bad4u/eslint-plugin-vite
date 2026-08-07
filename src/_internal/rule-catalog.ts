@@ -171,7 +171,7 @@ const toRuleCatalogId = (ruleNumber: number): ViteRuleCatalogId =>
     `R${String(ruleNumber).padStart(3, "0")}`;
 
 /** Canonical catalog metadata entries in stable display/order form. */
-export const viteRuleCatalogEntries: readonly ViteRuleCatalogEntry[] =
+const viteRuleCatalogEntries: readonly ViteRuleCatalogEntry[] =
     orderedRuleNames.map((ruleName, index) => ({
         ruleId: toRuleCatalogId(index + 1),
         ruleName,
@@ -179,7 +179,7 @@ export const viteRuleCatalogEntries: readonly ViteRuleCatalogEntry[] =
     }));
 
 /** Fast lookup map for rule catalog metadata by rule name. */
-export const viteRuleCatalogByRuleName: ReadonlyMap<
+const viteRuleCatalogByRuleName: ReadonlyMap<
     ViteRuleCatalogName,
     ViteRuleCatalogEntry
 > = new Map(viteRuleCatalogEntries.map((entry) => [entry.ruleName, entry]));
@@ -209,17 +209,6 @@ export const getRuleCatalogEntryForRuleName = (
 
     return catalogEntry;
 };
-
-/** Resolve stable catalog metadata by rule id. */
-export const viteRuleCatalogByRuleId: ReadonlyMap<
-    ViteRuleCatalogId,
-    ViteRuleCatalogEntry
-> = new Map(viteRuleCatalogEntries.map((entry) => [entry.ruleId, entry]));
-
-/** Resolve stable catalog metadata for a catalog id. */
-export const getRuleCatalogEntryForRuleId = (
-    ruleId: ViteRuleCatalogId
-): undefined | ViteRuleCatalogEntry => viteRuleCatalogByRuleId.get(ruleId);
 
 /** Validate that catalog ids are unique and sequential. */
 export const validateRuleCatalogIntegrity = (): boolean => {

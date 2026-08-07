@@ -29,21 +29,21 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                     const name = getStaticVitestProjectName(
                         projectEntry.projectObject
                     );
+                    const nameProperty = isDefined(name)
+                        ? getVitestProjectNameProperty(
+                              projectEntry.projectObject
+                          )
+                        : undefined;
 
-                    if (!isDefined(name)) {
+                    if (nameProperty === undefined || !isDefined(name)) {
                         continue;
                     }
 
                     const existingNode = seenProjectNames.get(name);
-                    const nameProperty = getVitestProjectNameProperty(
-                        projectEntry.projectObject
-                    );
 
-                    if (nameProperty === undefined) {
-                        continue;
-                    }
-
-                    if (existingNode !== undefined) {
+                    if (existingNode === undefined) {
+                        seenProjectNames.set(name, nameProperty.value);
+                    } else {
                         context.report({
                             data: {
                                 name,
@@ -51,10 +51,7 @@ const workspaceUniqueProjectNameRule: ReturnType<typeof createTypedRule> =
                             messageId: "duplicateProjectName",
                             node: nameProperty.value,
                         });
-                        continue;
                     }
-
-                    seenProjectNames.set(name, nameProperty.value);
                 }
             };
 

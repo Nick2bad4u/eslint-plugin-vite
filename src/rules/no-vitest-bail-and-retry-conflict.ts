@@ -103,14 +103,12 @@ const noVitestBailAndRetryConflictRule: ReturnType<typeof createTypedRule> =
 
                         const reportNode = state.retryNode ?? state.bailNode;
 
-                        if (reportNode === undefined) {
-                            continue;
+                        if (reportNode !== undefined) {
+                            context.report({
+                                messageId: "bailRetryConflict",
+                                node: reportNode,
+                            });
                         }
-
-                        context.report({
-                            messageId: "bailRetryConflict",
-                            node: reportNode,
-                        });
                     }
                 },
                 Property(node) {

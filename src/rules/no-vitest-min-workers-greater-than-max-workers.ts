@@ -79,14 +79,12 @@ const noVitestMinWorkersGreaterThanMaxWorkersRule: ReturnType<
                     const reportNode =
                         state.minWorkersNode ?? state.maxWorkersNode;
 
-                    if (reportNode === undefined) {
-                        continue;
+                    if (reportNode !== undefined) {
+                        context.report({
+                            messageId: "minWorkersGreaterThanMaxWorkers",
+                            node: reportNode,
+                        });
                     }
-
-                    context.report({
-                        messageId: "minWorkersGreaterThanMaxWorkers",
-                        node: reportNode,
-                    });
                 }
             },
             Property(node) {

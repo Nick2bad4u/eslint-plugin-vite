@@ -69,7 +69,7 @@ const noRestrictedImportMetaEnvRule: ReturnType<typeof createTypedRule> =
                     const isBuiltInEnvKey =
                         isDefined(envKey) && isBuiltInImportMetaEnvKey(envKey);
 
-                    if (!isDefined(envKey) || isBuiltInEnvKey) {
+                    if (isBuiltInEnvKey || !isDefined(envKey)) {
                         return;
                     }
 

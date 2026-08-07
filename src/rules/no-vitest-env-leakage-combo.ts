@@ -50,23 +50,16 @@ const noVitestEnvLeakageComboRule: ReturnType<typeof createTypedRule> =
                 "Program:exit"() {
                     for (const state of perTestObject.values()) {
                         if (
-                            state.globalsTrueNode === undefined ||
-                            state.isolateFalseNode === undefined
+                            state.globalsTrueNode !== undefined &&
+                            state.isolateFalseNode !== undefined &&
+                            (state.unstubEnvsFalseNode !== undefined ||
+                                state.unstubGlobalsFalseNode !== undefined)
                         ) {
-                            continue;
+                            context.report({
+                                messageId: "envLeakageCombo",
+                                node: state.isolateFalseNode,
+                            });
                         }
-
-                        if (
-                            state.unstubEnvsFalseNode === undefined &&
-                            state.unstubGlobalsFalseNode === undefined
-                        ) {
-                            continue;
-                        }
-
-                        context.report({
-                            messageId: "envLeakageCombo",
-                            node: state.isolateFalseNode,
-                        });
                     }
                 },
                 Property(node) {

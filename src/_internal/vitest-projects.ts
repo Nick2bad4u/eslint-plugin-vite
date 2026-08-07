@@ -36,7 +36,7 @@ const isVitestProjectFactoryCall = (
  * Resolve the object expression for an inline Vitest project entry when
  * possible.
  */
-export const getInlineVitestProjectEntry = (
+const getInlineVitestProjectEntry = (
     element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>,
     containerKind: VitestInlineProjectContainerKind
 ): undefined | VitestInlineProjectEntry => {

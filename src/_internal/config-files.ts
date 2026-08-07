@@ -43,7 +43,7 @@ export const isConfigFile = (filename: string): boolean =>
     getConfigFileKind(filename) !== null;
 
 /** Check whether the file looks like a test or benchmark source file. */
-export const isTestLikeFile = (filename: string): boolean =>
+const isTestLikeFile = (filename: string): boolean =>
     testDirectoryPattern.test(normalizeFilename(filename)) ||
     testFilenamePattern.test(normalizeFilename(filename));
 

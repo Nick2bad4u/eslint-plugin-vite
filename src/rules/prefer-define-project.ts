@@ -22,23 +22,16 @@ const preferDefineProjectRule: ReturnType<typeof createTypedRule> =
             ): void => {
                 for (const projectEntry of projectEntries) {
                     if (
-                        getVitestProjectFactoryCallName(projectEntry) !==
-                        "defineConfig"
+                        getVitestProjectFactoryCallName(projectEntry) ===
+                            "defineConfig" &&
+                        projectEntry.entryNode.type ===
+                            AST_NODE_TYPES.CallExpression
                     ) {
-                        continue;
+                        context.report({
+                            messageId: "preferDefineProject",
+                            node: projectEntry.entryNode.callee,
+                        });
                     }
-
-                    if (
-                        projectEntry.entryNode.type !==
-                        AST_NODE_TYPES.CallExpression
-                    ) {
-                        continue;
-                    }
-
-                    context.report({
-                        messageId: "preferDefineProject",
-                        node: projectEntry.entryNode.callee,
-                    });
                 }
             };
 

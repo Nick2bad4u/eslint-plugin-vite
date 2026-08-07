@@ -62,9 +62,9 @@ const requireVitestEnvironmentMatchGlobsRule: ReturnType<
         return {
             "Program:exit"() {
                 if (
-                    environments.size < 2 ||
                     hasEnvironmentMatchGlobs ||
-                    firstEnvironmentNode === null
+                    firstEnvironmentNode === null ||
+                    environments.size < 2
                 ) {
                     return;
                 }
