@@ -18,6 +18,27 @@ const isRecord = (value) =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
 /**
+ * Read a binary path from either package.json bin declaration shape.
+ *
+ * @param {unknown} bin - Package bin declaration.
+ * @param {string} executableName - Key in a bin map.
+ *
+ * @returns {string | undefined} The declared binary path.
+ */
+const getDeclaredBinaryPath = (bin, executableName) => {
+    if (typeof bin === "string") {
+        return bin;
+    }
+
+    if (!isRecord(bin)) {
+        return undefined;
+    }
+
+    const declaredPath = bin[executableName];
+    return typeof declaredPath === "string" ? declaredPath : undefined;
+};
+
+/**
  * Run a command and optionally capture its standard output.
  *
  * @param {string} command - Executable to run.
@@ -100,13 +121,7 @@ const resolvePackageBinary = async (packageName, executableName) => {
         throw new Error(`${packageName}/package.json is not an object.`);
     }
 
-    const bin = manifest["bin"];
-    const declaredPath =
-        typeof bin === "string"
-            ? bin
-            : isRecord(bin) && typeof bin[executableName] === "string"
-              ? bin[executableName]
-              : undefined;
+    const declaredPath = getDeclaredBinaryPath(manifest["bin"], executableName);
 
     if (declaredPath === undefined) {
         throw new Error(

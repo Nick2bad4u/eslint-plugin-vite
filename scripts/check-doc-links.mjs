@@ -14,6 +14,8 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import pc from "picocolors";
+import { remark } from "remark";
+import remarkMdx from "remark-mdx";
 
 const argv = process.argv.slice(2);
 const isVerbose = argv.includes("--verbose") || argv.includes("-v");
@@ -67,10 +69,6 @@ const IGNORED_DIRECTORIES = new Set([
     ".stryker-tmp",
 ]);
 
-// Capture Markdown links like [text](url) and images ![alt](url)
-// NOTE: for more accuracy use a Markdown parser (remark) instead of regex.
-const LINK_PATTERN = /!?\[[^\]]*]\(([^)]+)\)/g;
-
 const EXTERNAL_PROTOCOLS = [
     "http:",
     "https:",
@@ -81,6 +79,49 @@ const EXTERNAL_PROTOCOLS = [
     "vscode:",
     "file:",
 ];
+const markdownParser = remark();
+const mdxParser = remark().use(remarkMdx);
+
+/**
+ * Parse inline Markdown links while naturally excluding fenced and inline code.
+ *
+ * @param {string} content - Markdown source.
+ * @param {string} markdownPath - Source path used to select MD or MDX syntax.
+ *
+ * @returns {{ imageLinks: number; links: readonly string[] }} Parsed links.
+ */
+const extractMarkdownLinks = (content, markdownPath) => {
+    const parser =
+        extname(markdownPath).toLowerCase() === ".mdx"
+            ? mdxParser
+            : markdownParser;
+    const tree = parser.parse(content);
+    /** @type {(import("mdast").Root | import("mdast").RootContent)[]} */
+    const pendingNodes = [tree];
+    /** @type {string[]} */
+    const links = [];
+    let imageLinks = 0;
+
+    while (pendingNodes.length > 0) {
+        const node = pendingNodes.pop();
+
+        if (node === undefined) {
+            continue;
+        }
+
+        if (node.type === "link") {
+            links.push(node.url);
+        } else if (node.type === "image") {
+            imageLinks++;
+        }
+
+        if ("children" in node) {
+            pendingNodes.push(...node.children);
+        }
+    }
+
+    return { imageLinks, links };
+};
 
 /**
  * Truncate text safely while keeping the last `max` code points.
@@ -303,34 +344,25 @@ async function checkFile(markdownPath, issues, issueSet, metrics) {
     }
 
     const content = await readFile(markdownPath, "utf8");
-    // Skip fenced code blocks
-    const contentWithoutCodeBlocks = content.replaceAll(/```[\s\S]*?```/g, "");
-    const matches = Array.from(contentWithoutCodeBlocks.matchAll(LINK_PATTERN));
+    const { imageLinks, links } = extractMarkdownLinks(content, markdownPath);
+    metrics.imageLinksIgnored += imageLinks;
 
-    if (matches.length === 0) {
+    if (links.length === 0) {
         metrics.filesWithNoLinks++;
     } else {
         metrics.filesWithLinks++;
     }
 
-    for (const match of matches) {
-        const fullMatch = match[0];
-        const link = match[1];
-        if (fullMatch.startsWith("![")) {
-            metrics.imageLinksIgnored++;
-            continue;
-        }
-        if (link) {
-            const broken = await validateLink(
-                markdownPath,
-                link,
-                issues,
-                issueSet,
-                metrics
-            );
-            if (broken && failFast) {
-                throw new Error("Fail-fast triggered due to broken link");
-            }
+    for (const link of links) {
+        const broken = await validateLink(
+            markdownPath,
+            link,
+            issues,
+            issueSet,
+            metrics
+        );
+        if (broken && failFast) {
+            throw new Error("Fail-fast triggered due to broken link");
         }
     }
 }
