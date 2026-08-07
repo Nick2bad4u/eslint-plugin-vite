@@ -2,7 +2,12 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
 name: "Release"
 
-run-name: "Release ${{ inputs.version || inputs.release_type || github.ref_name }} by @${{ github.actor }}"
+run-name: >-
+    ${{
+        github.event_name == 'workflow_dispatch' &&
+        format('Manual release ({0}) by @{1}', inputs.version || inputs.release_type, github.actor) ||
+        format('Tagged release {0} by @{1}', github.ref_name, github.actor)
+    }}
 
 concurrency:
     group: "${{ github.workflow }}-${{ github.repository }}"
@@ -244,15 +249,16 @@ jobs:
             - name: "Update changelog for manual release"
               if: "github.event_name == 'workflow_dispatch'"
               env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
                   TAG: "${{ steps.version.outputs.tag }}"
               run: |
                   set -euo pipefail
-                  git cliff \
+                  ./node_modules/.bin/git-cliff \
                     --config node_modules/gitcliff-config-nick2bad4u/cliff.toml \
                     --github-repo Nick2bad4u/eslint-plugin-vite \
                     --unreleased \
                     --tag "$TAG" \
-                    --output CHANGELOG.md
+                    --prepend CHANGELOG.md
                   test -s CHANGELOG.md
 
             - name: "Check whether version is already published"
@@ -338,7 +344,7 @@ jobs:
                   fi
 
                   mkdir -p temp
-                  git cliff \
+                  ./node_modules/.bin/git-cliff \
                     --config node_modules/gitcliff-config-nick2bad4u/cliff.toml \
                     --github-repo Nick2bad4u/eslint-plugin-vite \
                     --current \
