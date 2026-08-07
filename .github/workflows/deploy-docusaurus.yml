@@ -54,8 +54,22 @@ jobs:
                   cache: "npm"
                   cache-dependency-path: "package-lock.json"
 
+            - name: "Install pinned npm"
+              run: |
+                  set -euo pipefail
+                  npm_version=$(node -p "require('./package.json').packageManager.replace(/^npm@/, '')")
+                  npm_prefix="${RUNNER_TEMP//\\//}/npm"
+                  (
+                    cd "$RUNNER_TEMP"
+                    npm install --global --prefix "$npm_prefix" "npm@${npm_version}"
+                  )
+                  npm_bin="$npm_prefix/bin"
+                  echo "$npm_bin" >> "$GITHUB_PATH"
+                  installed_version=$("$npm_bin/npm" --version)
+                  test "$installed_version" = "$npm_version"
+
             - name: "Install dependencies"
-              run: "npm ci --force"
+              run: "npm ci"
 
             - name: "Build before TypeDoc"
               run: "npm run build"
