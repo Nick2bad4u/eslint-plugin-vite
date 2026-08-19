@@ -195,7 +195,11 @@ export const getRuleCatalogEntryForRuleNameOrNull = (
     return viteRuleCatalogByRuleName.get(ruleName) ?? null;
 };
 
-/** Resolve stable catalog metadata for a rule name. */
+/**
+ * Resolve stable catalog metadata for a rule name.
+ *
+ * @throws TypeError When the rule is absent from the stable catalog.
+ */
 export const getRuleCatalogEntryForRuleName = (
     ruleName: string
 ): ViteRuleCatalogEntry => {

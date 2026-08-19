@@ -43,7 +43,12 @@ type ViteRuleInputDocs = Except<
     ruleNumber?: number;
 };
 
-/** Shared rule-creator wrapper used by all plugin rules. */
+/**
+ * Shared rule-creator wrapper used by all plugin rules.
+ *
+ * @throws TypeError When required docs or stable catalog metadata is missing or
+ *   the authored docs URL is non-canonical.
+ */
 export const createTypedRule: ViteRuleCreator = (ruleDefinition) => {
     const catalogEntry = getRuleCatalogEntryForRuleNameOrNull(
         ruleDefinition.name

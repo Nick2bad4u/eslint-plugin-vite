@@ -44,12 +44,14 @@ const knipConfig: KnipConfig = {
         "tslib",
         // These packages are consumed through executable or configuration file
         // paths that Knip cannot infer from package scripts and config loaders.
+        "@arethetypeswrong/cli",
         "gitcliff-config-nick2bad4u",
         "gitleaks-config-nick2bad4u",
         "jscpd-config-nick2bad4u",
         "lychee-config-nick2bad4u",
         "ncu-config-nick2bad4u",
         "@microsoft/tsdoc-config",
+        "publint",
         "secretlint-config-nick2bad4u",
         "tsdoc-config-nick2bad4u",
         "typed-css-modules",
