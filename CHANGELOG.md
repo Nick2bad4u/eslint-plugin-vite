@@ -1,5 +1,45 @@
 <!-- markdownlint-disable -->
 <!-- eslint-disable markdown/no-missing-label-refs -->
+# 📜 Changelog
+
+## ✨ What's Changed in v1.0.21
+
+- <b>Commit Range: ➡️</b> [`v1.0.20...v1.0.21`](https://github.com/Nick2bad4u/eslint-plugin-vite/compare/v1.0.20...v1.0.21 "View full commit range on GitHub")
+
+### 🛠️ Bug Fixes
+
+- [`570b7e6`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/570b7e61ee4747e07a9d75152860835e931c4d61 "Diff: 3 files, +12 | -3") — *(docs)* Parse Markdown links in MDX&nbsp;<sub><em>(3&nbsp;files,&nbsp;+12,&nbsp;-3)</em></sub>
+
+- [`db2bccf`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/db2bccf2025a0333e246e301d88bffaef388e7c0 "Diff: 3 files, +169 | -46") — *(sonar)* Resolve maintainability findings&nbsp;<sub><em>(3&nbsp;files,&nbsp;+169,&nbsp;-46)</em></sub>
+
+### ⚡ Performance
+
+- [`88345b5`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/88345b5594d6ed43c0fed4ffcca2d89dedc55e78 "Diff: 1 file, +2 | -1") — *(docs)* Reuse Markdown parser&nbsp;<sub><em>(1&nbsp;file,&nbsp;+2,&nbsp;-1)</em></sub>
+
+### 👷 CI/CD
+
+- [`3ac786e`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/3ac786e3861c02a1fa54985c8b195762dd0761e6 "Diff: 1 file, +18 | -2") — 👷 [ci] Make release mutation atomic&nbsp;<sub><em>(1&nbsp;file,&nbsp;+18,&nbsp;-2)</em></sub>
+    - 🛡️ [ci] Reject invalid dispatch branch names and require the remote branch to remain at the exact validated release source SHA.
+    - 🔒️ [ci] Push the generated release commit and annotated tag in one atomic remote transaction to prevent partial release state.
+
+### 🔧 Build System
+
+- [`a8b781d`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/a8b781d4b9752a431440dae81e28a6386f698c06 "Diff: 11 files, +3489 | -2965") — 👷 [build] Prepare the npm 12 dependency refresh&nbsp;<sub><em>(11&nbsp;files,&nbsp;+3489,&nbsp;-2965)</em></sub>
+    - ⬆️ [build] Upgrade the supported lint, test, mutation, package-validation, and documentation toolchain while retaining TypeScript 6 compatibility.
+    - 🛡️ [build] Add a guarded npm dependency extension for Madge 8's stale TypeScript peer range and migrate the lockfile to npm 12 extension provenance.
+    - 🔒️ [build] Review and narrowly update lifecycle-script allowlisting for esbuild 0.28.2 without enabling unreviewed scripts.
+    - 🧪 [test] Cover extension fail-closed behavior and prove JavaScript-only presets do not apply to JSON language files.
+    - 🔧 [chore] Align Tombi, Knip, Lychee, changelog formatting, and strict TSDoc with the refreshed toolchain.
+
+### 📦 Dependencies
+
+- [`bfe705d`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/bfe705ddc1e67c44afb5c90c08d0b5b054b5798a "Diff: 1 file, +3 | -3") — ⬆️ [build] Update npm_and_yarn dependencies&nbsp;<sub><em>(1&nbsp;file,&nbsp;+3,&nbsp;-3)</em></sub>
+
+> [!NOTE]
+> **Release comparison**: https://github.com/Nick2bad4u/eslint-plugin-vite/compare/v1.0.20...v1.0.21
+
+<!-- markdownlint-disable -->
+<!-- eslint-disable markdown/no-missing-label-refs -->
 
 # 📜 Changelog
 
