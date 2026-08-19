@@ -94,6 +94,10 @@ jobs:
                       echo "workflow_dispatch ref must be a branch, not a tag: $branch" >&2
                       exit 1
                     fi
+                    if ! git check-ref-format --branch "$branch" >/dev/null; then
+                      echo "workflow_dispatch ref is not a valid branch name: $branch" >&2
+                      exit 1
+                    fi
                     echo "ref=$branch" >> "$GITHUB_OUTPUT"
                     echo "branch=$branch" >> "$GITHUB_OUTPUT"
                   else
@@ -297,6 +301,17 @@ jobs:
                     exit 1
                   fi
 
+                  source_sha=$(git rev-parse HEAD)
+                  remote_sha=$(
+                    git ls-remote --exit-code origin "refs/heads/${BRANCH}" |
+                      awk 'NR == 1 { print $1 }'
+                  )
+                  if [ "$remote_sha" != "$source_sha" ]; then
+                    echo "Remote ${BRANCH} moved from release source ${source_sha} to ${remote_sha}." >&2
+                    echo "Re-run the release from the current branch head." >&2
+                    exit 1
+                  fi
+
                   git add -A
                   if git diff --cached --quiet; then
                     echo "No staged changes found for release commit." >&2
@@ -305,8 +320,9 @@ jobs:
 
                   git commit -m "🔖 [chore] Release ${TAG}"
                   git tag -a "$TAG" -m "$TAG"
-                  git push origin "HEAD:${BRANCH}"
-                  git push origin "$TAG"
+                  git push --atomic origin \
+                    "HEAD:refs/heads/${BRANCH}" \
+                    "refs/tags/${TAG}:refs/tags/${TAG}"
 
             - name: "Generate release notes from git-cliff"
               env:
