@@ -2,6 +2,21 @@
 <!-- eslint-disable markdown/no-missing-label-refs -->
 # 📜 Changelog
 
+## ✨ What's Changed in v1.0.22
+
+- <b>Commit Range: ➡️</b> [`v1.0.21...v1.0.22`](https://github.com/Nick2bad4u/eslint-plugin-vite/compare/v1.0.21...v1.0.22 "View full commit range on GitHub")
+
+### 🧪 Testing
+
+- [`4a0d474`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/4a0d474c250009fcb7296cebb307cb35e5e07fca "Diff: 4 files, +644 | -1") — *(oxlint)* Verify plugin compatibility&nbsp;<sub><em>(4&nbsp;files,&nbsp;+644,&nbsp;-1)</em></sub>
+
+### 🛡️ Security
+
+- [`8c22d3a`](https://github.com/Nick2bad4u/eslint-plugin-vite/commit/8c22d3a2b7dd6618b27cf6202acaf5554de097f7 "Diff: 1 file, +30 | -1") — 🔒 [ci] Harden release commit staging&nbsp;<sub><em>(1&nbsp;file,&nbsp;+30,&nbsp;-1)</em></sub>
+
+> [!NOTE]
+> **Release comparison**: https://github.com/Nick2bad4u/eslint-plugin-vite/compare/v1.0.21...v1.0.22
+
 ## ✨ What's Changed in v1.0.21
 
 - <b>Commit Range: ➡️</b> [`v1.0.20...v1.0.21`](https://github.com/Nick2bad4u/eslint-plugin-vite/compare/v1.0.20...v1.0.21 "View full commit range on GitHub")
